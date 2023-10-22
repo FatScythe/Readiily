@@ -1,7 +1,7 @@
 // Components
 import Header from "../../components/header";
 import Features from "../../components/features";
-import Cta from "../../components/features/cta";
+import Cta from "../../components/cta";
 import Footer from "../../components/footer";
 
 const Homepage = () => {

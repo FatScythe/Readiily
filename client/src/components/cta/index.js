@@ -1,5 +1,5 @@
 // Icon
-import { LoveIcon } from "../../../assets/icons";
+import { LoveIcon } from "../../assets/icons";
 
 const Cta = () => {
   return (
