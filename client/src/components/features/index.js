@@ -9,7 +9,7 @@ import {
 
 const Features = () => {
   return (
-    <section id='features' className='my-48'>
+    <section id='features' className='mt-40 sm:mt-44 md:mt-48 mb-2'>
       <Features1 />
       <Features2 />
       <Features3 />
@@ -23,11 +23,11 @@ export default Features;
 const Features1 = () => {
   return (
     <section className='grid grid-cols-12 gap-5 mb-28 p-2 container'>
-      <div className='col-span-12 sm:col-span-6'>
+      <div className='col-span-12 sm:col-span-6 gap-2'>
         <h2 className='flex justify-start items-center gap-5 md:gap-10'>
           <span className='font-semibold text-lg md:text-xl'>Section</span>
           <span>
-            <BulbIcon className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12' />
+            <BulbIcon className='w-8 h-8 hover:w-10 hover:h-10 transition-all duration-200 sm:w-10 sm:h-10 md:w-12 md:h-12 sm:hover:w-14 sm:hover:h-14' />
           </span>
         </h2>
         <h1 className='text-xl md:text-2xl font-bold mt-3'>
@@ -40,8 +40,8 @@ const Features1 = () => {
       </div>
 
       <div className='col-span-12 sm:col-span-6 relative w-full'>
-        <div className='bg-secondary mx-auto w-2/3 sm:w-5/6 h-64 rounded-md'></div>
-        <div className='bg-secondary mx-auto w-2/4 sm:w-5/6 h-52 rounded-md absolute top-2/4 right-10 sm:left-16 shadow-2xl border border-black'></div>
+        <div className='bg-secondary mx-auto w-2/3 sm:w-2/3 h-64 rounded-md'></div>
+        <div className='bg-secondary mx-auto w-2/4 sm:w-1/2 h-52 rounded-md absolute top-2/4 right-10 sm:left-1/2 shadow-2xl border border-black'></div>
       </div>
     </section>
   );
@@ -50,10 +50,10 @@ const Features1 = () => {
 const Features2 = () => {
   return (
     <section className='grid grid-cols-12 gap-5 mb-28 p-2 container'>
-      <div className='col-span-12 sm:col-span-6 order-2 sm:order-1'>
+      <div className='col-span-12 sm:col-span-6 order-2 sm:order-1 gap-2'>
         <div className='col-span-12 sm:col-span-6 relative w-full'>
-          <div className='bg-secondary mx-auto w-2/3 sm:w-5/6 h-64 rounded-md'></div>
-          <div className='bg-secondary mx-auto w-2/4 sm:w-5/6 h-52 rounded-md absolute top-2/4 right-10 sm:left-16 shadow-2xl border border-black'></div>
+          <div className='bg-secondary mx-auto w-2/3 h-64 rounded-md'></div>
+          <div className='bg-secondary mx-auto w-2/4 sm:w-1/2 h-52 rounded-md absolute top-2/4 right-10 sm:left-1/2 shadow-2xl border border-black'></div>
         </div>
       </div>
 
@@ -61,7 +61,7 @@ const Features2 = () => {
         <h2 className='flex justify-start items-center gap-5 md:gap-10'>
           <span className='font-semibold text-lg md:text-xl'>Assets</span>
           <span>
-            <RibbonIcon className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12' />
+            <RibbonIcon className='w-8 h-8 hover:w-10 hover:h-10 transition-all duration-200 sm:w-10 sm:h-10 md:w-12 md:h-12 sm:hover:w-14 sm:hover:h-14' />
           </span>
         </h2>
         <h1 className='text-xl md:text-2xl font-bold mt-3'>
@@ -81,11 +81,11 @@ const Features2 = () => {
 const Features3 = () => {
   return (
     <section className='grid grid-cols-12 gap-5 p-2 container'>
-      <div className='col-span-12 sm:col-span-6'>
+      <div className='col-span-12 sm:col-span-6 gap-2'>
         <h2 className='flex justify-start items-center gap-5 md:gap-10'>
           <span className='font-semibold text-lg md:text-xl'>Bespoke</span>
           <span>
-            <CheckIcon className='w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 stroke-secondary' />
+            <CheckIcon className='w-8 h-8 hover:w-10 hover:h-10 transition-all duration-200 sm:w-10 sm:h-10 md:w-12 md:h-12 sm:hover:w-14 sm:hover:h-14 stroke-secondary' />
           </span>
         </h2>
         <h1 className='text-xl md:text-2xl font-bold mt-3'>
@@ -98,10 +98,10 @@ const Features3 = () => {
       </div>
 
       <div className='col-span-12 sm:col-span-6 relative w-full'>
-        <div className='bg-secondary mx-auto w-2/3 sm:w-5/6 h-64 rounded-md'></div>
-        <div className='absolute top-2/4 w-1/2 left-[40%]'>
+        <div className='bg-secondary mx-auto w-2/3 sm:w-2/3 h-64 rounded-md'></div>
+        <div className='absolute top-2/4 w-1/2 left-1/2'>
           <div className='bg-secondary mx-auto w-full h-52 rounded-md shadow-2xl border border-black'></div>
-          <LoudIcon className='w-6 h-6 absolute -bottom-4 -right-4' />
+          <LoudIcon className='w-6 h-6  hover:w-8 hover:h-8 transition-all duration-200 absolute -bottom-4 -right-4' />
         </div>
       </div>
     </section>
@@ -110,8 +110,8 @@ const Features3 = () => {
 
 const Features4 = () => {
   return (
-    <section className='bg-primary text-center my-32 pb-36 relative'>
-      <WindIcon className='w-8 h-8 absolute -top-4 left-16' />
+    <section className='bg-primary text-center mt-32 pb-16 relative'>
+      <WindIcon className='w-8 h-8 absolute -top-4 left-16 hover:w-10 hover:h-10 transition-all duration-200' />
       <h2 className='text-xl md:text-4xl font-bold w-4/5 md:w-1/2 py-20 mx-auto'>
         Experience brand <span className='text-secondary'>designs </span>
         seamlessly sync with your
