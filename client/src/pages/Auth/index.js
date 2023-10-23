@@ -1,36 +1,51 @@
-// import { useLocation } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 // Image
 import Rlogo from "../../assets/images/Rlogo.png";
 import RIcon from "../../assets/images/R-light.png";
 // Icons
 import { ArrowIcon, GoogleIcon } from "../../assets/icons";
+// Hooks
+import useTitle from "../../hooks/useTitle";
+import { toast } from "react-toastify";
 
 const Auth = () => {
-  // const location = useLocation();
+  let [searchParams, setSearchParams] = useSearchParams({ signup: false });
+  const signup = searchParams.get("signup") === "true";
 
-  // console.log(location.pathname.slice(1));
-  const signup = true;
+  useTitle(signup ? "Sign-up" : "Login");
   return (
     <section id='auth' className={`${signup ? "h-full" : "h-screen"}`}>
       <nav className='flex justify-start items-center gap-3 bg-white/75 border-2 border-black'>
-        <div>
+        <Link to='/'>
           <img
             src={Rlogo}
             alt='Readiily'
             className='hidden sm:block sm:w-28 sm:h-16 md:w-36 md:h-20'
           />
           <img src={RIcon} alt='Readiily' className='sm:hidden w-16 h-16' />
-        </div>
+        </Link>
         <div className='border border-transparent border-l-black px-3 py-4'>
-          <span>Don’t have an account yet?</span>
-          <span className='text-orange mx-2'>Sign up</span>
+          <span>
+            {signup ? "Already have an account?" : "Don’t have an account yet?"}
+          </span>
+          <button
+            onClick={(e) => {
+              setSearchParams((prev) => {
+                prev.set("signup", signup ? false : true);
+                return prev;
+              });
+            }}
+            className='text-orange mx-2'
+          >
+            {signup ? "Sign In" : "Sign Up"}
+          </button>
         </div>
       </nav>
       <main className='bg-primary h-full pt-5'>
         <header className='text-center text-3xl font-bold'>
           {signup ? "Sign in to Readiily" : "Start designing with Readiily"}
         </header>
-        <div className='bg-white w-11/12 md:w-3/6 mx-auto rounded-md mt-5 p-4 border-2 border-black'>
+        <div className='bg-white w-11/12 sm:w-3/4 md:w-3/6 mx-auto rounded-md mt-5 p-4 border-2 border-black'>
           <button className='flex justify-center items-center gap-3 w-full sm:w-4/5 mx-auto px-3 py-2 border border-black shadow-md hover:shadow-xl rounded-md'>
             <GoogleIcon className='w-6 h-6' />
             <span>
@@ -77,7 +92,14 @@ const Auth = () => {
             )}
 
             <div className='w-full flex justify-end items-center'>
-              <button className='bg-primary2 px-2 py-3 rounded-md text-white flex justify-between items-center gap-2'>
+              <button
+                className='bg-primary2 px-2 py-3 rounded-md text-white flex justify-between items-center gap-2'
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  toast("Hello world ");
+                }}
+              >
                 <span>{signup ? "Sign in" : "Sign up"}</span>
                 <span>
                   <ArrowIcon className='w-6 h-6' />
@@ -88,9 +110,11 @@ const Auth = () => {
         </div>
         <footer className='gap-2 mt-2 flex justify-center items-center pb-20'>
           <h4>
-            {signup ? "Forgotten your password?" : "Already have an account?"}
+            {signup ? "Already have an account?" : "Forgotten your password?"}
           </h4>
-          <h3 className='text-orange'>{true ? "Reset it" : "Sign in"}</h3>
+          <Link to={signup ? "/auth" : "/"} className='text-orange'>
+            {signup ? "Sign in" : "Reset it"}
+          </Link>
         </footer>
       </main>
     </section>
