@@ -1,0 +1,4 @@
+/* ------------- SIDE NAV ------------- */
+ ul.side-opt .active {
+    @apply bg-sky-200 p-2 rounded-full scale-105;
+}
