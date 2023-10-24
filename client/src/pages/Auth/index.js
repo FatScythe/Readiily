@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 // Image
 import Rlogo from "../../assets/images/Rlogo.png";
 import RIcon from "../../assets/images/R-light.png";
@@ -11,11 +11,15 @@ import { toast } from "react-toastify";
 const Auth = () => {
   let [searchParams, setSearchParams] = useSearchParams({ signup: false });
   const signup = searchParams.get("signup") === "true";
+  const navigate = useNavigate();
 
   useTitle(signup ? "Sign-up" : "Login");
   return (
-    <section id='auth' className={`${signup ? "h-full" : "h-screen"}`}>
-      <nav className='flex justify-start items-center gap-3 bg-white/75 border-2 border-black'>
+    <section
+      id='auth'
+      className={`${signup ? "h-full" : "h-screen"} bg-white/75`}
+    >
+      <nav className='flex justify-between items-center gap-3 border-2 border-blue px-3'>
         <Link to='/'>
           <img
             src={Rlogo}
@@ -24,8 +28,8 @@ const Auth = () => {
           />
           <img src={RIcon} alt='Readiily' className='sm:hidden w-16 h-16' />
         </Link>
-        <div className='border border-transparent border-l-black px-3 py-4'>
-          <span>
+        <div>
+          <span className='text-blue'>
             {signup ? "Already have an account?" : "Don’t have an account yet?"}
           </span>
           <button
@@ -41,18 +45,18 @@ const Auth = () => {
           </button>
         </div>
       </nav>
-      <main className='bg-primary h-full pt-5'>
+      <main className='h-full pt-5 text-blue'>
         <header className='text-center text-3xl font-bold'>
           {signup ? "Sign in to Readiily" : "Start designing with Readiily"}
         </header>
-        <div className='bg-white w-11/12 sm:w-3/4 md:w-3/6 mx-auto rounded-md mt-5 p-4 border-2 border-black'>
+        <div className='w-11/12 sm:w-3/4 md:w-3/6 mx-auto rounded-md mt-5 px-4 py-10 border-2 border-blue'>
           <button className='flex justify-center items-center gap-3 w-full sm:w-4/5 mx-auto px-3 py-2 border border-black shadow-md hover:shadow-xl rounded-md'>
             <GoogleIcon className='w-6 h-6' />
             <span>
-              {signup ? "Sign in with Google" : "Sign up using Google"}
+              {signup ? "Sign up using Google" : "Sign in with Google"}
             </span>
           </button>
-          <form className='w-full sm:w-4/5 mt-8 mx-auto pt-4 border-2 border-transparent border-t-gray-400'>
+          <form className='w-full sm:w-4/5 mt-8 mx-auto pt-4 border-2 border-transparent border-t-gray-300'>
             {signup && (
               <div>
                 <label className='font-semibold'>Full name</label>
@@ -93,14 +97,15 @@ const Auth = () => {
 
             <div className='w-full flex justify-end items-center'>
               <button
-                className='bg-primary2 px-2 py-3 rounded-md text-white flex justify-between items-center gap-2'
+                className='bg-blue px-2 py-3 rounded-md text-white flex justify-between items-center gap-2'
                 onClick={(e) => {
                   e.preventDefault();
 
                   toast("Hello world ");
+                  navigate("/dashboard");
                 }}
               >
-                <span>{signup ? "Sign in" : "Sign up"}</span>
+                <span>{signup ? "Sign up" : "Sign in"}</span>
                 <span>
                   <ArrowIcon className='w-6 h-6' />
                 </span>
