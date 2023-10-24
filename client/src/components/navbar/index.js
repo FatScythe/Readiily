@@ -34,7 +34,7 @@ const Navbar = () => {
 
       <div
         onClick={() => setIsNavOpen(false)}
-        className={`block pt-40 text-center md:pt-0 text-white sm:text-black bg-black z-10 md:bg-transparent transition-all duration-700 fixed w-full ${
+        className={`block pt-40 text-center md:pt-0 text-white sm:text-blue bg-black z-10 md:bg-transparent transition-all duration-700 fixed w-full ${
           isNavOpen ? "right-0" : "-right-full"
         } top-0 bottom-0 md:static md:flex justify-between items-center basis-4/6`}
       >
@@ -62,7 +62,7 @@ const Navbar = () => {
           </Link>
           <Link
             to='/auth?signup=true'
-            className='font-semibold text-white text-xl sm:text-2xl md:text-sm bg-secondary px-3 py-2 rounded-md md:w-full hover:scale-105 transition-all duration-500'
+            className='font-semibold text-white text-xl sm:text-2xl md:text-sm bg-blue px-3 py-2 rounded-md md:w-full hover:scale-105 transition-all duration-500'
           >
             Get your first design!
           </Link>
