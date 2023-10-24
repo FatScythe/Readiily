@@ -4,7 +4,7 @@ import Hero from "./hero";
 
 const Header = () => {
   return (
-    <header id='hero' className='bg-primary md:ml-6 md:mt-3'>
+    <header id='hero'>
       <Navbar />
       <Hero />
     </header>

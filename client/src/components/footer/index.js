@@ -1,5 +1,6 @@
+import { useState } from "react";
 // Image
-import logo from "../../assets/images/Rlogo.png";
+import logo from "../../assets/images/R-White.png";
 // Icons
 import {
   FbIcon,
@@ -9,11 +10,10 @@ import {
   PhoneIcon,
   TwitterIcon,
 } from "../../assets/icons";
-import { useState } from "react";
 
 const Footer = () => {
   return (
-    <footer className='bg-black text-white'>
+    <footer className='bg-blue text-white'>
       <main className='container px-5 md:px-20 pt-5 pb-14 flex flex-col items-start gap-3 md:gap-5 md:flex-row justify-between'>
         <div className='contact flex flex-col justify-between items-start gap-5 mb-5 md:mb-0'>
           <img src={logo} alt='Readiily' className='w-30 h-20' />
