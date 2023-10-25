@@ -17,7 +17,7 @@ const DashboardHeader = ({ isSideOpen, setIsSideOpen }) => {
         />
       </button>
 
-      <nav className='flex justify-between items-center basis-full sm:basis-11/12 p-2 sm:border-2 shadow-sm'>
+      <nav className='flex justify-between items-center basis-full sm:basis-11/12 p-2 sm:border-2 shadow-md'>
         <Link to='/dashboard'>
           <img src={logo} alt='Readiily' className='w-8 h-10' />
         </Link>
