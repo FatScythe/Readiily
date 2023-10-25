@@ -11,6 +11,7 @@ module.exports = {
         secondary: "#8A0080",
         orange: "#FF3D00",
         blue: "#000060",
+        lightpink: "#F9F6F8",
       },
     },
   },
