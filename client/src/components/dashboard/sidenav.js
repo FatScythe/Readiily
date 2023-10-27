@@ -8,7 +8,7 @@ import links from "../../assets/links/dashlinks";
 const DashboardSideNav = ({ isSideOpen, setIsSideOpen }) => {
   return (
     <nav
-      className='hidden sm:block col-span-1 w-full h-full overflow-y-hidden'
+      className='hidden sm:block col-span-1 w-full h-full overflow-y-hidden z-30'
       onMouseEnter={() => setIsSideOpen(true)}
       onMouseLeave={() => setIsSideOpen(false)}
     >
