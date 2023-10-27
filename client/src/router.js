@@ -8,6 +8,7 @@ import { createBrowserRouter } from "react-router-dom";
 // User pages
 import Overview from "./pages/Dashboard/pages/user/home";
 import Account from "./pages/Dashboard/pages/user/account";
+import Ideate from "./pages/Dashboard/pages/user/ideate";
 import Calendar from "./pages/Dashboard/pages/user/calendar";
 // Designer pages
 import PendingRequest from "./pages/Dashboard/pages/designer/pending";
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "idea",
-        element: <h1 className='text-center text-2xl mt-10'>Coming soon!!!</h1>,
+        element: <Ideate />,
       },
       {
         path: "account",
