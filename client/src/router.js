@@ -19,6 +19,14 @@ import AllRequest from "./pages/Dashboard/pages/admin/request";
 import Payments from "./pages/Dashboard/pages/admin/payments";
 import Tickets from "./pages/Dashboard/pages/admin/tickets";
 import Designs from "./pages/Dashboard/pages/admin/designs";
+// User SubPages
+import Brand from "./pages/Dashboard/pages/user/account/pages/brand";
+import CreateBrand from "./pages/Dashboard/pages/user/account/pages/brand/create";
+import BrandManage from "./pages/Dashboard/pages/user/account/pages/brand/manage";
+import Wallet from "./pages/Dashboard/pages/user/account/pages/wallet";
+import Support from "./pages/Dashboard/pages/user/account/pages/support";
+import MyTickets from "./pages/Dashboard/pages/user/account/pages/support/tickets";
+import NewTicket from "./pages/Dashboard/pages/user/account/pages/support/newticket";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +57,40 @@ export const router = createBrowserRouter([
       {
         path: "account",
         element: <Account />,
+        children: [
+          {
+            path: "brand",
+            element: <Brand />,
+            children: [
+              {
+                path: "create",
+                element: <CreateBrand />,
+              },
+              {
+                path: "manage",
+                element: <BrandManage />,
+              },
+            ],
+          },
+          {
+            path: "wallet",
+            element: <Wallet />,
+          },
+          {
+            path: "ticket",
+            element: <Support />,
+            children: [
+              {
+                path: "tickets",
+                element: <MyTickets />,
+              },
+              {
+                path: "new",
+                element: <NewTicket />,
+              },
+            ],
+          },
+        ],
       },
       {
         path: "designer",
