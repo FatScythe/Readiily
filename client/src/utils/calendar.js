@@ -9,8 +9,8 @@ export const generateDate = (
 
   const arrayOfDate = [];
   // Preceding Dates of Month
-  for (let i = 0; firstDateOfMonth.day(); i++) {
-    arrayOfDate.push({ date: firstDateOfMonth.date(i), isCurrentMonth: false });
+  for (let i = 0; i < firstDateOfMonth.day(); i++) {
+    arrayOfDate.push({ date: firstDateOfMonth.day(i), isCurrentMonth: false });
   }
 
   // Current Dates of Month
