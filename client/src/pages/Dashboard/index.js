@@ -24,7 +24,7 @@ const Dashboard = () => {
           setIsSideOpen={setIsSideOpen}
         />
         <DashboardBotNav />
-        <div className='col-span-12 sm:col-span-11 sm:h-full sm:pb-28 sm:overflow-y-scroll'>
+        <div className='col-span-12 sm:col-span-11 h-full sm:pb-28 sm:overflow-y-scroll'>
           <DashboardMain />
         </div>
       </main>
