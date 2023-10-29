@@ -7,7 +7,7 @@ const Account = () => {
   return (
     <section id='account'>
       <Navigate to='/dashboard/account/brand' />
-      <nav className='shadow-2xl bg-lightpink px-2 py-5 m-2 sm:m-4'>
+      <nav className='shadow-2xl bg-lightpink px-2 pt-6 pb-2 m-2 sm:m-4'>
         <ul className='flex justify-start items-center text-blue gap-5 sm:gap-8'>
           <NavLink to='/dashboard/account/brand' className='relative'>
             <li className='text-xl sm:text-2xl'>Brands</li>
@@ -26,7 +26,7 @@ const Account = () => {
         </ul>
       </nav>
 
-      <main>
+      <main className='mb-40'>
         <Outlet />
       </main>
     </section>
