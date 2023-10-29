@@ -12,7 +12,9 @@ const Brand = () => {
           </NavLink>
 
           <NavLink to='/dashboard/account/brand/manage' className='relative'>
-            <li className='text-lg sm:text-2xl text-secondary'>Mange Brands</li>
+            <li className='text-lg sm:text-2xl text-secondary'>
+              Manage Brands
+            </li>
             <p className='absolute -bottom-2 w-0 h-1 bg-gradient-to-r from-red-500 to-green-500'></p>
           </NavLink>
         </ul>
