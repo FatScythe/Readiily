@@ -1,5 +1,5 @@
 // Pages
-import Homepage from "./pages/Home";
+import Homepage from "./pages/HomePage";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import HomeDash from "./pages/Dashboard/pages/all";
