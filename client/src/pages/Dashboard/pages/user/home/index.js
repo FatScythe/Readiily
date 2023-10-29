@@ -4,7 +4,7 @@ import useTitle from "../../../../../hooks/useTitle";
 const UserHome = () => {
   useTitle("Overview");
   return (
-    <section>
+    <section className='mb-20'>
       <div className='p-2 sm:p-3 md:p-4 w-full sm:w-11/12 mx-auto flex flex-col justify-start gap-4 items-center'>
         <h2 className='text-blue text-xl sm:text-3xl md:text-4xl font-semibold md:font-bold text-center'>
           Welcome, Ayomide
