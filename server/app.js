@@ -17,6 +17,7 @@ const notFoundMW = require("./middlewares/not-found");
 app.get("/health-check", (req, res) => {
   res.status(200).json({ msg: "OK" });
 });
+app.use("/api/v1/auth", require("./routes/authRoutes"));
 
 app.use(errorMW);
 app.use(notFoundMW);
