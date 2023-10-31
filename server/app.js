@@ -4,9 +4,11 @@ const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
