@@ -33,7 +33,6 @@ const AccountSchema = new Schema(
       type: String,
       enum: ["user", "designer", "admin"],
       default: "user",
-      required: [true, "Please provide role"],
     },
     authType: {
       type: String,
@@ -57,4 +56,4 @@ AccountSchema.methods.comparePassword = async function (candidatePwd) {
   return isMatch;
 };
 
-module.exports = model("Users", AccountSchema);
+module.exports = model("Accounts", AccountSchema);
