@@ -1,12 +1,16 @@
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 // Image
 import Rlogo from "../../assets/images/Rlogo.png";
 import RIcon from "../../assets/images/R-light.png";
 // Icons
 import { ArrowIcon, GoogleIcon } from "../../assets/icons";
+// Toastify
+import { toast } from "react-toastify";
 // Hooks
 import useTitle from "../../hooks/useTitle";
-import { toast } from "react-toastify";
+// Utils
+import url from "../../utils/url";
 
 const Auth = () => {
   let [searchParams, setSearchParams] = useSearchParams({ signup: false });
@@ -14,6 +18,41 @@ const Auth = () => {
   const navigate = useNavigate();
 
   useTitle(signup ? "Sign-up" : "Login");
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cpassword: "",
+  });
+
+  const handleAuth = async (e) => {
+    try {
+      e.preventDefault();
+      const { name, email, password, cpassword } = form;
+      if (!email || !password) {
+        toast.info("Please provide email and password!");
+        return;
+      }
+
+      if (signup && cpassword !== password) {
+        toast.info("Passwords do not match");
+      }
+
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/todos/1"
+      );
+
+      console.log(response, "here");
+
+      const data = await response.json();
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section
       id='auth'
@@ -56,13 +95,18 @@ const Auth = () => {
               {signup ? "Sign up using Google" : "Sign in with Google"}
             </span>
           </button>
-          <form className='w-full sm:w-4/5 mt-8 mx-auto pt-4 border-2 border-transparent border-t-gray-300'>
+          <form
+            className='w-full sm:w-4/5 mt-8 mx-auto pt-4 border-2 border-transparent border-t-gray-300'
+            onSubmit={handleAuth}
+          >
             {signup && (
               <div>
                 <label className='font-semibold'>Full name</label>
                 <input
                   type='text'
                   placeholder='Enter your full name'
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
                   className='block border border-black outline-none p-2 w-full rounded-lg my-4'
                 />
               </div>
@@ -72,6 +116,8 @@ const Auth = () => {
               <input
                 type='text'
                 placeholder='Enter your email'
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className='block border border-black outline-none p-2 w-full rounded-lg my-4'
               />
             </div>
@@ -80,6 +126,8 @@ const Auth = () => {
               <input
                 type='password'
                 placeholder='Enter your password'
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
                 className='block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-yellow-500'
               />
             </div>
@@ -90,21 +138,17 @@ const Auth = () => {
                 <input
                   type='password'
                   placeholder='Confirm your password'
+                  value={form.cpassword}
+                  onChange={(e) =>
+                    setForm({ ...form, cpassword: e.target.value })
+                  }
                   className='block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-green-600'
                 />
               </div>
             )}
 
             <div className='w-full flex justify-end items-center'>
-              <button
-                className='bg-blue px-2 py-3 rounded-md text-white flex justify-between items-center gap-2'
-                onClick={(e) => {
-                  e.preventDefault();
-
-                  toast("Hello world ");
-                  navigate("/dashboard");
-                }}
-              >
+              <button className='bg-blue px-2 py-3 rounded-md text-white flex justify-between items-center gap-2'>
                 <span>{signup ? "Sign up" : "Sign in"}</span>
                 <span>
                   <ArrowIcon className='w-6 h-6' />
