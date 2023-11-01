@@ -1,6 +1,9 @@
 require("express-async-errors");
 require("dotenv").config();
 const express = require("express");
+const passport = require("passport");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const path = require("path");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
@@ -8,10 +11,20 @@ const cors = require("cors");
 
 const app = express();
 
+app.set("trust proxy", 1);
 app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+  })
+);
+app.use(passport.session());
 
 const errorMW = require("./middlewares/error-handler");
 const notFoundMW = require("./middlewares/not-found");

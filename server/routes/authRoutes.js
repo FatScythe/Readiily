@@ -1,7 +1,21 @@
 const router = require("express").Router();
-const { register, login } = require("../controller/authCtrl");
+const { register, login } = require("../controller/authPwdCtrl");
+const passport = require("../passport/passportLocal");
 
 router.post("/register/password", register);
-router.post("/login/password", login);
+
+passport.serializeUser(function (user, cb) {
+  process.nextTick(function () {
+    cb(null, { user });
+  });
+});
+
+passport.deserializeUser(function (user, cb) {
+  process.nextTick(function () {
+    return cb(null, user);
+  });
+});
+
+router.post("/login/password", passport.authenticate("local"), login);
 
 module.exports = router;
