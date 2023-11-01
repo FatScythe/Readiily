@@ -1,4 +1,4 @@
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 // Image
 import Rlogo from "../../assets/images/Rlogo.png";
@@ -15,7 +15,7 @@ import url from "../../utils/url";
 const Auth = () => {
   let [searchParams, setSearchParams] = useSearchParams({ signup: false });
   const signup = searchParams.get("signup") === "true";
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useTitle(signup ? "Sign-up" : "Login");
 
@@ -39,14 +39,15 @@ const Auth = () => {
         toast.info("Passwords do not match");
       }
 
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos/1"
-      );
-
-      console.log(response, "here");
+      const response = await fetch(url + "/api/v1/auth/login/password", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name, username: email, password }),
+      });
 
       const data = await response.json();
 
+      console.log(response);
       console.log(data);
     } catch (error) {
       console.log(error);
