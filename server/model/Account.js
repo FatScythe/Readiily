@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const AccountSchema = new Schema(
@@ -26,14 +26,21 @@ const AccountSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, "Please provide password"],
-      minLength: [6, "Password cannot be less than 6 characters"],
     },
     role: {
       type: String,
       enum: ["user", "designer", "admin"],
       default: "user",
     },
+    referral: {
+      type: Types.ObjectId,
+      ref: "Accounts",
+    },
+    refarralClaim: {
+      type: Boolean,
+      default: false,
+    },
+    googleId: String,
     authType: {
       type: String,
       enum: ["email", "google"],
