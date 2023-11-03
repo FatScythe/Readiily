@@ -26,6 +26,10 @@ const Auth = () => {
     cpassword: "",
   });
 
+  const handleGoogleAuth = () => {
+    window.open("http://localhost:5000/api/v1/auth/login/google", "_self");
+  };
+
   const handleAuth = async (e) => {
     try {
       e.preventDefault();
@@ -90,7 +94,10 @@ const Auth = () => {
           {signup ? "Sign in to Readiily" : "Start designing with Readiily"}
         </header>
         <div className='w-11/12 sm:w-3/4 md:w-3/6 mx-auto rounded-md mt-5 px-4 py-10 border-2 border-blue'>
-          <button className='flex justify-center items-center gap-3 w-full sm:w-4/5 mx-auto px-3 py-2 border border-black shadow-md hover:shadow-xl rounded-md'>
+          <button
+            onClick={handleGoogleAuth}
+            className='flex justify-center items-center gap-3 w-full sm:w-4/5 mx-auto px-3 py-2 border border-black shadow-md hover:shadow-xl rounded-md'
+          >
             <GoogleIcon className='w-6 h-6' />
             <span>
               {signup ? "Sign up using Google" : "Sign in with Google"}
