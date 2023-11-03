@@ -1,21 +1,28 @@
 require("express-async-errors");
 require("dotenv").config();
+require("https").globalAgent.options.rejectUnauthorized = false; // GoogleAuth
 const express = require("express");
 const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const path = require("path");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
 
+// Middlewares
+const errorMW = require("./middlewares/error-handler");
+const notFoundMW = require("./middlewares/not-found");
+
+app.use(express.static(path.join(__dirname, "public")));
 app.set("trust proxy", 1);
 app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(cookieParser(process.env.JWT_SECRET));
 app.use(
   session({
     secret: "keyboard cat",
@@ -26,13 +33,16 @@ app.use(
 );
 app.use(passport.session());
 
-const errorMW = require("./middlewares/error-handler");
-const notFoundMW = require("./middlewares/not-found");
+app.use("/api/v1/auth", require("./routes/authRoutes"));
+app.use("/api/v1/account", require("./routes/accountRoutes"));
 
 app.get("/health-check", (req, res) => {
-  res.status(200).json({ msg: "OK" });
+  res.status(200).json({ msg: "Everything looks good" });
 });
-app.use("/api/v1/auth", require("./routes/authRoutes"));
+
+app.get("*", async (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "build", "index.html"));
+});
 
 app.use(errorMW);
 app.use(notFoundMW);
