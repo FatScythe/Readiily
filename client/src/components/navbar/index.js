@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   return (
     <nav className='flex justify-between items-center container relative py-3 md:pt-0'>
-      <div className='flex w-full fixed top-1 md:static md:w-fit md:block justify-between items-center z-30'>
+      <div className='flex w-full absolute top-1 md:static md:w-fit md:block justify-between items-center z-30'>
         <Link to='/' className='basis-1/3'>
           <img
             src={logo}
