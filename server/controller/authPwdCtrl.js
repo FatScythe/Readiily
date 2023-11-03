@@ -1,16 +1,16 @@
 const Account = require("../model/Account");
 const { BadRequestError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
-// var passport = require("passport");
-// var LocalStrategy = require("passport-local");
-// const crypto = require("crypto");
-// const passport = require("../passport/passportLocal.js");
+const { attachCookieToResponse } = require("../utils/jwt");
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
     throw new BadRequestError("Please fill all fields");
+  }
+  if (password.length < 6) {
+    throw new BadRequestError("Password should be minimum of 6 character");
   }
   const isFirstAccount = (await Account.countDocuments({})) === 0;
   const role = isFirstAccount ? "admin" : "user";
@@ -26,7 +26,26 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  res.send(req.session);
+  const { password } = req.body;
+
+  if (!password) {
+    throw new BadRequestError("Please provide password");
+  }
+  if (password.length < 6) {
+    throw new BadRequestError("Password should be minimum of 6 character");
+  }
+
+  attachCookieToResponse(res, req.user);
+  res.status(StatusCodes.OK).json(req.user);
 };
 
-module.exports = { register, login };
+const logout = async (req, res) => {
+  res.cookie("token", "logout", {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  req.session.destroy();
+  res.status(StatusCodes.OK).json({ msg: "Logged Out Sucessfully" });
+};
+
+module.exports = { register, login, logout };

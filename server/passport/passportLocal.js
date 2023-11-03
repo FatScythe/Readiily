@@ -1,29 +1,37 @@
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
 var Account = require("../model/Account");
+const { BadRequestError, NotFoundError } = require("../errors");
 
 module.exports = passport.use(
   new LocalStrategy(async function verify(username, password, cb) {
     try {
-      const user = await Account.findOne({ email: username });
-      console.log(user);
-      if (!user) {
-        return cb(null, false, {
-          message: "Incorrect credentials",
-        });
+      const account = await Account.findOne({ email: username });
+      if (account && account.authType !== "email") {
+        throw new BadRequestError("Account was not created with password");
+      }
+      if (!account) {
+        throw new NotFoundError("Invalid Credentials");
       }
 
-      const isPasswordCorrect = await user.comparePassword(password);
+      const isPasswordCorrect = await account.comparePassword(password);
       if (!isPasswordCorrect) {
+        // throw new BadRequestError("Invalid Credentials");
         return cb(null, false, {
           message: "Invalid Credentials.",
         });
       }
 
-      return cb(null, user);
+      return cb(null, {
+        userId: account._id,
+        name: account.name,
+        email: account.email,
+        avatar: account.avatar,
+        role: account.role,
+      });
     } catch (error) {
       console.log(error);
-      cb(error);
+      return cb(error);
     }
   })
 );
