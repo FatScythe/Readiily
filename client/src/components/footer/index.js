@@ -3,6 +3,7 @@ import { useState } from "react";
 import logo from "../../assets/images/R-White.png";
 // Icons
 import {
+  ChevronUp,
   FbIcon,
   InstaIcon,
   LInIcon,
@@ -55,13 +56,19 @@ export default Footer;
 const Accordian1 = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className='w-full md:w-fit md:mt-14 hover:border-y border-x-0 border-y-gray-400 cursor-pointer'>
+    <div className='w-full md:w-fit md:mt-14 hover:border-y sm:hover:border-y-0 border-x-0 border-y-gray-400 cursor-pointer'>
       <h1
         className='text-lg md:text-xl font-semibold mb-2 flex w-full md:w-fit md:block justify-between items-center'
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>Company</span>
-        <span className='md:hidden'>{isOpen ? "-" : "+"}</span>
+        <span className='md:hidden'>
+          <ChevronUp
+            className={`w-6 h-6 stroke-white stroke-2 transition-all duration-300 ${
+              isOpen ? "" : "rotate-180"
+            }`}
+          />
+        </span>
       </h1>
       <ul
         className={`flex overflow-hidden ${
@@ -79,13 +86,19 @@ const Accordian1 = () => {
 const Accordian2 = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className='w-full md:w-fit md:mt-14 hover:border-y border-x-0 border-y-gray-400 cursor-pointer'>
+    <div className='w-full md:w-fit md:mt-14 hover:border-y sm:hover:border-y-0 border-x-0 border-y-gray-400 cursor-pointer'>
       <h1
         className='text-lg md:text-xl font-semibold mb-2 flex w-full md:w-fit md:block justify-between items-center'
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>Account</span>
-        <span className='md:hidden'>{isOpen ? "-" : "+"}</span>
+        <span className='md:hidden'>
+          <ChevronUp
+            className={`w-6 h-6 stroke-white stroke-2 transition-all duration-300 ${
+              isOpen ? "" : "rotate-180"
+            }`}
+          />
+        </span>
       </h1>
       <ul
         className={`flex overflow-hidden ${
@@ -103,13 +116,19 @@ const Accordian2 = () => {
 const Accordian3 = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className='w-full md:w-fit md:mt-14 hover:border-y border-x-0 border-y-gray-400 cursor-pointer'>
+    <div className='w-full md:w-fit md:mt-14 hover:border-y sm:hover:border-y-0 border-x-0 border-y-gray-400 cursor-pointer'>
       <h1
         className='text-lg md:text-xl font-semibold mb-2 flex w-full md:w-fit md:block justify-between items-center'
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>Legal</span>
-        <span className='md:hidden'>{isOpen ? "-" : "+"}</span>
+        <span className='md:hidden'>
+          <ChevronUp
+            className={`w-6 h-6 stroke-white stroke-2 transition-all duration-300 ${
+              isOpen ? "" : "rotate-180"
+            }`}
+          />
+        </span>
       </h1>
       <ul
         className={`flex overflow-hidden ${
