@@ -4,7 +4,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import HomeDash from "./pages/Dashboard/pages/all";
 // Router
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 // User pages
 import Overview from "./pages/Dashboard/pages/user/home";
 import Account from "./pages/Dashboard/pages/user/account";
@@ -63,6 +63,10 @@ export const router = createBrowserRouter([
             element: <Brand />,
             children: [
               {
+                path: "",
+                element: <Navigate to='/dashboard/account/brand/create' />,
+              },
+              {
                 path: "create",
                 element: <CreateBrand />,
               },
@@ -80,6 +84,10 @@ export const router = createBrowserRouter([
             path: "ticket",
             element: <Support />,
             children: [
+              {
+                path: "",
+                element: <Navigate to='/dashboard/account/ticket/tickets' />,
+              },
               {
                 path: "tickets",
                 element: <MyTickets />,
