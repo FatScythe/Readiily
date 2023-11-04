@@ -4,7 +4,7 @@ import Header from "../../components/header";
 import Features from "../../components/features";
 import Cta from "../../components/cta";
 import Footer from "../../components/footer";
-import { ArrowUpIcon } from "../../assets/icons";
+import { ChevronUp } from "../../assets/icons";
 
 const Homepage = () => {
   const [show, setShow] = useState(false);
@@ -28,10 +28,10 @@ const Homepage = () => {
       <a
         className={`fixed ${
           show ? "bottom-10" : "-bottom-20"
-        } right-4 bg-black transition-all duration-500 text-white rounded-full p-4`}
+        } right-4 bg-black transition-all duration-500 text-white rounded-full p-4 sm:p-6`}
         href='#hero'
       >
-        <ArrowUpIcon className='w-6 h-6 stroke-white' />
+        <ChevronUp className='w-6 h-6 sm:w-8 sm:h-8 stroke-white stroke-[4]' />
       </a>
     </main>
   );
