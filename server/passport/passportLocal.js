@@ -16,10 +16,7 @@ module.exports = passport.use(
 
       const isPasswordCorrect = await account.comparePassword(password);
       if (!isPasswordCorrect) {
-        // throw new BadRequestError("Invalid Credentials");
-        return cb(null, false, {
-          message: "Invalid Credentials.",
-        });
+        throw new BadRequestError("Invalid Credentials");
       }
 
       return cb(null, {
