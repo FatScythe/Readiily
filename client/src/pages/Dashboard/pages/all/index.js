@@ -1,11 +1,17 @@
 import { Navigate } from "react-router-dom";
+// Redux
+import { useSelector } from "react-redux";
 
-const HomeDash = () => {
+const HomeDash = ({ role }) => {
+  const { account } = useSelector((store) => store.auth);
+  if (!account) {
+    return <Navigate to='/' />;
+  }
   return (
     <section>
-      {true && <Navigate to='user' />}
-      {false && <Navigate to='designer' />}
-      {false && <Navigate to='admin' />}
+      {account.role === "user" && <Navigate to='user' />}
+      {account.role === "admin" && <Navigate to='designer' />}
+      {account.role === "admin" && <Navigate to='admin' />}
     </section>
   );
 };

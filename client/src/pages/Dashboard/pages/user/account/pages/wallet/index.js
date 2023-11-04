@@ -1,5 +1,13 @@
+// Components
+import { Card, Referral } from "./walletComp";
+
 const Wallet = () => {
-  return <div>My Wallet</div>;
+  return (
+    <section className='m-3'>
+      <Card />
+      <Referral />
+    </section>
+  );
 };
 
 export default Wallet;

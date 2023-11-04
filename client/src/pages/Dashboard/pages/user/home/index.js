@@ -15,7 +15,7 @@ const UserHome = () => {
             <span>1</span> <span>Brands</span>
           </div>
           <div className='bg-white/90 w-full sm:w-3/4 gap-1 sm:gap-3 shadow-md hover:shadow-lg text-blue py-10 px-8 h-full rounded-md text-xl flex flex-col justify-between items-center'>
-            <span>My</span> <span>Subscription</span>
+            <span>My</span> <span>Wallet</span>
           </div>
           <div className='bg-white/90 w-full sm:w-3/4 gap-1 sm:gap-3 shadow-md hover:shadow-lg text-blue py-10 px-8 h-full rounded-md text-xl flex flex-col justify-between items-center'>
             <span>0</span>

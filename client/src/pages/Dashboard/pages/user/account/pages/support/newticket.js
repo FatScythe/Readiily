@@ -32,13 +32,15 @@ const NewTicket = () => {
             htmlFor='attachment'
             className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2'
           >
-            <div className='border border-black rounded-md basis-full w-full sm:basis-4/5 p-3'>
-              <span className='font-semibold text-xl p-4'>Select File</span>
-              <span className='border border-l-black border-transparent rounded-md text-xl p-4'>
+            <div className='border border-black rounded-md basis-full w-full sm:basis-4/5 p-0.5 sm:p-3'>
+              <span className='font-semibold text-sm sm:text-xl p-4'>
+                Select File
+              </span>
+              <span className='border border-l-black border-transparent rounded-md text-sm sm:text-xl p-1 sm:p-4'>
                 No files selected
               </span>
             </div>
-            <button className='bg-blue text-white text-xl px-4 py-3 rounded-md flex justify-start items-center gap-2 sm:basis-1/5'>
+            <button className='bg-blue text-white text-sm sm:text-xl px-4 py-3 rounded-md flex justify-start items-center gap-2 sm:basis-1/5'>
               <PlusIcon className='w-6 h-6' />
               <span>Add More</span>
             </button>
@@ -50,7 +52,7 @@ const NewTicket = () => {
             className='hidden'
           />
 
-          <p className='text-xl my-5'>
+          <p className='sm:text-xl my-5'>
             Allowed File Extensions: .jpg, .gif, .png, .pdf, (Max file size:
             10MB)
           </p>

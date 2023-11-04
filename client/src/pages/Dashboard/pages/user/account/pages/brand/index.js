@@ -1,9 +1,8 @@
-import { Outlet, NavLink, Navigate } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 
 const Brand = () => {
   return (
     <div>
-      <Navigate to='/dashboard/account/brand/create' />
       <header className='px-2 py-5 m-2 sm:m-4'>
         <ul className='flex justify-start items-center text-blue gap-5 sm:gap-8'>
           <NavLink to='/dashboard/account/brand/create' className='relative'>
