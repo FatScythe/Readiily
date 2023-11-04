@@ -5,7 +5,7 @@ import { ExitIcon } from "../../assets/icons";
 // Links
 import links from "../../assets/links/dashlinks";
 
-const DashboardSideNav = ({ isSideOpen, setIsSideOpen }) => {
+const DashboardSideNav = ({ isSideOpen, setIsSideOpen, role }) => {
   return (
     <nav
       className='hidden sm:block col-span-1 w-full h-full overflow-y-hidden z-30'
@@ -20,7 +20,7 @@ const DashboardSideNav = ({ isSideOpen, setIsSideOpen }) => {
         }`}
       >
         <ul className='side-opt flex flex-col justify-between items-center gap-5'>
-          {links.user.map((link) => {
+          {links[role].map((link) => {
             return (
               <NavLink
                 to={link.to}

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/R-light.png";
 // Icon
 import { HamburgerIcon, ExitIcon, BellIcon } from "../../assets/icons";
-const DashboardHeader = ({ isSideOpen, setIsSideOpen }) => {
+const DashboardHeader = ({ isSideOpen, setIsSideOpen, role }) => {
   return (
     <header className='flex justify-between items-center'>
       <button
@@ -23,9 +23,9 @@ const DashboardHeader = ({ isSideOpen, setIsSideOpen }) => {
         </Link>
 
         <div className='flex justify-between items-center'>
-          {true && <UserHeader />}
-          {false && <DesignerHeader />}
-          {false && <AdminHeader />}
+          {role === "user" && <UserHeader />}
+          {role === "designer" && <DesignerHeader />}
+          {role === "admin" && <AdminHeader />}
           <button className='sm:hidden mx-4'>
             <ExitIcon className='w-6 h-6' />
           </button>
@@ -51,7 +51,7 @@ const UserHeader = () => {
   if (currentLocation === "idea") {
     return <div className='mx-2'></div>;
   }
-  if (currentLocation === "account") {
+  if (currentLocation.startsWith("account")) {
     return (
       <div className='text-blue font-semibold sm:text-xl mx-2'>My Account</div>
     );
