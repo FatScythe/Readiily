@@ -37,7 +37,7 @@ router.get("/login/google", passportGoogle.authenticate("google"));
 router.get(
   "/oauth2/redirect/google",
   passportGoogle.authenticate("google", {
-    failureRedirect: "http://localhost:3000/auth",
+    failureRedirect: process.env.DOMAIN + "auth",
   }),
   googleLogin
 );
