@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 // Images
 import logo from "../../assets/images/Rlogo.png";
 import icon from "../../assets/images/R-light.png";
+// Redux
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { account } = useSelector((store) => store.auth);
   return (
     <nav className='flex justify-between items-center container relative py-3 md:pt-0'>
       <div className='flex w-full absolute top-1 md:static md:w-fit md:block justify-between items-center z-30'>
@@ -54,18 +57,37 @@ const Navbar = () => {
         </ul>
 
         <div className='flex flex-col pt-10 md:pt-0 gap-10 md:flex-row justify-end items-center md:gap-0 basis-1/2'>
-          <Link
-            to='/auth'
-            className='block w-fit mx-auto md:w-full md:inline-block text-xl sm:text-2xl md:text-base font-semibold hover:text-orange transition-colors duration-500'
-          >
-            Log in
-          </Link>
-          <Link
-            to='/auth?signup=true'
-            className='font-semibold text-white text-xl sm:text-2xl md:text-sm bg-blue px-3 py-2 rounded-md md:w-full hover:scale-105 transition-all duration-500'
-          >
-            Get your first design!
-          </Link>
+          {!account ? (
+            <>
+              <Link
+                to='/auth'
+                className='block w-fit mx-auto md:w-full md:inline-block text-xl sm:text-2xl md:text-base font-semibold hover:text-orange transition-colors duration-500'
+              >
+                Log in
+              </Link>
+              <Link
+                to='/auth?signup=true'
+                className='font-semibold text-white text-xl sm:text-2xl md:text-sm bg-blue px-3 py-2 rounded-md md:w-full hover:scale-105 transition-all duration-500'
+              >
+                Get your first design!
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to='/auth'
+                className='block invisible w-fit mx-auto md:w-full md:inline-block text-xl sm:text-2xl md:text-base font-semibold hover:text-orange transition-colors duration-500'
+              >
+                Log in
+              </Link>
+              <Link
+                to='/dashboard'
+                className='font-semibold text-white text-xl sm:text-2xl md:text-sm bg-sky-700 px-3 py-2 rounded-md md:w-full hover:scale-105 transition-all duration-500'
+              >
+                Dashboard
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>
