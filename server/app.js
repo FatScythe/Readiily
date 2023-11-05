@@ -17,7 +17,8 @@ const app = express();
 const errorMW = require("./middlewares/error-handler");
 const notFoundMW = require("./middlewares/not-found");
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use("/", express.static(path.join(__dirname, "public", "build")));
+app.use("/public", express.static(path.join(__dirname, "public")));
 app.set("trust proxy", 1);
 app.use(cors());
 app.use(morgan("tiny"));
