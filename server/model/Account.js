@@ -22,7 +22,7 @@ const AccountSchema = new Schema(
     },
     avatar: {
       type: String,
-      default: "/images/avatar.png",
+      default: "/public/images/avatar.png",
     },
     password: {
       type: String,
