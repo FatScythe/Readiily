@@ -1,8 +1,12 @@
+const { StatusCodes } = require("http-status-codes");
 const { attachCookieToResponse } = require("../utils/jwt");
 
 const googleLogin = async (req, res) => {
   attachCookieToResponse(res, req.user);
-  res.redirect("http://localhost:3000/dashboard");
+  const { name, email, avatar, role, userId } = req.user;
+  res.redirect(
+    `${process.env.DOMAIN}google?name=${name}&email=${email}&avatar=${avatar}&role=${role}&userId=${userId}`
+  );
 };
 
 module.exports = { googleLogin };
