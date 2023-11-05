@@ -1,6 +1,7 @@
 // Pages
 import Homepage from "./pages/HomePage";
 import Auth from "./pages/Auth";
+import GoogleRedirect from "./pages/Auth/google";
 import Dashboard from "./pages/Dashboard";
 import HomeDash from "./pages/Dashboard/pages/all";
 // Router
@@ -27,6 +28,8 @@ import Wallet from "./pages/Dashboard/pages/user/account/pages/wallet";
 import Support from "./pages/Dashboard/pages/user/account/pages/support";
 import MyTickets from "./pages/Dashboard/pages/user/account/pages/support/tickets";
 import NewTicket from "./pages/Dashboard/pages/user/account/pages/support/newticket";
+// Component
+import Protected from "./components/protected/protected";
 
 export const router = createBrowserRouter([
   {
@@ -34,13 +37,22 @@ export const router = createBrowserRouter([
     element: <Homepage />,
   },
   { path: "/auth", element: <Auth /> },
+  { path: "/google", element: <GoogleRedirect /> },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <Protected>
+        <Dashboard />
+      </Protected>
+    ),
     children: [
       {
         path: "",
-        element: <HomeDash />,
+        element: (
+          <Protected>
+            <HomeDash />
+          </Protected>
+        ),
       },
       {
         path: "user",
