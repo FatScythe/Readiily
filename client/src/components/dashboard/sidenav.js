@@ -1,11 +1,17 @@
 import "./dashboard.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 // Icons
 import { ExitIcon } from "../../assets/icons";
 // Links
 import links from "../../assets/links/dashlinks";
+// Redux
+import { useDispatch } from "react-redux";
+import { logoutAccount } from "../../features/auth/authSlice";
 
 const DashboardSideNav = ({ isSideOpen, setIsSideOpen, role }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   return (
     <nav
       className='hidden sm:block col-span-1 w-full h-full overflow-y-hidden z-30'
@@ -37,7 +43,13 @@ const DashboardSideNav = ({ isSideOpen, setIsSideOpen, role }) => {
           })}
         </ul>
 
-        <button className='flex justify-start items-center gap-2 hover:bg-red-200 p-2 rounded-full'>
+        <button
+          onClick={() => {
+            dispatch(logoutAccount());
+            navigate("/");
+          }}
+          className='flex justify-start items-center gap-2 hover:bg-red-200 p-2 rounded-full'
+        >
           <ExitIcon className='sm:w-8 sm:h-8 md:w-10 md:h-10' />
           {isSideOpen && <p className='hidden sm:block'>Logout</p>}
         </button>
