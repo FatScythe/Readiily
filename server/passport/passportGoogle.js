@@ -17,9 +17,7 @@ module.exports = passport.use(
         account = await Account.findOne({ email: profile.emails[0].value });
 
         if (account && account.authType !== "google") {
-          return cb(null, false, {
-            message: "Email already exist",
-          });
+          throw new BadRequestError("Email already exist");
         }
 
         if (!account) {
@@ -40,10 +38,8 @@ module.exports = passport.use(
         };
 
         return cb(null, user);
-      } catch (error) {
-        console.log(error);
-
-        return cb(error);
+      } catch (err) {
+        return cb(err);
       }
     }
   )
