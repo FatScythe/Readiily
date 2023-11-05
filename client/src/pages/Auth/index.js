@@ -12,16 +12,15 @@ import {
 } from "../../assets/icons";
 // Redux
 import { useDispatch } from "react-redux";
-import { saveAccount } from "../../features/auth/authSlice";
+import { registerAccount, loginAccount } from "../../features/auth/authSlice";
 // Toastify
 import { toast } from "react-toastify";
 // Hooks
 import useTitle from "../../hooks/useTitle";
-// Utils
-import url from "../../utils/url";
 
 const Auth = () => {
   let [searchParams, setSearchParams] = useSearchParams({ signup: false });
+  const [showPwd, setShowPwd] = useState(false);
   const signup = searchParams.get("signup") === "true";
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -33,7 +32,6 @@ const Auth = () => {
     email: "",
     password: "",
     cpassword: "",
-    show: true,
   });
 
   const handleGoogleAuth = () => {
@@ -48,41 +46,32 @@ const Auth = () => {
         toast.info("Please provide email and password!");
         return;
       }
+
+      if (signup && !name) {
+        toast.info("Provide your full name");
+        return;
+      }
       if (signup && password.length < 8) {
         toast.info("Password too short");
         return;
       }
-
       if (signup && cpassword !== password) {
         toast.info("Passwords does not match");
         return;
       }
 
-      const response = await fetch(
-        url + `/api/v1/auth/${signup ? "register" : "login"}/password`,
-        {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ name, email, username: email, password }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        toast.error(data?.msg || "Something went wrong");
-        return;
+      if (signup) {
+        dispatch(registerAccount(form));
+      } else {
+        dispatch(loginAccount(form));
+        navigate("/dashboard");
       }
 
       if (signup) {
-        toast.success(data.msg);
         setSearchParams((prev) => {
           prev.set("signup", false);
           return prev;
         });
-      } else {
-        dispatch(saveAccount(data));
-        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -126,6 +115,7 @@ const Auth = () => {
         </header>
         <div className='w-11/12 sm:w-3/4 md:w-3/6 mx-auto rounded-md mt-5 px-4 py-10 border-2 border-blue'>
           <button
+            type='button'
             onClick={handleGoogleAuth}
             className='flex justify-center items-center gap-3 w-full sm:w-4/5 mx-auto px-3 py-2 border border-black shadow-md hover:shadow-xl rounded-md'
           >
@@ -172,7 +162,7 @@ const Auth = () => {
               <label className='font-semibold'>Password</label>
               <div className='relative'>
                 <input
-                  type={form.show ? "text" : "password"}
+                  type={showPwd ? "text" : "password"}
                   placeholder='Enter your password'
                   value={form.password}
                   onChange={(e) =>
@@ -182,11 +172,11 @@ const Auth = () => {
                   required
                 />
                 <button
-                  onClick={() => setForm({ ...form, show: !form.show })}
-                  className='absolute right-3 top-2
-absolute right-3 top-2'
+                  type='button'
+                  onClick={() => setShowPwd(!showPwd)}
+                  className='absolute right-3 top-2'
                 >
-                  {form.show ? (
+                  {showPwd ? (
                     <EyeCloseIcon className='w-6 h-6' />
                   ) : (
                     <EyeOpenIcon className='w-6 h-6' />
@@ -201,15 +191,28 @@ absolute right-3 top-2'
             {signup && (
               <div>
                 <label className='font-semibold'>Confirm Password</label>
-                <input
-                  type='password'
-                  placeholder='Confirm your password'
-                  value={form.cpassword}
-                  onChange={(e) =>
-                    setForm({ ...form, cpassword: e.target.value })
-                  }
-                  className='peer block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-green-600 focus:border-sky-600 focus:border-2'
-                />
+                <div className='relative'>
+                  <input
+                    type={showPwd ? "text" : "password"}
+                    placeholder='Confirm your password'
+                    value={form.cpassword}
+                    onChange={(e) =>
+                      setForm({ ...form, cpassword: e.target.value })
+                    }
+                    className='peer block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-green-600 focus:border-sky-600 focus:border-2'
+                  />
+                  <button
+                    type='button'
+                    onClick={() => setShowPwd(!showPwd)}
+                    className='absolute right-3 top-2'
+                  >
+                    {showPwd ? (
+                      <EyeCloseIcon className='w-6 h-6' />
+                    ) : (
+                      <EyeOpenIcon className='w-6 h-6' />
+                    )}
+                  </button>
+                </div>
                 <p className='mt-2 invisible peer-invalid:visible text-pink-600 text-sm'>
                   Please confirm password.
                 </p>
