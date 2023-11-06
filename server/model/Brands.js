@@ -1,5 +1,10 @@
 const { Schema, model, Types } = require("mongoose");
 
+const SocialSchema = new Schema({
+  media: String,
+  handle: String,
+});
+
 const BrandSchema = new Schema(
   {
     name: {
@@ -9,7 +14,7 @@ const BrandSchema = new Schema(
     color: [String],
     font: String,
     fontUrl: String,
-    socials: [String],
+    socials: [SocialSchema],
     website: String,
     logoDark: String,
     logoLight: String,
