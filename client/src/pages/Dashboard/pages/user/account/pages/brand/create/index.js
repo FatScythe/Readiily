@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 // Components
 import Color from "./color";
 import Website from "./website";
@@ -6,46 +6,13 @@ import Font from "./font";
 import Social from "./social";
 import { DarkBackground, LightBackground } from "./bkg";
 import Industry from "./industry";
-import Name from "./name";
-// Utils
-import { socials } from "./utils";
-// Toastify
-import { toast } from "react-toastify";
 
 const CreateBrand = () => {
-  const [form, setForm] = useState({
-    name: "",
-    colors: [],
-    font: "",
-    website: "",
-    fontFile: null,
-    customFont: false,
-    socials,
-    light: null,
-    dark: null,
-    industry: [],
-  });
-
-  console.log(form.dark);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { name, customFont, fontFile } = form;
-    if (!name) {
-      toast.warning("Please provide a brand name");
-      return;
-    }
-    if (customFont && !fontFile) {
-      toast.warning("Please provide custom font file");
-      return;
-    }
-    // const formData = new FormData();
-  };
+  const [form, setForm, handleSubmit] = useOutletContext();
 
   return (
     <div className='p-3' onSubmit={handleSubmit}>
       <form>
-        <Name form={form} setForm={setForm} />
         <main className='grid grid-cols-12 my-4 gap-3'>
           <Color form={form} setForm={setForm} />
           <Font form={form} setForm={setForm} />

@@ -1,4 +1,5 @@
 // Icons
+import { useState } from "react";
 import {
   UploadLogoIcon,
   CancelIcon,
@@ -7,6 +8,7 @@ import {
 import { toast } from "react-toastify";
 
 export const LightBackground = ({ form, setForm }) => {
+  const [inputKey, setInputKey] = useState("");
   const handleBkg = (e) => {
     const file = e.target.files[0];
 
@@ -21,17 +23,17 @@ export const LightBackground = ({ form, setForm }) => {
     <div className='flex flex-col justify-between items-stretch w-full h-40 rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-4 p-1 sm:p-2'>
       <h2 className='text-blue text-lg'>Logo for Light Background</h2>
       <div className='flex justify-between items-center outline-none border border-gray-400 rounded-md p-3 '>
-        <div className='basis-11/12 '>
+        <div className='basis-11/12 overflow-hidden'>
           <label
             htmlFor='upload-light'
             className='flex justify-between items-center'
           >
-            <p className='flex justify-between items-center gap-2'>
+            <p className='flex justify-start items-center gap-1'>
               <span className='bg-secondary/25 p-2 rounded-md'>
                 <UploadLogoIcon className='w-6 h-6' />
               </span>
               <span className='overflow-hidden text-ellipsis'>
-                {form.light?.name || "Upload"}
+                {form.light?.name.slice(0, 10) || "Upload"}
                 <span className='font-semibold text-blue ml-2'>
                   {form.light &&
                     (form.light?.size / (1024 * 1024)).toFixed(2) + "MB"}
@@ -41,6 +43,7 @@ export const LightBackground = ({ form, setForm }) => {
           </label>
           <input
             id='upload-light'
+            key={inputKey}
             onChange={handleBkg}
             type='file'
             accept='image/*'
@@ -52,7 +55,11 @@ export const LightBackground = ({ form, setForm }) => {
           {form.light && (
             <button
               type='button'
-              onClick={() => setForm({ ...form, light: null })}
+              onClick={(e) => {
+                let randomString = Math.random().toString(36);
+                setInputKey(randomString);
+                setForm({ ...form, light: null });
+              }}
             >
               <CancelIcon className='w-6 h-6 bg-secondary rounded-full p-0.5 font-bold text-white stroke-2' />
             </button>
@@ -64,6 +71,7 @@ export const LightBackground = ({ form, setForm }) => {
 };
 
 export const DarkBackground = ({ form, setForm }) => {
+  const [inputKey, setInputKey] = useState("");
   const handleBkg = (e) => {
     const file = e.target.files[0];
 
@@ -78,17 +86,17 @@ export const DarkBackground = ({ form, setForm }) => {
     <div className='flex flex-col justify-between items-stretch w-full h-40 rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-4 p-1 sm:p-2'>
       <h2 className='text-blue text-lg'>Logo for Dark Background</h2>
       <div className='flex justify-between items-center outline-none border border-gray-400 rounded-md p-3 '>
-        <div className='basis-11/12 '>
+        <div className='basis-11/12 overflow-hidden'>
           <label
             htmlFor='upload-dark'
             className='flex justify-between items-center'
           >
-            <p className='flex justify-between items-center gap-2'>
+            <p className='flex justify-start items-center gap-1'>
               <span className='bg-secondary/25 p-2 rounded-md'>
                 <UploadLogoIcon className='w-6 h-6' />
               </span>
               <span className='overflow-hidden text-ellipsis'>
-                {form.dark?.name || "Upload"}
+                {form.dark?.name.slice(0, 10) || "Upload"}
                 <span className='font-semibold text-blue ml-2'>
                   {form.dark &&
                     (form.dark?.size / (1024 * 1024)).toFixed(2) + "MB"}
@@ -98,6 +106,7 @@ export const DarkBackground = ({ form, setForm }) => {
           </label>
           <input
             id='upload-dark'
+            key={inputKey}
             onChange={handleBkg}
             type='file'
             accept='image/*'
@@ -109,7 +118,11 @@ export const DarkBackground = ({ form, setForm }) => {
           {form.dark && (
             <button
               type='button'
-              onClick={() => setForm({ ...form, dark: null })}
+              onClick={(e) => {
+                let randomString = Math.random().toString(36);
+                setInputKey(randomString);
+                setForm({ ...form, dark: null });
+              }}
             >
               <CancelIcon className='w-6 h-6 bg-secondary rounded-full p-0.5 font-bold text-white stroke-2' />
             </button>
