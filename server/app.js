@@ -10,9 +10,16 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  secure: true,
+});
 
 const app = express();
-
 // Middlewares
 const errorMW = require("./middlewares/error-handler");
 const notFoundMW = require("./middlewares/not-found");
@@ -24,6 +31,7 @@ app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
+app.use(fileUpload({ useTempFiles: true }));
 app.use(
   session({
     secret: "keyboard cat",
@@ -36,6 +44,7 @@ app.use(passport.session());
 
 app.use("/api/v1/auth", require("./routes/authRoutes"));
 app.use("/api/v1/account", require("./routes/accountRoutes"));
+app.use("/api/v1/brand", require("./routes/brandRoutes"));
 
 app.get("/health-check", (req, res) => {
   res.status(200).json({ msg: "Everything looks good" });
