@@ -9,16 +9,29 @@ const BrandSchema = new Schema(
   {
     name: {
       type: String,
+      unique: [true, "Brand name already exists"],
       required: [true, "Please provide a brand name"],
     },
-    color: [String],
-    font: String,
+    colors: {
+      type: [String],
+      default: [],
+    },
+    font: {
+      type: String,
+      required: [true, "Please provide a brand font"],
+    },
     fontUrl: String,
-    socials: [SocialSchema],
+    socials: {
+      type: [SocialSchema],
+      default: [],
+    },
     website: String,
     logoDark: String,
     logoLight: String,
-    industry: [String],
+    industry: {
+      type: [String],
+      default: [],
+    },
     account: {
       type: Types.ObjectId,
       ref: "Accounts",
