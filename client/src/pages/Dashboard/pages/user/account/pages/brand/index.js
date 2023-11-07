@@ -1,27 +1,79 @@
+import { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
+// Utils
+import { socials } from "./create/utils";
+// Toastify
+import { toast } from "react-toastify";
+// Redux
+import { useDispatch } from "react-redux";
+import { createBrand } from "../../../../../../../features/brand/brandSlice";
+// Componenet
+import Name from "./name";
 
 const Brand = () => {
-  return (
-    <div>
-      <header className='px-2 py-5 m-2 sm:m-4'>
-        <ul className='flex justify-start items-center text-blue gap-5 sm:gap-8'>
-          <NavLink to='/dashboard/account/brand/create' className='relative'>
-            <li className='text-lg sm:text-2xl text-secondary'>Create Brand</li>
-            <p className='absolute -bottom-2 w-0 h-1 bg-gradient-to-r from-red-500 to-green-500'></p>
-          </NavLink>
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({
+    id: "",
+    name: "",
+    colors: [],
+    font: "",
+    website: "",
+    fontFile: null,
+    customFont: false,
+    socials,
+    light: null,
+    dark: null,
+    industry: [],
+  });
 
-          <NavLink to='/dashboard/account/brand/manage' className='relative'>
-            <li className='text-lg sm:text-2xl text-secondary'>
-              Manage Brands
-            </li>
-            <p className='absolute -bottom-2 w-0 h-1 bg-gradient-to-r from-red-500 to-green-500'></p>
-          </NavLink>
-        </ul>
-      </header>
-      <main>
-        <Outlet />
-      </main>
-    </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { name, font, customFont, fontFile } = form;
+      if (!name) {
+        toast.warning("Please provide a brand name");
+        return;
+      }
+      if (customFont && !fontFile) {
+        toast.warning("Please provide custom font file");
+        return;
+      }
+      if (customFont && !font) {
+        toast.warning("Please provide custom font name");
+        return;
+      }
+
+      dispatch(createBrand(form));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return (
+    <section>
+      <Name form={form} setForm={setForm} />
+      <div className='rounded-2xl sm:m-3 sm:p-2 sm:shadow-xl sm:bg-white/80'>
+        <header className='px-2 py-5 m-2 sm:m-4'>
+          <ul className='flex justify-start items-center text-blue gap-5 sm:gap-8'>
+            <NavLink to='/dashboard/account/brand/create' className='relative'>
+              <li className='text-lg sm:text-2xl text-secondary'>
+                Create Brand
+              </li>
+              <p className='absolute -bottom-2 w-0 h-1 bg-gradient-to-r from-red-500 to-green-500'></p>
+            </NavLink>
+
+            <NavLink to='/dashboard/account/brand/manage' className='relative'>
+              <li className='text-lg sm:text-2xl text-secondary'>
+                Manage Brands
+              </li>
+              <p className='absolute -bottom-2 w-0 h-1 bg-gradient-to-r from-red-500 to-green-500'></p>
+            </NavLink>
+          </ul>
+        </header>
+        <main>
+          <Outlet context={[form, setForm, handleSubmit]} />
+        </main>
+      </div>
+    </section>
   );
 };
 
