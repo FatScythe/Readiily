@@ -3,6 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/R-light.png";
 // Icon
 import { HamburgerIcon, ExitIcon, BellIcon } from "../../assets/icons";
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { selectBrand } from "../../features/brand/brandSlice";
+
 const DashboardHeader = ({ isSideOpen, setIsSideOpen, role }) => {
   return (
     <header className='flex justify-between items-center'>
@@ -38,8 +42,20 @@ const DashboardHeader = ({ isSideOpen, setIsSideOpen, role }) => {
 export default DashboardHeader;
 
 const UserHeader = () => {
+  const { currentBrand, brands, loading } = useSelector((store) => store.brand);
+  const dispatch = useDispatch();
   const location = useLocation();
   const currentLocation = location.pathname.substring(11);
+
+  const handleSelect = (e) => {
+    const selectedIndex = e.target.options.selectedIndex;
+    dispatch(
+      selectBrand({
+        name: e.target.value,
+        id: e.target.options[selectedIndex].getAttribute("data-key"),
+      })
+    );
+  };
 
   if (currentLocation === "calendar") {
     return (
@@ -57,12 +73,31 @@ const UserHeader = () => {
     );
   }
   return (
-    <select className='border border-black'>
-      <option>Select Brand</option>
-      <option>Google</option>
-      <option>Vimeo</option>
-      <option>Spotify</option>
-    </select>
+    <>
+      {loading ? (
+        <div className='animate-pulse duration-700'>...</div>
+      ) : brands && brands?.brands.length > 0 ? (
+        <>
+          <select
+            className='border border-black'
+            onChange={handleSelect}
+            value={currentBrand.name}
+          >
+            {brands.brands.map((brand) => {
+              return (
+                <option key={brand._id} data-key={brand._id}>
+                  {brand.name}
+                </option>
+              );
+            })}
+          </select>
+        </>
+      ) : (
+        <Link to='/dashboard/account/brand/create' className=''>
+          Create Brand
+        </Link>
+      )}
+    </>
   );
 };
 

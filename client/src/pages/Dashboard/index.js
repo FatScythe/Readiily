@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // Components
 import DashboardMain from "../../components/dashboard/main";
 import DashboardSideNav from "../../components/dashboard/sidenav";
 import DashboardHeader from "../../components/dashboard/header";
 import DashboardBotNav from "../../components/dashboard/bottomnav";
 // Redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getBrands } from "../../features/brand/brandSlice";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const [isSideOpen, setIsSideOpen] = useState(false);
   const { account } = useSelector((store) => store.auth);
+  useEffect(() => {
+    if (account?.role === "user") {
+      dispatch(getBrands());
+    }
+  }, [dispatch, account]);
 
   return (
     <section
