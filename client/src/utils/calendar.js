@@ -10,7 +10,12 @@ export const generateDate = (
   const arrayOfDate = [];
   // Preceding Dates of Month
   for (let i = 0; i < firstDateOfMonth.day(); i++) {
-    arrayOfDate.push({ date: firstDateOfMonth.day(i), isCurrentMonth: false });
+    arrayOfDate.push({
+      date: firstDateOfMonth.day(i),
+      isCurrentMonth: false,
+      today: false,
+      isAfter: false,
+    });
   }
 
   // Current Dates of Month
@@ -18,9 +23,13 @@ export const generateDate = (
     arrayOfDate.push({
       date: firstDateOfMonth.date(i),
       isCurrentMonth: true,
-      today:
-        firstDateOfMonth.date(i).toDate().toDateString() ===
-        dayjs().toDate().toDateString(),
+      // today:
+      //   firstDateOfMonth.date(i).toDate().toDateString() ===
+      //   dayjs().toDate().toDateString(),
+      today: firstDateOfMonth
+        .date(i)
+        .isSame(dayjs().toDate().toDateString(), "day"),
+      isAfter: firstDateOfMonth.date(i).$D > dayjs().$D,
     });
   }
 
@@ -32,7 +41,12 @@ export const generateDate = (
     i <= lastDateOfMonth.date() + remainingDate;
     i++
   ) {
-    arrayOfDate.push({ date: lastDateOfMonth.date(i), isCurrentMonth: false });
+    arrayOfDate.push({
+      date: lastDateOfMonth.date(i),
+      isCurrentMonth: false,
+      today: false,
+      isAfter: true,
+    });
   }
 
   return arrayOfDate;
