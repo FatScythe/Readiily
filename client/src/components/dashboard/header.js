@@ -93,7 +93,10 @@ const UserHeader = () => {
           </select>
         </>
       ) : (
-        <Link to='/dashboard/account/brand/create' className=''>
+        <Link
+          to='/dashboard/account/brand/create'
+          className='bg-blue rounded-md px-3 py-2 text-white'
+        >
           Create Brand
         </Link>
       )}
