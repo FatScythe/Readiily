@@ -6,6 +6,7 @@ import Font from "./font";
 import Social from "./social";
 import { DarkBackground, LightBackground } from "./bkg";
 import Industry from "./industry";
+import Email from "./email";
 
 const CreateBrand = () => {
   const [form, setForm, handleSubmit] = useOutletContext();
@@ -16,6 +17,7 @@ const CreateBrand = () => {
         <main className='grid grid-cols-12 my-4 gap-3'>
           <Color form={form} setForm={setForm} />
           <Font form={form} setForm={setForm} />
+          <Email form={form} setForm={setForm} />
           <Website form={form} setForm={setForm} />
           <Social form={form} setForm={setForm} />
           <LightBackground form={form} setForm={setForm} />

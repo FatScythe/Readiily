@@ -49,6 +49,7 @@ const Font = ({ form, setForm }) => {
             <input
               type='search'
               value={form.font}
+              placeholder='Custom font name'
               onChange={(e) => setForm({ ...form, font: e.target.value })}
               className='w-full outline-none border border-gray-400 rounded-md p-2'
             />

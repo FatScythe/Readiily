@@ -6,8 +6,11 @@ import { socials } from "./create/utils";
 import { toast } from "react-toastify";
 // Redux
 import { useDispatch } from "react-redux";
-import { createBrand } from "../../../../../../../features/brand/brandSlice";
-// Componenet
+import {
+  createBrand,
+  getBrands,
+} from "../../../../../../../features/brand/brandSlice";
+// Component
 import Name from "./name";
 
 const Brand = () => {
@@ -18,6 +21,7 @@ const Brand = () => {
     colors: [],
     font: "",
     website: "",
+    email: "",
     fontFile: null,
     customFont: false,
     socials,
@@ -29,9 +33,13 @@ const Brand = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { name, font, customFont, fontFile } = form;
+      const { name, font, email, customFont, fontFile } = form;
       if (!name) {
         toast.warning("Please provide a brand name");
+        return;
+      }
+      if (!email) {
+        toast.warning("Please provide a brand email");
         return;
       }
       if (customFont && !fontFile) {
@@ -44,6 +52,7 @@ const Brand = () => {
       }
 
       dispatch(createBrand(form));
+      dispatch(getBrands());
     } catch (error) {
       console.error(error);
     }
