@@ -4,16 +4,18 @@ import { CancelIcon, UploadIcon } from "../../../../../assets/icons";
 // Toastify
 import { toast } from "react-toastify";
 // Redux
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createRequest } from "../../../../../features/request/requestSlice";
 
 const Post = ({ setIsPostOpen, form, setForm }) => {
   const { brands, currentBrand } = useSelector((store) => store.brand);
   const [inputKey, setInputKey] = useState("");
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setForm({ ...form, loading: true });
     e.preventDefault();
-    const { desc, imageFile, date } = form;
-    const formData = new FormData();
+    const { desc, date } = form;
     if (!desc) {
       toast.info("Please provide a description");
       return;
@@ -30,13 +32,10 @@ const Post = ({ setIsPostOpen, form, setForm }) => {
       toast.error("No Brand selected");
       return;
     }
-    formData.append("desc", desc);
-    formData.append("imageFile", imageFile);
-    formData.append("brand", currentBrand.id);
-    formData.append("date", date);
-    // Append date
 
-    console.log({ desc, imageFile, date, currentBrand });
+    dispatch(createRequest({ ...form, brand: currentBrand.id }));
+    setIsPostOpen(false);
+    setForm({ desc: "", imageFile: null, date: "", loading: false });
   };
 
   const handleFont = (e) => {
@@ -122,10 +121,11 @@ const Post = ({ setIsPostOpen, form, setForm }) => {
           </div>
           <div className='w-full flex justify-end items-center'>
             <button
-              className='px-3 py-2 bg-sky-500 rounded-3xl font-semibold hover:opacity-50 text-white text-sm'
+              className='px-3 py-2 bg-sky-500 disabled:bg-sky-300 rounded-3xl font-semibold hover:opacity-50 text-white text-sm'
               type='submit'
+              disabled={form.loading}
             >
-              Confirm Request
+              {form.loading ? "..." : "Confirm Request"}
             </button>
           </div>
         </div>

@@ -16,7 +16,12 @@ const Calendar = () => {
   const currentDate = dayjs();
   const [day, setDay] = useState(currentDate);
   // Post Request
-  const [form, setForm] = useState({ desc: "", imageFile: null, date: "" });
+  const [form, setForm] = useState({
+    desc: "",
+    imageFile: null,
+    date: "",
+    loading: false,
+  });
 
   return (
     <section id='calendar' className='bg-primary/60'>
