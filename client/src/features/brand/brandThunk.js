@@ -7,6 +7,7 @@ export const createBrandThunk = async (payload, url, thunkAPI) => {
       name,
       colors,
       font,
+      email,
       website,
       socials,
       light,
@@ -20,6 +21,7 @@ export const createBrandThunk = async (payload, url, thunkAPI) => {
     formData.append("name", name);
     formData.append("colors", JSON.stringify(colors));
     formData.append("font", font);
+    formData.append("email", email);
     formData.append("fontFile", fontFile);
     formData.append("website", website);
     formData.append("socials", JSON.stringify(socials));
@@ -48,9 +50,7 @@ export const createBrandThunk = async (payload, url, thunkAPI) => {
 
 export const getBrandsThunk = async (url, thunkAPI) => {
   try {
-    const response = await fetch(url, {
-      method: "DELETE",
-    });
+    const response = await fetch(url);
 
     const data = await response.json();
 
@@ -59,7 +59,6 @@ export const getBrandsThunk = async (url, thunkAPI) => {
       return thunkAPI.rejectWithValue(data.msg);
     }
 
-    toast.success(data.msg);
     return data;
   } catch (error) {
     return error;
@@ -101,7 +100,6 @@ export const deleteBrandThunk = async (url, thunkAPI) => {
       return thunkAPI.rejectWithValue(data.msg);
     }
 
-    toast.success(data.msg);
     return data;
   } catch (error) {
     return error;
