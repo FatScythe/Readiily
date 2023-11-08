@@ -45,6 +45,7 @@ app.use(passport.session());
 app.use("/api/v1/auth", require("./routes/authRoutes"));
 app.use("/api/v1/account", require("./routes/accountRoutes"));
 app.use("/api/v1/brand", require("./routes/brandRoutes"));
+app.use("/api/v1/request", require("./routes/requestRoutes"));
 
 app.get("/health-check", (req, res) => {
   res.status(200).json({ msg: "Everything looks good" });
