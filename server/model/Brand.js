@@ -25,6 +25,10 @@ const BrandSchema = new Schema(
       type: [SocialSchema],
       default: [],
     },
+    email: {
+      type: String,
+      required: [true, "Please provide a brand email"],
+    },
     website: String,
     logoDark: String,
     logoLight: String,

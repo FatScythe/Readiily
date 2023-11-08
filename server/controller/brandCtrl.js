@@ -1,55 +1,17 @@
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors/index");
-const cloudinary = require("cloudinary");
-const fs = require("fs");
 const Brand = require("../model/Brand");
 const checkPermissions = require("../utils/checkPermissions");
-
-const useCloudinary = async (
-  file,
-  mimetype = "image",
-  folder,
-  public_id,
-  maxSize = process.env.MAX_SIZE
-) => {
-  try {
-    if (!file.mimetype.startsWith(mimetype)) {
-      throw new BadRequestError("Please provide " + mimetype);
-    }
-    if (file.size > maxSize) {
-      throw new BadRequestError(
-        `${mimetype} size must not be larger than 3 MB`
-      );
-    }
-    const options = {
-      use_filename: true,
-      folder: "Readiily" + folder,
-      public_id,
-      unique_filename: false,
-      overwrite: true,
-      resource_type: "auto",
-    };
-    const result = await cloudinary.v2.uploader.upload(
-      file.tempFilePath,
-      options
-    );
-    fs.unlinkSync(file.tempFilePath);
-
-    return result.secure_url;
-  } catch (error) {
-    console.error(error);
-    return "";
-  }
-};
+const useCloudinary = require("../utils/useCloudinary");
 
 const createBrand = async (req, res) => {
-  let { name, colors, font, website, socials, industry } = req.body;
+  let { name, colors, font, website, socials, industry, email } = req.body;
   let logoLight = "",
     logoDark = "",
     fontUrl = "";
 
-  if (!name) {
-    throw new BadRequestError("Please provide brand name");
+  if (!name || !email) {
+    throw new BadRequestError("Please provide brand name and email");
   }
 
   if (req.files) {
@@ -61,6 +23,11 @@ const createBrand = async (req, res) => {
         "/Brands/" + name,
         "lightlogo"
       );
+      if (logoLight && logoLight.msg) {
+        return res.status(logoLight.status).json({
+          msg: logoLight.msg,
+        });
+      }
     }
     if (darkFile) {
       logoDark = await useCloudinary(
@@ -69,6 +36,11 @@ const createBrand = async (req, res) => {
         "/Brands/" + name,
         "darklogo"
       );
+      if (logoDark && logoDark.msg) {
+        return res.status(logoDark.status).json({
+          msg: logoDark.msg,
+        });
+      }
     }
     if (fontFile) {
       fontUrl = await useCloudinary(
@@ -77,6 +49,11 @@ const createBrand = async (req, res) => {
         "/Brands/" + name,
         "font"
       );
+      if (fontUrl && fontUrl.msg) {
+        return res.status(fontUrl.status).json({
+          msg: fontUrl.msg,
+        });
+      }
     }
   }
 
@@ -84,6 +61,7 @@ const createBrand = async (req, res) => {
     name,
     colors: colors ? JSON.parse(colors) : [],
     font,
+    email,
     socials: socials ? JSON.parse(socials) : [],
     fontUrl,
     website,
@@ -128,7 +106,7 @@ const deleteBrand = async (req, res) => {
 
 const editBrand = async (req, res) => {
   const { id: brandId } = req.params;
-  let { name, colors, font, website, socials, industry } = req.body;
+  let { name, colors, font, website, socials, email, industry } = req.body;
   let logoLight = "",
     logoDark = "",
     fontUrl = "";
@@ -141,8 +119,8 @@ const editBrand = async (req, res) => {
 
   checkPermissions(req.user, brand.account);
 
-  if (!name) {
-    throw new BadRequestError("Please provide brand name");
+  if (!name || !email) {
+    throw new BadRequestError("Please provide brand name and email");
   }
 
   if (req.files) {
@@ -179,6 +157,7 @@ const editBrand = async (req, res) => {
       name,
       colors: colors ? JSON.parse(colors) : [],
       font,
+      email,
       socials: socials ? JSON.parse(socials) : [],
       fontUrl,
       website,
