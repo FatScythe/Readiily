@@ -15,6 +15,8 @@ const Calendar = () => {
   const [isPostOpen, setIsPostOpen] = useState(false);
   const currentDate = dayjs();
   const [day, setDay] = useState(currentDate);
+  // Post Request
+  const [form, setForm] = useState({ desc: "", imageFile: null, date: "" });
 
   return (
     <section id='calendar' className='bg-primary/60'>
@@ -50,10 +52,12 @@ const Calendar = () => {
           );
         })}
 
-        {isPostOpen && <Post setIsPostOpen={setIsPostOpen} />}
+        {isPostOpen && (
+          <Post setIsPostOpen={setIsPostOpen} form={form} setForm={setForm} />
+        )}
 
         {generateDate(day.month(), day.year()).map(
-          ({ date, isCurrentMonth, today }, index) => {
+          ({ date, isCurrentMonth, today, isAfter }, index) => {
             return (
               <Date
                 date={date}
@@ -64,6 +68,9 @@ const Calendar = () => {
                 index={index}
                 key={index}
                 setIsPostOpen={setIsPostOpen}
+                isAfter={isAfter}
+                form={form}
+                setForm={setForm}
               />
             );
           }
