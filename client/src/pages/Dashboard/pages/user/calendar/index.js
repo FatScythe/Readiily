@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Components
 import Post from "./post";
-import Date from "./date";
+import EachDate from "./date";
 // Hook
 import useTitle from "../../../../../hooks/useTitle";
 import dayjs from "dayjs";
 // Util
 import { generateDate, days, months } from "../../../../../utils/calendar";
 import { ArrowIcon } from "../../../../../assets/icons";
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { getRequests } from "../../../../../features/request/requestSlice";
 
 const Calendar = () => {
   useTitle("Calendar");
+  const dispatch = useDispatch();
+  const { currentBrand } = useSelector((store) => store.brand);
+  const { loading, requests } = useSelector((store) => store.request);
   const [currentGrid, setCurrentGrid] = useState(null);
   const [isPostOpen, setIsPostOpen] = useState(false);
   const currentDate = dayjs();
@@ -22,6 +28,20 @@ const Calendar = () => {
     date: "",
     loading: false,
   });
+
+  useEffect(() => {
+    if (currentBrand) {
+      dispatch(getRequests(currentBrand?.id));
+    }
+  }, [currentBrand, dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!loading && !requests) {
+    return <div>Error...</div>;
+  }
 
   return (
     <section id='calendar' className='bg-primary/60'>
@@ -63,8 +83,15 @@ const Calendar = () => {
 
         {generateDate(day.month(), day.year()).map(
           ({ date, isCurrentMonth, today, isAfter }, index) => {
+            const myRequest =
+              requests?.requests.filter(
+                (request) =>
+                  new Date(request.date).toDateString() ===
+                  date.date(date.date()).toDate().toDateString()
+              ) || [];
+
             return (
-              <Date
+              <EachDate
                 date={date}
                 isCurrentMonth={isCurrentMonth}
                 today={today}
@@ -76,6 +103,7 @@ const Calendar = () => {
                 isAfter={isAfter}
                 form={form}
                 setForm={setForm}
+                myRequest={myRequest[0]}
               />
             );
           }

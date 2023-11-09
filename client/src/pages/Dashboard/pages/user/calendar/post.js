@@ -16,20 +16,25 @@ const Post = ({ setIsPostOpen, form, setForm }) => {
     setForm({ ...form, loading: true });
     e.preventDefault();
     const { desc, date } = form;
+
     if (!desc) {
       toast.info("Please provide a description");
+      setForm({ ...form, loading: false });
       return;
     }
     if (!date) {
       toast.error("Please provide a schedule date");
+      setForm({ ...form, loading: false });
       return;
     }
     if (brands && brands.nb < 1) {
       toast.info("Please create a brand");
+      setForm({ ...form, loading: false });
       return;
     }
     if (!currentBrand) {
       toast.error("No Brand selected");
+      setForm({ ...form, loading: false });
       return;
     }
 
@@ -49,6 +54,10 @@ const Post = ({ setIsPostOpen, form, setForm }) => {
     setForm({ ...form, imageFile: file });
   };
 
+  const isToday =
+    new Date(form.date).setHours(0, 0, 0, 0) ===
+    new Date().setHours(0, 0, 0, 0);
+
   return (
     <div className='fixed bg-slate-200 z-40 -top-24 left-1/2 right-1/2 -translate-x-1/2 translate-y-1/2 w-full sm:w-3/4 md:w-1/2 h-4/5 border border-black'>
       <h3
@@ -58,6 +67,12 @@ const Post = ({ setIsPostOpen, form, setForm }) => {
         <CancelIcon className='w-6 h-6 bg-red-400 rounded-full p-1 m-2' />
       </h3>
       <form className='p-1 sm:p-2' onSubmit={handleSubmit}>
+        {isToday && (
+          <p className='bg-sky-500 p-2 text-white border border-transparent border-l-red-400 border-l-4'>
+            <span className='font-bold'>NB:</span> Design will be ready only
+            after 24hrs
+          </p>
+        )}
         <h1 className='text-lg font-semibold sm:text-xl sm:my-2'>
           What to you intend to post today?
         </h1>

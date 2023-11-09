@@ -8,7 +8,7 @@ import {
   PostIcon,
 } from "../../../../../assets/icons";
 
-const Date = ({
+const EachDate = ({
   date,
   isCurrentMonth,
   today,
@@ -75,7 +75,7 @@ const Date = ({
   );
 };
 
-export default Date;
+export default EachDate;
 
 const Options = ({ isComment, setIsComment, setIsDone, today, isAfter }) => {
   return (
