@@ -5,12 +5,15 @@ import Features from "../../components/features";
 import Cta from "../../components/cta";
 import Footer from "../../components/footer";
 import { ChevronUp } from "../../assets/icons";
+// Hooks
+import useTitle from "../../hooks/useTitle";
 
 const Homepage = () => {
   const [show, setShow] = useState(false);
+  useTitle("Readiily");
 
   const scrollTop = () => {
-    window.scrollY > 250 ? setShow(true) : setShow(false);
+    window.scrollY > 350 ? setShow(true) : setShow(false);
   };
 
   useEffect(() => {
