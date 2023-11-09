@@ -3,12 +3,14 @@ import {
   BulbIcon,
   CheckIcon,
   LoudIcon,
+  LoveIcon,
   RibbonIcon,
   WindIcon,
 } from "../../assets/icons";
 // Images
 import feat1 from "../../assets/images/features1.png";
 import feat2 from "../../assets/images/features2.png";
+import feat3 from "../../assets/images/features3.png";
 import cta1 from "../../assets/images/cta1.png";
 import cta2 from "../../assets/images/cta2.png";
 import cta3 from "../../assets/images/cta3.png";
@@ -39,7 +41,7 @@ const Features1 = () => {
         <h1 className='text-xl sm:text-2xl md:text-3xl font-bold mt-3'>
           Fill pre-designed sections for building cohesive design layout
         </h1>
-        <p className='mt-5 md:mt-10 text-xl sm:text-4xl'>
+        <p className='mt-5 md:mt-10 text-lg sm:text-xl md:text-3xl w-3/4'>
           We leverage your pre-design input to streamline your brand’s design
           content and layout
         </p>
@@ -57,7 +59,7 @@ const Features2 = () => {
     <section className='grid grid-cols-12 gap-5 mb-10 p-2 container'>
       <div className='col-span-12 sm:col-span-6 order-2 sm:order-1 gap-2'>
         <div className='col-span-12 sm:col-span-6 w-full border border-secondary rounded-lg flex justify-center items-center bg-secondary/5'>
-          <img src={feat2} alt='Section' />
+          <img src={feat2} alt='Assets' />
         </div>
       </div>
 
@@ -101,9 +103,13 @@ const Features3 = () => {
         </p>
       </div>
 
-      <div className='col-span-12 sm:col-span-6 relative w-full'>
-        <div className='bg-secondary mx-auto w-2/3 sm:w-2/3 h-80 rounded-md'></div>
-        <LoudIcon className='w-6 h-6 hover:w-8 hover:h-8 transition-all duration-200 absolute -bottom-6 right-5' />
+      <div className='col-span-12 sm:col-span-6 relative w-full mx-auto'>
+        <img
+          src={feat3}
+          alt='Bespoke'
+          className='rounded-md object-cover sm:w-11/12'
+        />
+        <LoudIcon className='w-6 h-6 hover:w-8 hover:h-8 transition-all duration-200 absolute -bottom-6 right-0 sm:right-5' />
       </div>
     </section>
   );
@@ -121,7 +127,9 @@ const Features4 = () => {
 
       <div className='grid grid-cols-8 gap-6 md:gap-2'>
         <div className='col-span-8 md:col-span-2'>
-          <h4 className='font-semibold mb-4'>Pre-filled brand sections</h4>
+          <h4 className='text-lg font-semibold mb-4'>
+            Pre-filled brand sections
+          </h4>
           <div className='flex justify-center items-center mt-3'>
             <img
               src={cta1}
@@ -136,7 +144,7 @@ const Features4 = () => {
         </div>
 
         <div className='col-span-8 md:col-span-2'>
-          <h4 className='font-semibold mb-4'>Content Prompts</h4>
+          <h4 className='text-lg font-semibold mb-4'>Content Prompts</h4>
           <div className='flex justify-center items-center mt-3'>
             <img
               src={cta2}
@@ -150,8 +158,9 @@ const Features4 = () => {
           <span className='text-secondary text-4xl font-semibold'>=</span>
         </div>
 
-        <div className='col-span-8 md:col-span-2'>
-          <h4 className='font-semibold mb-4'>Crazy Engaging Designs</h4>
+        <div className='col-span-8 md:col-span-2 relative'>
+          <LoveIcon className='w-6 h-6 absolute right-2 top-4' />
+          <h4 className='text-lg font-semibold mb-4'>Crazy Engaging Designs</h4>
           <div className='flex justify-center items-center mt-3'>
             <img
               src={cta3}
