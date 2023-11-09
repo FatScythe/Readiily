@@ -6,9 +6,11 @@ const HomeDash = () => {
   const { account } = useSelector((store) => store.auth);
   return (
     <section>
-      {account.role === "user" && <Navigate to='user' />}
-      {account.role === "admin" && <Navigate to='designer' />}
-      {account.role === "admin" && <Navigate to='admin' />}
+      {account && account.role ? (
+        <Navigate to={`${account.role}`} />
+      ) : (
+        <Navigate to='/auth' />
+      )}
     </section>
   );
 };
