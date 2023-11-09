@@ -11,9 +11,12 @@ const initialState = {
   requests: null,
 };
 
-export const getRequests = createAsyncThunk("request/get", async (thunkAPI) => {
-  return getRequestsThunk(url + "/api/v1/request", thunkAPI);
-});
+export const getRequests = createAsyncThunk(
+  "request/get",
+  async (payload, thunkAPI) => {
+    return getRequestsThunk(url + "/api/v1/request/" + payload, thunkAPI);
+  }
+);
 
 export const createRequest = createAsyncThunk(
   "request/create",
@@ -28,13 +31,13 @@ const requestSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      // Get All Request
+      // Get Brand Request
       .addCase(getRequests.pending, (state) => {
         state.loading = true;
       })
       .addCase(getRequests.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.brands = payload;
+        state.requests = payload;
       })
       .addCase(getRequests.rejected, (state, { payload }) => {
         state.loading = false;
