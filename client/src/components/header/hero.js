@@ -18,7 +18,7 @@ const Hero = () => {
         creating consistent captivating brand designs with prompts.
       </h4>
       <StarIcon className='absolute top-24 sm:top-20 left-1 sm:left-10 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 stroke-secondary' />
-      <TrophyIcon className='absolute top-[35%] rotate-45 right-1 sm:right-10 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 stroke-secondary' />
+      <TrophyIcon className='absolute top-[40%] sm:top-[35%] rotate-45 right-1 sm:right-10 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 stroke-secondary' />
       <div className='flex flex-col md:flex-row justify-center items-center pb-48 gap-6 mt-10'>
         <button
           className='flex justify-center items-center gap-1 md:gap-2 pr-2 border border-black rounded-md bg-white text-black font-semibold'
