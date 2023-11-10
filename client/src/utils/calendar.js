@@ -2,7 +2,8 @@ import dayjs from "dayjs";
 
 export const generateDate = (
   month = dayjs().month(),
-  year = dayjs().year()
+  year = dayjs().year(),
+  requests = []
 ) => {
   const firstDateOfMonth = dayjs().year(year).month(month).startOf("month");
   const lastDateOfMonth = dayjs().year(year).month(month).endOf("month");
@@ -15,6 +16,15 @@ export const generateDate = (
       isCurrentMonth: false,
       today: false,
       isAfter: false,
+      myRequest: requests.filter(
+        (request) =>
+          new Date(request.date).toDateString() ===
+          firstDateOfMonth
+            .day(i)
+            .date(firstDateOfMonth.day(i).date())
+            .toDate()
+            .toDateString()
+      ),
     });
   }
 
@@ -23,13 +33,19 @@ export const generateDate = (
     arrayOfDate.push({
       date: firstDateOfMonth.date(i),
       isCurrentMonth: true,
-      // today:
-      //   firstDateOfMonth.date(i).toDate().toDateString() ===
-      //   dayjs().toDate().toDateString(),
       today: firstDateOfMonth
         .date(i)
         .isSame(dayjs().toDate().toDateString(), "day"),
       isAfter: firstDateOfMonth.date(i).$D > dayjs().$D,
+      myRequest: requests.filter(
+        (request) =>
+          new Date(request.date).toDateString() ===
+          firstDateOfMonth
+            .date(i)
+            .date(firstDateOfMonth.date(i).date())
+            .toDate()
+            .toDateString()
+      ),
     });
   }
 
@@ -46,6 +62,15 @@ export const generateDate = (
       isCurrentMonth: false,
       today: false,
       isAfter: true,
+      myRequest: requests.filter(
+        (request) =>
+          new Date(request.date).toDateString() ===
+          lastDateOfMonth
+            .date(i)
+            .date(lastDateOfMonth.date(i).date())
+            .toDate()
+            .toDateString()
+      ),
     });
   }
 

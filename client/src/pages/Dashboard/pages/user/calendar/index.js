@@ -26,6 +26,7 @@ const Calendar = () => {
     desc: "",
     imageFile: null,
     date: "",
+    myRequest: null,
     loading: false,
   });
 
@@ -78,18 +79,16 @@ const Calendar = () => {
         })}
 
         {isPostOpen && (
-          <Post setIsPostOpen={setIsPostOpen} form={form} setForm={setForm} />
+          <Post
+            setIsPostOpen={setIsPostOpen}
+            form={form}
+            setForm={setForm}
+            myRequest={form.myRequest}
+          />
         )}
 
-        {generateDate(day.month(), day.year()).map(
-          ({ date, isCurrentMonth, today, isAfter }, index) => {
-            const myRequest =
-              requests?.requests.filter(
-                (request) =>
-                  new Date(request.date).toDateString() ===
-                  date.date(date.date()).toDate().toDateString()
-              ) || [];
-
+        {generateDate(day.month(), day.year(), requests.requests).map(
+          ({ date, isCurrentMonth, today, isAfter, myRequest }, index) => {
             return (
               <EachDate
                 date={date}
@@ -101,9 +100,9 @@ const Calendar = () => {
                 key={index}
                 setIsPostOpen={setIsPostOpen}
                 isAfter={isAfter}
+                myRequest={myRequest}
                 form={form}
                 setForm={setForm}
-                myRequest={myRequest[0]}
               />
             );
           }

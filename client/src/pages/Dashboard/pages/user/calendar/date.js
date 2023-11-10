@@ -17,6 +17,7 @@ const EachDate = ({
   index,
   setIsPostOpen,
   isAfter,
+  myRequest,
   form,
   setForm,
 }) => {
@@ -50,7 +51,7 @@ const EachDate = ({
         />
       )}
       <div className='scale-0 flex flex-col absolute top-0 bottom-0 right-0 left-0 sm:static sm:flex-row group-hover:scale-100 transition-all duration-500 justify-between items-center'>
-        {(today || isAfter) && (
+        {(myRequest.length > 0 || today || isAfter) && (
           <button
             className='bg-green-200 opacity-90 sm:bg-transparent w-full h-full flex justify-center items-center sm:inline-block'
             onClick={() => {
@@ -59,6 +60,9 @@ const EachDate = ({
                 ...form,
                 date: `${date.$y}-${date.$M + 1}-${date.$D}`,
               });
+              if (myRequest.length > 0) {
+                setForm({ ...form, myRequest: myRequest[0] });
+              }
             }}
           >
             <PostIcon className='w-6 h-6 stroke-blue' />
