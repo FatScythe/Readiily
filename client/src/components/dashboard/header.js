@@ -65,7 +65,11 @@ const UserHeader = () => {
     );
   }
   if (currentLocation === "idea") {
-    return <div className='mx-2'></div>;
+    return (
+      <div className='font-semibold text-left sm:font-bold sm:text-2xl md:text-3xl mx-2'>
+        Content Inspiration
+      </div>
+    );
   }
   if (currentLocation.startsWith("account")) {
     return (
