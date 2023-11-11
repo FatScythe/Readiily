@@ -20,8 +20,4 @@ const CommentSchema = new Schema(
   { timestamps: true }
 );
 
-CommentSchema.pre("save", async function () {
-  // Change request accepted to false
-});
-
 module.exports = model("Comments", CommentSchema);
