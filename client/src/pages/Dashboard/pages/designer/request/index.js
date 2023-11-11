@@ -1,8 +1,7 @@
-// Hook
-import useTitle from "../../../../../hooks/useTitle";
-const AvailableRequest = () => {
-  useTitle("Request");
-  return <section>REQUEST</section>;
+import { Outlet } from "react-router-dom";
+
+const Accepted = () => {
+  return <Outlet />;
 };
 
-export default AvailableRequest;
+export default Accepted;
