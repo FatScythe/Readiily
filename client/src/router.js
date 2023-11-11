@@ -11,15 +11,6 @@ import Overview from "./pages/Dashboard/pages/user/home";
 import Account from "./pages/Dashboard/pages/user/account";
 import Ideate from "./pages/Dashboard/pages/user/ideate";
 import Calendar from "./pages/Dashboard/pages/user/calendar";
-// Designer pages
-import PendingRequest from "./pages/Dashboard/pages/designer/pending";
-import AvailableRequest from "./pages/Dashboard/pages/designer/request";
-import History from "./pages/Dashboard/pages/designer/history";
-// Admin Pages
-import AllRequest from "./pages/Dashboard/pages/admin/request";
-import Payments from "./pages/Dashboard/pages/admin/payments";
-import Tickets from "./pages/Dashboard/pages/admin/tickets";
-import Designs from "./pages/Dashboard/pages/admin/designs";
 // User SubPages
 import Brand from "./pages/Dashboard/pages/user/account/pages/brand";
 import CreateBrand from "./pages/Dashboard/pages/user/account/pages/brand/create";
@@ -28,6 +19,19 @@ import Wallet from "./pages/Dashboard/pages/user/account/pages/wallet";
 import Support from "./pages/Dashboard/pages/user/account/pages/support";
 import MyTickets from "./pages/Dashboard/pages/user/account/pages/support/tickets";
 import NewTicket from "./pages/Dashboard/pages/user/account/pages/support/newticket";
+// Designer pages
+import PendingRequest from "./pages/Dashboard/pages/designer/pending";
+import Accepted from "./pages/Dashboard/pages/designer/request";
+import History from "./pages/Dashboard/pages/designer/history";
+// Designer SubPages
+import AvailableRequest from "./pages/Dashboard/pages/designer/request/available";
+import BrandInfo from "./pages/Dashboard/pages/designer/request/brand";
+import RequestView from "./pages/Dashboard/pages/designer/request/view";
+// Admin Pages
+import AllRequest from "./pages/Dashboard/pages/admin/request";
+import Payments from "./pages/Dashboard/pages/admin/payments";
+import Tickets from "./pages/Dashboard/pages/admin/tickets";
+import Designs from "./pages/Dashboard/pages/admin/designs";
 // Component
 import Protected from "./components/protected/protected";
 
@@ -118,7 +122,21 @@ export const router = createBrowserRouter([
       },
       {
         path: "request",
-        element: <AvailableRequest />,
+        element: <Accepted />,
+        children: [
+          {
+            path: "",
+            element: <AvailableRequest />,
+          },
+          {
+            path: "brand",
+            element: <BrandInfo />,
+          },
+          {
+            path: "view",
+            element: <RequestView />,
+          },
+        ],
       },
       {
         path: "history",
