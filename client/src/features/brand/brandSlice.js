@@ -57,7 +57,7 @@ const brandSlice = createSlice({
       .addCase(getBrands.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.brands = payload;
-        if (payload.brands.length > 0) {
+        if (payload.brands && payload.brands.length > 0) {
           state.currentBrand = {
             id: payload.brands[0]._id,
             name: payload.brands[0].name,
