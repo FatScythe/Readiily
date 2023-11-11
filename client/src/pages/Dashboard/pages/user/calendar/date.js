@@ -7,6 +7,10 @@ import {
   MailIcon,
   PostIcon,
 } from "../../../../../assets/icons";
+// Toastify
+import { toast } from "react-toastify";
+// Redux
+import { useSelector } from "react-redux";
 
 const EachDate = ({
   date,
@@ -48,6 +52,8 @@ const EachDate = ({
           setIsDone={setIsDone}
           today={today}
           isAfter={isAfter}
+          myRequest={myRequest}
+          form={form}
         />
       )}
       <div className='scale-0 flex flex-col absolute top-0 bottom-0 right-0 left-0 sm:static sm:flex-row group-hover:scale-100 transition-all duration-500 justify-between items-center'>
@@ -69,7 +75,13 @@ const EachDate = ({
           </button>
         )}
         <button
-          onClick={() => setIsDone(!isDone)}
+          onClick={() => {
+            setIsDone(!isDone);
+            setForm({
+              ...form,
+              date: `${date.$y}-${date.$M + 1}-${date.$D}`,
+            });
+          }}
           className='bg-amber-300 w-full h-full sm:w-fit opacity-90 sm:bg-transparent flex justify-center items-center sm:inline-block'
         >
           <DoneIcon className='w-6 h-6' />
@@ -81,27 +93,100 @@ const EachDate = ({
 
 export default EachDate;
 
-const Options = ({ isComment, setIsComment, setIsDone, today, isAfter }) => {
+const Options = ({
+  isComment,
+  setIsComment,
+  setIsDone,
+  today,
+  isAfter,
+  myRequest,
+  form,
+}) => {
+  const { currentBrand } = useSelector((store) => store.brand);
+  const [comment, setComment] = useState("");
+
+  const handleComment = async () => {
+    if (!comment) {
+      toast.info("Please Provide a comment");
+      setIsComment(false);
+      setIsDone(false);
+      return;
+    }
+    if (!form.date) {
+      toast.error("No request date");
+      return;
+    }
+    if (!currentBrand) {
+      toast.error("No current brand");
+      return;
+    }
+    if (!myRequest) {
+      toast.error("No Request");
+      return;
+    }
+
+    const res = await fetch("/api/v1/comment", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        comment,
+        requestId: myRequest[0]._id,
+        brandId: currentBrand.id,
+        date: form.date,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      toast.error(data?.msg);
+      return;
+    }
+
+    toast.success(data.msg);
+    setIsComment(false);
+    setIsDone(false);
+    setComment("");
+  };
+
   return (
     <div>
       {isComment ? (
         <div className='absolute -left-12 sm:left-0 bg-lightpink sm:bg-white/80 sm:text-black bottom-0 sm:bottom-2 z-20 h-32 w-20 sm:w-full flex flex-col justify-between items-center sm:items-start overflow-hidden'>
-          <textarea
-            rows='10'
-            className='w-full'
-            placeholder='Comment'
-          ></textarea>
-          <div className='w-full mt-2 flex justify-end items-center'>
-            <button
-              className='bg-sky-300 text-sm px-2 py-1 rounded-xl'
-              onClick={() => {
-                setIsComment(false);
-                setIsDone(false);
-              }}
-            >
-              Post
-            </button>
-          </div>
+          {myRequest && myRequest.length > 0 ? (
+            <>
+              <textarea
+                rows='10'
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className='w-full'
+                placeholder='Comment'
+              ></textarea>
+              <div className='w-full mt-2 flex justify-end items-center'>
+                <button
+                  className='bg-sky-300 text-sm px-2 py-1 rounded-xl'
+                  onClick={handleComment}
+                >
+                  Post
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className='flex flex-col justify-between items-start gap-4'>
+              <p className='text-sm sm:text-base'> Make a request to comment</p>
+              <div className='flex justify-end items-center w-full'>
+                <button
+                  className='bg-red-300 px-3 py-2 rounded-md'
+                  onClick={() => {
+                    setIsComment(false);
+                    setIsDone(false);
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className='absolute bg-lightpink sm:bg-white/80 sm:text-black bottom-0 sm:bottom-2 z-20 h-32 w-full flex flex-col justify-between items-center sm:items-start overflow-hidden'>

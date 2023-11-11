@@ -80,8 +80,12 @@ const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
           </p>
           <p>Description: {myRequest.desc}</p>
           {myRequest.image && (
-            <a href={myRequest.image} target='_blank' download>
-              <img src={myRequest.image} className='w-40 h-40' />
+            <a href={myRequest.image} target='_blank' rel='noreferrer' download>
+              <img
+                src={myRequest.image}
+                alt={myRequest._id}
+                className='w-40 h-40'
+              />
             </a>
           )}
         </div>
