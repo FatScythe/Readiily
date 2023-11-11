@@ -30,7 +30,15 @@ const useCloudinary = async (
       file.tempFilePath,
       options
     );
-    fs.unlinkSync(file.tempFilePath);
+
+    let resultHandler = function (err) {
+      if (err) {
+        console.log("unlink failed", err);
+      } else {
+        console.log("file deleted");
+      }
+    };
+    fs.unlink(file.tempFilePath, resultHandler);
 
     return result.secure_url;
   } catch (error) {
