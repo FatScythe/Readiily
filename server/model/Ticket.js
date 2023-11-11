@@ -16,6 +16,10 @@ const TicketSchema = new Schema(
       enum: ["open", "close", "pending"],
       default: "open",
     },
+    ticketId: {
+      type: String,
+      unique: [true, "Provide unique ticket id"],
+    },
     account: {
       type: Types.ObjectId,
       ref: "Accounts",
@@ -24,6 +28,7 @@ const TicketSchema = new Schema(
     brand: {
       type: Types.ObjectId,
       ref: "Brands",
+      required: [true, "Please provide a brand"],
     },
   },
   { timestamps: true }
