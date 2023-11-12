@@ -4,6 +4,7 @@ import Auth from "./pages/Auth";
 import GoogleRedirect from "./pages/Auth/google";
 import Dashboard from "./pages/Dashboard";
 import HomeDash from "./pages/Dashboard/pages/all";
+import SingleTicket from "./pages/Dashboard/pages/all/SingleTicket";
 // Router
 import { createBrowserRouter, Navigate } from "react-router-dom";
 // User pages
@@ -58,6 +59,12 @@ export const router = createBrowserRouter([
           </Protected>
         ),
       },
+      // All
+      {
+        path: "ticket/:id",
+        element: <SingleTicket />,
+      },
+      // User
       {
         path: "user",
         element: <Overview />,
@@ -116,6 +123,7 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      // Designer
       {
         path: "designer",
         element: <PendingRequest />,
@@ -133,7 +141,7 @@ export const router = createBrowserRouter([
             element: <BrandInfo />,
           },
           {
-            path: "view",
+            path: "/:id",
             element: <RequestView />,
           },
         ],
@@ -142,6 +150,7 @@ export const router = createBrowserRouter([
         path: "history",
         element: <History />,
       },
+      // Admin
       {
         path: "admin",
         element: <AllRequest />,
