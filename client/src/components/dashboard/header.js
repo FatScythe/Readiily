@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // Image
 import logo from "../../assets/images/R-light.png";
 // Icon
@@ -6,8 +6,11 @@ import { HamburgerIcon, ExitIcon, BellIcon } from "../../assets/icons";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { selectBrand } from "../../features/brand/brandSlice";
+import { logoutAccount } from "../../features/auth/authSlice";
 
 const DashboardHeader = ({ isSideOpen, setIsSideOpen, role }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <header className='flex justify-between items-center'>
       <button
@@ -30,7 +33,13 @@ const DashboardHeader = ({ isSideOpen, setIsSideOpen, role }) => {
           {role === "user" && <UserHeader />}
           {role === "designer" && <DesignerHeader />}
           {role === "admin" && <AdminHeader />}
-          <button className='sm:hidden mx-4'>
+          <button
+            className='sm:hidden mx-4'
+            onClick={() => {
+              dispatch(logoutAccount());
+              navigate("/");
+            }}
+          >
             <ExitIcon className='w-6 h-6' />
           </button>
         </div>
