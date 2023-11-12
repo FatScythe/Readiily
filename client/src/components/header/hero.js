@@ -46,7 +46,7 @@ const Hero = () => {
         </Link>
       </div>
 
-      <div className='absolute rounded-lg w-11/12 sm:w-3/4 h-80 bg-gray-400 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2'></div>
+      <div className='absolute rounded-lg w-11/12 sm:w-3/4 h-80 bg-grayish left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2'></div>
     </section>
   );
 };

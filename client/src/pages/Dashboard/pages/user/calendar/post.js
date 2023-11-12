@@ -59,7 +59,7 @@ const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
     new Date().setHours(0, 0, 0, 0);
 
   return (
-    <div className='fixed bg-gray z-40 -top-24 left-1/2 right-1/2 -translate-x-1/2 translate-y-1/2 w-full sm:w-3/4 md:w-1/2 h-4/5 border border-black'>
+    <div className='fixed bg-grayish z-40 -top-24 left-1/2 right-1/2 -translate-x-1/2 translate-y-1/2 w-full sm:w-3/4 md:w-1/2 h-4/5 border border-black'>
       <h3
         className='flex justify-end items-center w-full'
         onClick={() => {
