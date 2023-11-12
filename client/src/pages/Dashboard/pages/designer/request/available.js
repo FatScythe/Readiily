@@ -69,17 +69,20 @@ const SingleRequest = () => {
         </p>
       </div>
       <Link
-        to='/dashboard/request/view'
+        to='/dashboard/request/12345'
         className='col-span-3 sm:col-span-2 sm:text-lg ml-4 sm:text-center overflow-hidden text-blue'
       >
         7
       </Link>
-      <div className='col-span-3 sm:col-span-2 overflow-hidden text-sm sm:text-base text-center text-red-400 bg-gray-200 rounded-xl sm:rounded-3xl px-1 flex justify-center items-center'>
+      <div className='col-span-3 sm:col-span-2 overflow-hidden text-sm sm:text-base text-center text-red-400 bg-gray-200 rounded-xl sm:rounded-3xl px-1 flex justify-center items-center cursor-pointer'>
         Pending
       </div>
-      <div className='col-span-3 sm:col-span-5 sm:text-lg overflow-hidden text-center'>
+      <Link
+        to='/dashboard/request/12345'
+        className='col-span-3 sm:col-span-5 sm:text-lg overflow-hidden text-center'
+      >
         <UploadIcon className='w-6 h-6 mx-auto' />
-      </div>
+      </Link>
     </div>
   );
 };
