@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const MyTickets = () => {
   return (
     <div className='my-5 p-3'>
@@ -9,11 +11,18 @@ const MyTickets = () => {
         </select>
       </div>
 
-      <div className=''>
-        <div className='flex justify-between items-center my-2 w-full text-gray-500 font-semibold text-lg p-5 border-2 border-transparent border-b-gray-400'>
-          <p>Subject</p>
-          <p>TicketId</p>
-          <p>Status</p>
+      <div>
+        <div className='grid grid-cols-12 py-3 px-2 sm:py-6 sm:px-5 border-2 border-transparent border-b-gray-400'>
+          <div className='col-span-4 text-gray-500 text-center font-semibold sm:text-lg overflow-hidden'>
+            Subject
+          </div>
+          <div className='col-span-4 text-gray-500 text-center font-semibold sm:text-lg overflow-hidden'>
+            TicketId
+          </div>
+
+          <div className='col-span-4 text-gray-500 text-center font-semibold sm:text-lg overflow-hidden'>
+            Status
+          </div>
         </div>
         <div className='overflow-scroll border-2 border-transparent border-b-gray-400'>
           <SingleTicket />
@@ -30,17 +39,20 @@ const MyTickets = () => {
 
 const SingleTicket = () => {
   return (
-    <div className='w-full'>
-      <main className='flex justify-between items-center my-2 text-xs gap-1 sm:text-base md:text-lg p-3'>
-        <p className='flex flex-col justify-between items-start gap-2 w-16 text-ellipsis sm:w-fit overflow-hidden'>
-          Ayomi Brand
-        </p>
-        <p className='w-20 text-ellipsis sm:w-fit overflow-hidden text-blue'>
-          #YZY-453-04752
-        </p>
-        <p className='w-16 text-ellipsis sm:w-fit overflow-hidden'>Closed</p>
-      </main>
-    </div>
+    <Link
+      to='/dashboard/ticket/12345'
+      className='w-full grid grid-cols-12 my-2 text-xs gap-1 sm:text-base md:text-lg p-3'
+    >
+      <p className='col-span-4 gap-2 text-ellipsis text-center overflow-hidden'>
+        Ayomi Brand
+      </p>
+      <p className='col-span-4 text-ellipsis text-center overflow-hidden text-blue'>
+        #YZY-453-04752
+      </p>
+      <p className='col-span-4 text-ellipsis text-center overflow-hidden'>
+        Closed
+      </p>
+    </Link>
   );
 };
 
