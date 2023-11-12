@@ -9,7 +9,9 @@ const createTicket = async (req, res) => {
   const tickets = await Ticket.countDocuments();
 
   let ticketId =
-    Math.random().toString(35).slice(2).toUpperCase() + tickets.toString();
+    "#" +
+    Math.random().toString(35).slice(2).toUpperCase() +
+    tickets.toString();
 
   console.log(ticketId);
 
