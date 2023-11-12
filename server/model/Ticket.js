@@ -1,5 +1,19 @@
 const { Schema, Types, model } = require("mongoose");
 
+const ResponseSchema = new Schema(
+  {
+    account: {
+      type: Types.ObjectId,
+      ref: "Accounts",
+    },
+    response: {
+      type: String,
+      required: [true, "Please provide reply"],
+    },
+  },
+  { timestamps: true }
+);
+
 const TicketSchema = new Schema(
   {
     subject: {
@@ -19,6 +33,9 @@ const TicketSchema = new Schema(
     ticketId: {
       type: String,
       unique: [true, "Provide unique ticket id"],
+    },
+    response: {
+      type: [ResponseSchema],
     },
     account: {
       type: Types.ObjectId,
