@@ -17,7 +17,7 @@ import cta3 from "../../assets/images/cta3.png";
 
 const Features = () => {
   return (
-    <section id='features' className='mt-48 sm:mt-44 md:mt-48 mb-2'>
+    <section id='features' className='mt-64 mb-2'>
       <Features1 />
       <Features2 />
       <Features3 />

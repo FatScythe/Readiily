@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoogleIcon, TrophyIcon, StarIcon } from "../../assets/icons";
 // Redux
 import { useSelector } from "react-redux";
+// Image
+import heroGif from "../../assets/images/hero.gif";
 
 const Hero = () => {
   const { account } = useSelector((store) => store.auth);
@@ -19,7 +21,7 @@ const Hero = () => {
       </h4>
       <StarIcon className='absolute top-24 sm:top-20 left-1 sm:left-10 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 stroke-secondary' />
       <TrophyIcon className='absolute top-[40%] sm:top-[35%] rotate-45 right-1 sm:right-10 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 stroke-secondary' />
-      <div className='flex flex-col md:flex-row justify-center items-center pb-48 gap-6 mt-10'>
+      <div className='flex flex-col md:flex-row justify-center items-center pb-52 gap-6 mt-10'>
         <button
           className='flex justify-center items-center gap-1 md:gap-2 pr-2 border border-black rounded-md bg-white text-black font-semibold'
           onClick={() => {
@@ -46,7 +48,9 @@ const Hero = () => {
         </Link>
       </div>
 
-      <div className='absolute rounded-lg w-11/12 sm:w-3/4 h-80 bg-grayish left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2'></div>
+      <div className='absolute rounded-lg w-11/12 sm:w-3/4 my-5 h-96 bg-grayish left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2'>
+        <img src={heroGif} className='w-full h-full object-cover' alt='Hero' />
+      </div>
     </section>
   );
 };
