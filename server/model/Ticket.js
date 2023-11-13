@@ -6,7 +6,7 @@ const ResponseSchema = new Schema(
       type: Types.ObjectId,
       ref: "Accounts",
     },
-    response: {
+    reply: {
       type: String,
       required: [true, "Please provide reply"],
     },
@@ -27,7 +27,7 @@ const TicketSchema = new Schema(
     attachments: [String],
     status: {
       type: String,
-      enum: ["open", "close", "pending"],
+      enum: ["open", "closed", "pending"],
       default: "open",
     },
     ticketId: {
