@@ -4,10 +4,12 @@ import { PlusIcon } from "../../../../../../../assets/icons";
 // Toastify
 import { toast } from "react-toastify";
 // Redux
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createTicket } from "../../../../../../../features/ticket/ticketSlice";
 
 const NewTicket = () => {
   const { currentBrand } = useSelector((store) => store.brand);
+  const dispatch = useDispatch();
   const [form, setForm] = useState({
     subject: "",
     message: "",
@@ -21,9 +23,10 @@ const NewTicket = () => {
       files: [],
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { subject, message, files } = form;
+    const { subject, message } = form;
     if (!subject) {
       toast.info("Provide a subject");
       return;
@@ -38,28 +41,7 @@ const NewTicket = () => {
       return;
     }
 
-    const formData = new FormData();
-
-    formData.append("subject", subject);
-    formData.append("message", message);
-    formData.append("brand", currentBrand.id);
-    for (let i = 0; i < files.length; i++) {
-      formData.append("attachments", files[i]);
-    }
-
-    const res = await fetch("/api/v1/ticket", {
-      method: "POST",
-      body: formData,
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      toast.error(data?.msg || "Something went wrong");
-      return;
-    }
-
-    toast.success(data.msg);
+    dispatch(createTicket({ ...form, brandId: currentBrand.id }));
     reset();
   };
 
@@ -67,14 +49,23 @@ const NewTicket = () => {
     const file = e.target.files[0];
 
     if (!file) return;
+    let totalSize = 0;
+
+    for (let i = 0; i < form.files.length; i++) {
+      let file = form.files[i];
+      totalSize += file.size;
+    }
+
+    if (totalSize > 10485760) {
+      toast.info("Files size must not be more than 10MB");
+      return;
+    }
+
     if (form.files.length > 4) {
       toast.info("Maximum of 5 files");
       return;
     }
-    if (file.size > 3145728) {
-      toast.error("Font size must not be more than 3MB");
-      return;
-    }
+
     setForm({ ...form, files: [...form.files, file] });
   };
 

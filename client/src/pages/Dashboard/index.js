@@ -7,6 +7,7 @@ import DashboardBotNav from "../../components/dashboard/bottomnav";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { getBrands } from "../../features/brand/brandSlice";
+import { getTickets } from "../../features/ticket/ticketSlice";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (account?.role === "user") {
       dispatch(getBrands());
+      dispatch(getTickets());
     }
   }, [dispatch, account]);
 
