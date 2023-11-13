@@ -1,6 +1,3 @@
-// Toastify
-import { toast } from "react-toastify";
-
 export const createBrandThunk = async (payload, url, thunkAPI) => {
   try {
     const {
@@ -37,8 +34,7 @@ export const createBrandThunk = async (payload, url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      toast.error(data?.msg || "Something went wrong");
-      return thunkAPI.rejectWithValue(data.msg);
+      return thunkAPI.rejectWithValue(data);
     }
 
     return data;
@@ -55,8 +51,7 @@ export const getBrandsThunk = async (url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      toast.error(data.msg);
-      return thunkAPI.rejectWithValue(data.msg);
+      return thunkAPI.rejectWithValue(data);
     }
 
     return data;
@@ -77,8 +72,7 @@ export const editBrandThunk = async (payload, url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      toast.error(data?.msg || "Something went wrong");
-      return thunkAPI.rejectWithValue(data.msg);
+      return thunkAPI.rejectWithValue(data);
     }
 
     return data;
@@ -96,8 +90,7 @@ export const deleteBrandThunk = async (url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      toast.error(data.msg);
-      return thunkAPI.rejectWithValue(data.msg);
+      return thunkAPI.rejectWithValue(data);
     }
 
     return data;

@@ -67,7 +67,7 @@ const authSlice = createSlice({
       })
       .addCase(registerAccount.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg);
+        toast.error(payload.msg || "Something went wrong");
       })
       // Login Account
       .addCase(loginAccount.pending, (state) => {
@@ -80,7 +80,7 @@ const authSlice = createSlice({
       })
       .addCase(loginAccount.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg);
+        toast.error(payload.msg || "Something went wrong");
       })
       // Logout Account
       .addCase(logoutAccount.pending, (state) => {
@@ -93,7 +93,7 @@ const authSlice = createSlice({
       })
       .addCase(logoutAccount.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg);
+        toast.error(payload.msg || "Something went wrong");
       });
   },
 });

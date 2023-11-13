@@ -1,6 +1,3 @@
-// Toastify
-import { toast } from "react-toastify";
-
 export const registerAccountThunk = async (account, url, thunkAPI) => {
   try {
     const { name, email, password } = account;
@@ -13,8 +10,7 @@ export const registerAccountThunk = async (account, url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      toast.error(data?.msg || "Something went wrong");
-      return thunkAPI.rejectWithValue(data.msg);
+      return thunkAPI.rejectWithValue(data);
     }
 
     return data;
@@ -35,8 +31,7 @@ export const loginAccountThunk = async (account, url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      toast.error(data?.msg || "Something went wrong");
-      return thunkAPI.rejectWithValue(data.msg);
+      return thunkAPI.rejectWithValue(data);
     }
 
     return data;
@@ -54,8 +49,7 @@ export const logoutAccountThunk = async (url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      toast.error(data.msg);
-      return thunkAPI.rejectWithValue(data.msg);
+      return thunkAPI.rejectWithValue(data);
     }
 
     return data;
