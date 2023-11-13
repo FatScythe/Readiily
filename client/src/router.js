@@ -141,7 +141,7 @@ export const router = createBrowserRouter([
             element: <BrandInfo />,
           },
           {
-            path: "/:id",
+            path: ":id",
             element: <RequestView />,
           },
         ],
