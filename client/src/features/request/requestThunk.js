@@ -1,6 +1,3 @@
-// Toastify
-import { toast } from "react-toastify";
-
 export const createRequestThunk = async (payload, url, thunkAPI) => {
   try {
     const { desc, imageFile, date, brand } = payload;
@@ -19,8 +16,7 @@ export const createRequestThunk = async (payload, url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      toast.error(data?.msg || "Something went wrong");
-      return thunkAPI.rejectWithValue(data.msg);
+      return thunkAPI.rejectWithValue(data);
     }
 
     return data;
@@ -37,8 +33,7 @@ export const getRequestsThunk = async (url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      toast.error(data.msg);
-      return thunkAPI.rejectWithValue(data.msg);
+      return thunkAPI.rejectWithValue(data);
     }
 
     return data;

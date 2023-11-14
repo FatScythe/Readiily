@@ -41,7 +41,7 @@ const requestSlice = createSlice({
       })
       .addCase(getRequests.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg);
+        toast.error(payload.msg || "Something went wrong");
       })
       // Create Request
       .addCase(createRequest.pending, (state) => {
@@ -53,7 +53,7 @@ const requestSlice = createSlice({
       })
       .addCase(createRequest.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg);
+        toast.error(payload.msg || "Something went wrong");
       });
   },
 });
