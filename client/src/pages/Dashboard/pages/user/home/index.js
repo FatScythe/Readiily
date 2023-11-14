@@ -8,6 +8,7 @@ const UserHome = () => {
   useTitle("Overview");
   const { account } = useSelector((store) => store.auth);
   const { brands } = useSelector((store) => store.brand);
+  const { tickets } = useSelector((store) => store.ticket);
 
   return (
     <section className='mb-20'>
@@ -48,7 +49,7 @@ const UserHome = () => {
             to='/dashboard/account/ticket/tickets'
             className='bg-white/90 w-full sm:w-3/4 gap-1 sm:gap-3 shadow-md hover:shadow-lg text-blue py-10 px-8 h-full rounded-md text-xl flex flex-col justify-between items-center'
           >
-            <span>2</span>
+            <span>{tickets ? tickets.nb : "..."}</span>
             <span>Tickets</span>
           </Link>
         </div>
