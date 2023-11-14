@@ -23,5 +23,5 @@ yarn-error.log*
 server/node_modules
 server/package-lock.json
 server/.env
-server/public/build
+# server/public/build
 server/tmp
