@@ -1,14 +1,30 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useOutletContext } from "react-router-dom";
 // Hook
 import useTitle from "../../../../../hooks/useTitle";
 // Redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getComments } from "../../../../../features/comment/commentSlice";
+// Image
+import heroGif from "../../../../../assets/images/hero.gif";
 
 const UserHome = () => {
   useTitle("Overview");
+  const [openBanner, setOpenBanner] = useOutletContext();
+  const dispatch = useDispatch();
   const { account } = useSelector((store) => store.auth);
   const { brands } = useSelector((store) => store.brand);
   const { tickets } = useSelector((store) => store.ticket);
+  const { currentBrand } = useSelector((store) => store.brand);
+  const { comments } = useSelector((store) => store.comment);
+
+  useEffect(() => {
+    if (currentBrand) {
+      dispatch(getComments(currentBrand.id));
+    }
+  }, [dispatch, currentBrand]);
+
+  console.log(comments);
 
   return (
     <section className='mb-20'>
@@ -16,7 +32,30 @@ const UserHome = () => {
         <h2 className='text-blue text-xl sm:text-3xl md:text-4xl font-semibold md:font-bold text-center'>
           Welcome, {account?.name.split(" ")[0] || "User"}
         </h2>
-        <div className='w-full h-80 bg-slate-300 mx-auto rounded-md'></div>
+        {openBanner ? (
+          <div className='w-full h-80 bg-slate-300 mx-auto rounded-md relative group overflow-hidden'>
+            <button
+              onClick={() => setOpenBanner(!openBanner)}
+              className='px-5 py-3 bg-red-500 text-white hover:bg-black font-semibold absolute top-1 right-1 sm:-top-5 sm:-right-20 sm:group-hover:top-3 sm:group-hover:right-3 rounded-3xl transition-all duration-300'
+            >
+              Hide
+            </button>
+            <img
+              src={heroGif}
+              className='w-full h-full object-cover'
+              alt='Hero'
+            />
+          </div>
+        ) : (
+          <div>
+            <button
+              onClick={() => setOpenBanner(!openBanner)}
+              className='px-5 py-3 bg-black text-white hover:bg-black/60 font-semibold rounded-3xl transition-all duration-300'
+            >
+              Show Banner
+            </button>
+          </div>
+        )}
         <div className='flex flex-col sm:flex-row justify-between items-center gap-6 w-full'>
           <Link
             to='/dashboard/account/brand/create'
@@ -42,7 +81,7 @@ const UserHome = () => {
             to='/dashboard/calendar'
             className='bg-white/90 w-full sm:w-3/4 gap-1 sm:gap-3 shadow-md hover:shadow-lg text-blue py-10 px-8 h-full rounded-md text-xl flex flex-col justify-between items-center'
           >
-            <span>0</span>
+            <span>{comments ? comments.nb : 0}</span>
             <span>Comments</span>
           </Link>
           <Link
