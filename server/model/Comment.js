@@ -13,8 +13,8 @@ const CommentSchema = new Schema(
     },
     request: {
       type: Types.ObjectId,
-      ref: "Request",
-      required: [true, "Please provide a brand"],
+      ref: "Requests",
+      required: [true, "Please provide a request"],
     },
   },
   { timestamps: true }

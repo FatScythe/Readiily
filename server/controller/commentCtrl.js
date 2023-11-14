@@ -1,7 +1,7 @@
+const Request = require("../model/Request");
+const Comment = require("../model/Comment");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
-const Comment = require("../model/Comment");
-const Request = require("../model/Request");
 
 const createComment = async (req, res) => {
   const { comment, brandId, requestId, date } = req.body;
@@ -34,4 +34,25 @@ const createComment = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ msg: "Comment as been added" });
 };
 
-module.exports = { createComment };
+const getBrandComments = async (req, res) => {
+  const { id: brandId } = req.params;
+
+  const date = new Date();
+  let currentMonth = date.getMonth();
+  let currentYear = date.getFullYear();
+
+  const comments = await Comment.find({
+    brand: brandId,
+    createdAt: {
+      $gte: new Date(currentYear, currentMonth, -6).toISOString(), // 6 days b4 month
+      $lt: new Date(currentYear, currentMonth, 36).toISOString(), // 6 or 7 days after month
+    },
+  }).populate("request");
+
+  res.status(StatusCodes.OK).json({
+    nb: comments.length,
+    comments,
+  });
+};
+
+module.exports = { createComment, getBrandComments };
