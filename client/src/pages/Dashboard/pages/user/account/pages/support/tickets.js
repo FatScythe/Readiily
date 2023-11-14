@@ -20,12 +20,16 @@ const MyTickets = () => {
     <div>Error</div>;
   }
 
-  const myTickets = tickets.tickets.filter((ticket) => {
-    if (!option.startsWith("all")) {
-      return ticket.status === option;
-    }
-    return ticket;
-  });
+  let myTickets = [];
+
+  if (tickets) {
+    myTickets = tickets.tickets.filter((ticket) => {
+      if (!option.startsWith("all")) {
+        return ticket.status === option;
+      }
+      return ticket;
+    });
+  }
 
   return (
     <div className='my-5 p-3'>
