@@ -10,7 +10,8 @@ import {
 // Toastify
 import { toast } from "react-toastify";
 // Redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { createComment } from "../../../../../features/comment/commentSlice";
 
 const EachDate = ({
   date,
@@ -54,6 +55,7 @@ const EachDate = ({
           isAfter={isAfter}
           myRequest={myRequest}
           form={form}
+          index={index}
         />
       )}
       <div className='scale-0 flex flex-col absolute top-0 bottom-0 right-0 left-0 sm:static sm:flex-row group-hover:scale-100 transition-all duration-500 justify-between items-center'>
@@ -101,9 +103,11 @@ const Options = ({
   isAfter,
   myRequest,
   form,
+  index,
 }) => {
   const { currentBrand } = useSelector((store) => store.brand);
   const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
 
   const handleComment = async () => {
     if (!comment) {
@@ -125,25 +129,14 @@ const Options = ({
       return;
     }
 
-    const res = await fetch("/api/v1/comment", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
+    dispatch(
+      createComment({
         comment,
         requestId: myRequest[0]._id,
         brandId: currentBrand.id,
         date: form.date,
-      }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      toast.error(data?.msg);
-      return;
-    }
-
-    toast.success(data.msg);
+      })
+    );
     setIsComment(false);
     setIsDone(false);
     setComment("");
@@ -152,7 +145,11 @@ const Options = ({
   return (
     <div>
       {isComment ? (
-        <div className='absolute -left-12 sm:left-0 bg-lightpink sm:bg-white/80 sm:text-black bottom-0 sm:bottom-2 z-20 h-32 w-20 sm:w-full flex flex-col justify-between items-center sm:items-start overflow-hidden'>
+        <div
+          className={`absolute ${
+            index % 7 === 0 ? "left-12" : "-left-28"
+          } bg-lightpink sm:bg-white/80 sm:text-black bottom-0 sm:bottom-2 z-20 h-32 w-36 sm:w-full flex flex-col justify-between items-center sm:items-start overflow-hidden`}
+        >
           {myRequest && myRequest.length > 0 ? (
             <>
               <textarea
@@ -173,7 +170,7 @@ const Options = ({
             </>
           ) : (
             <div className='flex flex-col justify-between items-start gap-4'>
-              <p className='text-sm sm:text-base'> Make a request to comment</p>
+              <p className='text-sm sm:text-base'>Make a request to comment</p>
               <div className='flex justify-end items-center w-full'>
                 <button
                   className='bg-red-300 px-3 py-2 rounded-md'
@@ -189,7 +186,11 @@ const Options = ({
           )}
         </div>
       ) : (
-        <div className='absolute bg-lightpink sm:bg-white/80 sm:text-black bottom-0 sm:bottom-2 z-20 h-32 w-full flex flex-col justify-between items-center sm:items-start overflow-hidden'>
+        <div
+          className={`absolute ${
+            index % 7 === 0 ? "left-12" : "-left-10"
+          } bg-lightpink sm:bg-white/80 sm:text-black bottom-0 sm:bottom-2 z-20 h-32 w-full flex flex-col justify-between items-center sm:items-start overflow-hidden`}
+        >
           {(isAfter || today) && (
             <button
               className='flex justify-between items-center'

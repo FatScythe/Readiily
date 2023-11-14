@@ -1,6 +1,11 @@
 import { useState } from "react";
 // Icons
-import { CancelIcon, InfoIcon, UploadIcon } from "../../../../../assets/icons";
+import {
+  ArrowIcon,
+  CancelIcon,
+  InfoIcon,
+  UploadIcon,
+} from "../../../../../assets/icons";
 // Toastify
 import { toast } from "react-toastify";
 // Redux
@@ -163,11 +168,12 @@ const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
             </div>
             <div className='w-full flex justify-end items-center'>
               <button
-                className='px-3 py-2 bg-sky-500 disabled:bg-sky-300 rounded-3xl font-semibold hover:opacity-50 text-white text-sm'
+                className='px-3 py-2 bg-blue disabled:bg-blue/40 rounded-3xl font-semibold hover:opacity-50 text-white text-sm flex justify-between items-center gap-2'
                 type='submit'
                 disabled={form.loading}
               >
-                {form.loading ? "..." : "Confirm Request"}
+                <span>Okay</span>
+                <ArrowIcon className='w-6 h-6' />
               </button>
             </div>
           </div>
