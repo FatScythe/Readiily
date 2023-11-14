@@ -35,7 +35,11 @@ const Auth = () => {
   });
 
   const handleGoogleAuth = () => {
-    window.open("http://localhost:5000/api/v1/auth/login/google", "_self");
+    // window.open("http://localhost:5000/api/v1/auth/login/google", "_self");
+    window.open(
+      "https://readiily.onrender.com/api/v1/auth/login/google",
+      "_self"
+    );
   };
 
   const handleAuth = async (e) => {
