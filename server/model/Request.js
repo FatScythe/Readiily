@@ -16,6 +16,11 @@ const RequestSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    status: {
+      type: String,
+      enum: ["pending", "done"],
+      default: "pending",
+    },
     account: {
       type: Types.ObjectId,
       ref: "Accounts",
