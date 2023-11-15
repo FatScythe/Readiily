@@ -1,52 +1,137 @@
+import { useState } from "react";
 // Hook
 import useTitle from "../../../../../hooks/useTitle";
+import useSWR from "swr";
+// Utils
+import url from "../../../../../utils/url";
+import time_between from "../../../../../utils/time_between";
+import { CancelIcon } from "../../../../../assets/icons";
+// Toastify
+import { toast } from "react-toastify";
 
 const PendingRequest = () => {
   useTitle("Available Request");
+  const [modal, setModal] = useState({ open: false, request: null });
+  const [requestId, setRequestId] = useState([]);
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { data, error, isLoading } = useSWR(
+    url + "/api/v1/request/assign",
+    fetcher
+  );
+
+  const handleAccept = async () => {
+    if (requestId.length < 1) {
+      toast.info("Select request to accept");
+      return;
+    }
+    const res = await fetch(url + "/api/v1/request/accept", {
+      method: "PATCH",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ requestId }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.msg || "Something went wrong");
+      return;
+    }
+
+    toast.success(data.msg);
+    setRequestId([]);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if ((data && data.msg) || error) {
+    return <div>Failed to load</div>;
+  }
+
+  const myRequest = data?.filter((request) => !request.accepted) || [];
   return (
-    <section>
+    <section className='relative'>
+      {modal.open && (
+        <div className='relative'>
+          <p
+            className='fixed bottom-0 left-0 right-0 top-0 bg-black/30 z-10'
+            onClick={() => setModal({ open: false, request: null })}
+          ></p>
+          <div className='absolute top-56 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-11/12 sm:w-3/4 bg-grayish z-20 p-2'>
+            <div className='flex justify-between items-center'>
+              <h1 className='text-lg font-semibold'>
+                Request #{modal.request._id}
+              </h1>
+              <button className='bg-red-400 p-1 rounded-full'>
+                <CancelIcon className='w-6 h-6 stroke-white stroke-2' />
+              </button>
+            </div>
+            <p className='mt-6'>
+              <span className='text-lg font-bold'>Description:</span>
+              {modal.request.desc}
+            </p>
+
+            <img
+              src={
+                modal.request.brand
+                  ? modal.request.brand.logoLight ||
+                    modal.request.brand.logoDark
+                  : ""
+              }
+              alt='additional information'
+            />
+          </div>
+        </div>
+      )}
       <main className='bg-white/80 sm:m-2 shadow-xl sm:p-2'>
         <header>
           <div className='text-blue font-bold text-lg sm:text-xl py-4'>
             Available Design Request
           </div>
-          <div className='grid grid-cols-12 py-3 px-2 sm:py-6 sm:px-5 bg-blue/10 gap-2'>
-            <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
-              Brands
+          {myRequest.length > 0 && (
+            <div className='grid grid-cols-12 py-3 px-2 sm:py-6 sm:px-5 bg-blue/10 gap-2'>
+              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
+                ID
+              </div>
+              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
+                Brand
+              </div>
+              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
+                Deadline
+              </div>
+              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
+                Accept
+              </div>
             </div>
-            <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden hidden sm:block'>
-              Industry
-            </div>
-            <div className='col-span-3 sm:col-span-2 text-secondary font-semibold sm:text-lg overflow-hidden flex justify-start items-center gap-1'>
-              <span className='hidden sm:block'>Request</span>
-              <span className='sm:hidden'>Req.</span>
-              <span className='hidden sm:block'>Number</span>
-              <span className='sm:hidden'>No.</span>
-            </div>
-            <div className='col-span-3 sm:col-span-2 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
-              Deadline
-            </div>
-            <div className='col-span-3 sm:col-span-2 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
-              Accept
-            </div>
-          </div>
+          )}
         </header>
 
         <div className='h-[50vh] sm:h-[60vh] overflow-x-hidden overflow-y-scroll'>
-          <SingleRequest />
-          <SingleRequest />
-          <SingleRequest />
-          <SingleRequest />
-          <SingleRequest />
-          <SingleRequest />
-          <SingleRequest />
-          <SingleRequest />
-          <SingleRequest />
-          <SingleRequest />
+          {myRequest.length > 0 ? (
+            myRequest.map((request) => (
+              <SingleRequest
+                key={request._id}
+                request={request}
+                setModal={setModal}
+                requestId={requestId}
+                setRequestId={setRequestId}
+              />
+            ))
+          ) : (
+            <div>
+              <h1 className='text-center text-xl font-semibold sm:text-2xl'>
+                You have no pending design request
+              </h1>
+            </div>
+          )}
         </div>
 
         <div className='flex justify-end items-center py-3 px-4'>
-          <button className='bg-sky-600 px-3 py-2 text-lg rounded-3xl text-white font-semibold'>
+          <button
+            className='bg-sky-600 px-3 py-2 text-lg rounded-3xl text-white font-semibold'
+            onClick={handleAccept}
+          >
             Accept
           </button>
         </div>
@@ -57,28 +142,48 @@ const PendingRequest = () => {
 
 export default PendingRequest;
 
-const SingleRequest = () => {
+const SingleRequest = ({ request, setModal, requestId, setRequestId }) => {
+  const { _id, brand, date } = request;
   return (
     <div className='grid grid-cols-12 py-3 px-2 sm:py-6 sm:px-5 mt-3 gap-2 border border-transparent border-b-slate-400'>
-      <div className='col-span-3 sm:col-span-3 sm:text-lg flex justify-start gap-2 items-center overflow-hidden'>
-        <img
-          src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB8CAMAAACcwCSMAAABGlBMVEX////lQzU0o1NCgO/2twQ8fe9plvFPifDg6Pz2tQAwolAldO7lQTPkNiXlPzD2sgDkOyv3zcoln0nxpqHiIQDjLRjkMyD3+/hQrWj++PfsgnvreXH87u3woJvqcGf1v7z85bj3vQD+9eP4yWf3v0L++e72uiL62pv09/797tLl7fzW6ttwuYJntnvl8ugTnEBcsXG528H64N7pZFroW1DztLDmUkXvmJLuhRjyoifnWTbsezLkODjwlyr0qx/5zXbqbzLuhy72xK751IOmv/aDp/PW37rbuDG0tUTE1fmRr0rntiBvrFTQtzePsPSjtEqUyaBXqle6sS+p07JKkNBBlLGBwJA8nIkzoGAspDpNlsQ/m5Y4n3JHiOAJuJq3AAAEAElEQVRoge2XWVebQBSAyQSMECAJBogYE1OttdkQorH7vte2aa2pdvn/f6MTYmKGdRgHzunpfA/64ODHvXPn3oHjGAwGg8FgMBgMRuZsQvK3Nt32ttUaHUFGLWu77eb2Du7GVkHXlap6RVXRjbF13Mze3Nwe15WqXPAhV416q52tutaqKwHxAtXQT7ILvzYyqlHmefyKkpG+aSnxak9vjLNIfrsQnXBEr2/RDn7T0rHUM5RCjarbhf8RH7m+QdFd09UUbohuUXO3DeyUL+TUQk/tlum5a6njNrZpud24EyaH/U2n5t5Uw2sNNnO9rivK7IeKvAK9nHOtsK4mV/WxtVFrznDbJy3FULNwH+shakW1akgXa24cLfQU3WEbXlUsN7Bwsz322pBxQs3NbQWTro+Cak9/UpcLOkV3LZD0uM7pKnVqdQ6DOfJXuqrEzQyXZkvfued3U55Xcezx9wurBSdX83PfFXm+8uDRSq1lfENcZRfK+c7DpZ3mMUqkws/oPL5KvTzO0b0zl/OdJ/PU6/ltOMc9FfkrKs+gXR3l6Ob2l3K+8/yRHHvCaXOrwl/TuV8o5Ohebvki9S/ylL8UETl/N2xRt7SWyCsC+S4iF/dCF62XhURep3ff3kPluxHyYhLCGoF8H5FX7hDLSwfp5eiOV3ZI5cVievkttN4qofWGJRe6TP5vyOkVHImc1lErCgRHjVaTITlquO012U3QZPAGC5QHm7kv6wTt1TdSRf5NqFwoBfHJCQYLepkQ34IG9pNrSOwCyUhdvUZV3gGg9TCf66KRl9+TyJcXSHH/AwBAGmA+9x4twjJBvV1vuvjxFMywMUNHs14skbgXHw3iJzBHwtv1ddQtfCaTeydd/AIWaBOcp3yBk22596Eo7p+Ca2wn+aFXvrZTJnPDT2Tx7dcVN5CkxG3v+lsMySn32PkGUCSQYD8o+eWEWec4syH57fGxd9f8bsJan+HYwI99Fr18vehzE5ebR18L2gfDiMVnATfRUFkyDMph6ichetMB9sV3gWLgMJpg4uGBB9OeiZiHk4Ymwdc6RwbqzQKHDEJih3q7MXV6QxMy7DnTQ1ubl6b9YzX1wvoN5abmr/ir5Gu2bUveL21liXbxZ2kvEw1ThGGEPQLp8meZUtJnOKGJj8b+5aWe5AORgl37DVMvFG+64Ut7qszDLvydmpvjenZK++U5NTesOpAq9RqI6oJEmNOwbhOBjXvdw8aRMIPXpJjZQ4o5xak7SetTTfmS3qGWEL2kNXCv9wT6vh0TPuz4GLe8GzA8a4T6YZMHYaOWvr8P4DiRFmhwuIDBJLt8+zB7zqQ/OGxADgfTiTM0k5+h/g6Q/K0MBoPBYDAYDMb/xl8imWokuW/z0QAAAABJRU5ErkJggg=='
-          className='w-10 h-10 rounded-full'
-          alt='google'
+      <p className='flex flex-col justify-between items-start text-sm sm:text-base col-span-3 overflow-hidden'>
+        <span>{_id}</span>
+        <button
+          className='text-blue underline underline-offset-2 text-xs sm:text-sm'
+          onClick={() => setModal({ open: true, request: { ...request } })}
+        >
+          View Request
+        </button>
+      </p>
+      <div className='col-span-3 sm:text-lg flex justify-start gap-2 items-center overflow-hidden'>
+        {brand && (brand.logoLight || brand.logoDark) && (
+          <img
+            src={brand.logoLight || brand.logoDark}
+            className='w-10 h-10 rounded-full'
+            alt={brand.name}
+          />
+        )}
+        <span>{brand ? brand.name : "No brand name"}</span>
+      </div>
+      <div
+        className='col-span-3 sm:text-lg overflow-hidden text-center text-red-400 cursor-pointer'
+        title={new Date(date).toDateString()}
+      >
+        {time_between(new Date(date))}
+      </div>
+      <div className='col-span-3 sm:text-lg overflow-hidden text-center'>
+        <input
+          type='checkbox'
+          className='scale-105 h-8 w-8 accent-blue'
+          onChange={(e) => {
+            if (e.target.checked) {
+              setRequestId([...requestId, _id]);
+            } else {
+              let filterId = requestId.filter((id) => id !== _id);
+              setRequestId(filterId);
+            }
+          }}
         />
-        <span>Google</span>
-      </div>
-      <div className='col-span-3 sm:col-span-3 sm:text-lg overflow-hidden hidden sm:block'>
-        Technology
-      </div>
-      <div className='col-span-3 sm:col-span-2 sm:text-lg ml-4 sm:text-center overflow-hidden text-blue'>
-        7
-      </div>
-      <div className='col-span-3 sm:col-span-2 sm:text-lg overflow-hidden text-center text-red-400'>
-        3 days
-      </div>
-      <div className='col-span-3 sm:col-span-2 sm:text-lg overflow-hidden text-center'>
-        <input type='checkbox' className='scale-105 h-8 w-8 accent-blue' />
       </div>
     </div>
   );
