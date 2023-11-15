@@ -24,8 +24,6 @@ const UserHome = () => {
     }
   }, [dispatch, currentBrand]);
 
-  console.log(comments);
-
   return (
     <section className='mb-20'>
       <div className='p-2 sm:p-3 md:p-4 w-full sm:w-11/12 mx-auto flex flex-col justify-start gap-4 items-center'>
