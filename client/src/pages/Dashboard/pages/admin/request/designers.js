@@ -24,7 +24,7 @@ const Designers = ({ openModal, setOpenModal, requestId, setRequestId }) => {
           <div>Failed to load</div>
         ) : (
           <div className='grid grid-cols-12 my-2 gap-2'>
-            {data.length >= 1 ? (
+            {data && data.length >= 1 ? (
               data.map((designer) => (
                 <Designer
                   key={designer._id}

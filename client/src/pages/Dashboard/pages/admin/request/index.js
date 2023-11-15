@@ -55,16 +55,16 @@ const Request = () => {
           </div>
           {unassignedReq.length >= 1 && (
             <div className='grid grid-cols-12 py-3 px-2 sm:py-6 sm:px-5 bg-blue/10 gap-2'>
-              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
+              <div className='col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
                 ID
               </div>
-              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
+              <div className='col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
                 Brand
               </div>
-              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
+              <div className='col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
                 Deadline
               </div>
-              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
+              <div className='col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
                 Assign
               </div>
             </div>
@@ -114,9 +114,7 @@ const SingleRequest = ({ request, requestId, setRequestId }) => {
 
   return (
     <div className='grid grid-cols-12 py-3 px-2 sm:py-6 sm:px-5 mt-3 gap-2 border border-transparent border-b-slate-400'>
-      <div className='col-span-3 sm:col-span-3 sm:text-lg overflow-hidden'>
-        {_id}
-      </div>
+      <div className='col-span-3 sm:text-lg overflow-hidden'>{_id}</div>
       <div className='col-span-3 sm:col-span-3 sm:text-lg flex justify-start gap-2 items-center overflow-hidden'>
         {brand && brand.logoLight ? (
           <img
@@ -130,12 +128,12 @@ const SingleRequest = ({ request, requestId, setRequestId }) => {
         <span>{brand ? brand.name : "Brand deleted"}</span>
       </div>
       <div
-        className='col-span-3 sm:col-span-3 sm:text-lg overflow-hidden text-center text-red-400 cursor-pointer'
+        className='col-span-3 sm:text-lg overflow-hidden text-center text-red-400 cursor-pointer'
         title={new Date(date).toDateString()}
       >
         {time_between(new Date(date))}
       </div>
-      <div className='col-span-3 sm:col-span-3 sm:text-lg overflow-hidden text-center'>
+      <div className='col-span-3 sm:text-lg overflow-hidden text-center'>
         <input
           onChange={(e) => {
             if (e.target.checked) {
