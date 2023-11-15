@@ -41,7 +41,9 @@ const requestSlice = createSlice({
       })
       .addCase(getRequests.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       })
       // Create Request
       .addCase(createRequest.pending, (state) => {
@@ -53,7 +55,9 @@ const requestSlice = createSlice({
       })
       .addCase(createRequest.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       });
   },
 });

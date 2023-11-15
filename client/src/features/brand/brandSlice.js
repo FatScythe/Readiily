@@ -67,7 +67,10 @@ const brandSlice = createSlice({
       .addCase(getBrands.rejected, (state, { payload }) => {
         state.loading = false;
         state.currentBrand = null;
-        toast.error(payload.msg || "Something went wrong");
+        state.brands = null;
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       })
       // Create brand
       .addCase(createBrand.pending, (state) => {
@@ -79,7 +82,9 @@ const brandSlice = createSlice({
       })
       .addCase(createBrand.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload.msg || "Something went wrong, Check internet connection"
+        );
       }) // Delete brand
       .addCase(deleteBrand.pending, (state) => {
         state.loading = true;
@@ -91,7 +96,9 @@ const brandSlice = createSlice({
       })
       .addCase(deleteBrand.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload.msg || "Something went wrong, Check internet connection"
+        );
       });
   },
 });

@@ -41,7 +41,9 @@ const commentSlice = createSlice({
       })
       .addCase(getComments.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       })
       // Create Comment
       .addCase(createComment.pending, (state) => {
@@ -53,7 +55,9 @@ const commentSlice = createSlice({
       })
       .addCase(createComment.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       });
   },
 });

@@ -49,7 +49,9 @@ const ticketSlice = createSlice({
       })
       .addCase(getTickets.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       })
       // Create Ticket
       .addCase(createTicket.pending, (state) => {
@@ -61,7 +63,9 @@ const ticketSlice = createSlice({
       })
       .addCase(createTicket.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       })
       // Reply Ticket
       .addCase(replyTicket.pending, (state) => {
@@ -73,7 +77,9 @@ const ticketSlice = createSlice({
       })
       .addCase(replyTicket.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       });
   },
 });

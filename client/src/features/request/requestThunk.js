@@ -22,7 +22,9 @@ export const createRequestThunk = async (payload, url, thunkAPI) => {
     return data;
   } catch (error) {
     console.error(error);
-    return error;
+    return thunkAPI.rejectWithValue({
+      msg: "Something went wrong, Check internet connection",
+    });
   }
 };
 
@@ -38,6 +40,9 @@ export const getRequestsThunk = async (url, thunkAPI) => {
 
     return data;
   } catch (error) {
-    return error;
+    console.error(error);
+    return thunkAPI.rejectWithValue({
+      msg: "Something went wrong, Check internet connection",
+    });
   }
 };

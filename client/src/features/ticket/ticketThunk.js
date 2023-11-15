@@ -27,7 +27,9 @@ export const createTicketThunk = async (payload, url, thunkAPI) => {
     return data;
   } catch (error) {
     console.error(error);
-    return error;
+    return thunkAPI.rejectWithValue({
+      msg: "Something went wrong, Check internet connection",
+    });
   }
 };
 
@@ -38,12 +40,15 @@ export const getTicketsThunk = async (url, thunkAPI) => {
     const data = await response.json();
 
     if (!response.ok) {
-      return thunkAPI.rejectWithValue(data);
+      return thunkAPI?.rejectWithValue(data) || { msg: "Something went wrong" };
     }
 
     return data;
   } catch (error) {
-    return error;
+    console.error(error);
+    return thunkAPI.rejectWithValue({
+      msg: "Something went wrong, Check internet connection",
+    });
   }
 };
 export const replyTicketThunk = async (payload, url, thunkAPI) => {
@@ -68,6 +73,9 @@ export const replyTicketThunk = async (payload, url, thunkAPI) => {
 
     return data;
   } catch (error) {
-    return error;
+    console.error(error);
+    return thunkAPI.rejectWithValue({
+      msg: "Something went wrong, Check internet connection",
+    });
   }
 };

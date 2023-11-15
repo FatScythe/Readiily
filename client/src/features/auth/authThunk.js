@@ -15,7 +15,10 @@ export const registerAccountThunk = async (account, url, thunkAPI) => {
 
     return data;
   } catch (error) {
-    return error;
+    console.error(error);
+    return thunkAPI.rejectWithValue({
+      msg: "Something went wrong, Check internet connection",
+    });
   }
 };
 
@@ -36,7 +39,10 @@ export const loginAccountThunk = async (account, url, thunkAPI) => {
 
     return data;
   } catch (error) {
-    return error;
+    console.error(error);
+    return thunkAPI.rejectWithValue({
+      msg: "Something went wrong, Check internet connection",
+    });
   }
 };
 
@@ -54,6 +60,9 @@ export const logoutAccountThunk = async (url, thunkAPI) => {
 
     return data;
   } catch (error) {
-    return error;
+    console.error(error);
+    return thunkAPI.rejectWithValue({
+      msg: "Something went wrong, Check internet connection",
+    });
   }
 };

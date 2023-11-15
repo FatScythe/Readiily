@@ -67,7 +67,9 @@ const authSlice = createSlice({
       })
       .addCase(registerAccount.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       })
       // Login Account
       .addCase(loginAccount.pending, (state) => {
@@ -80,7 +82,9 @@ const authSlice = createSlice({
       })
       .addCase(loginAccount.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       })
       // Logout Account
       .addCase(logoutAccount.pending, (state) => {
@@ -93,7 +97,9 @@ const authSlice = createSlice({
       })
       .addCase(logoutAccount.rejected, (state, { payload }) => {
         state.loading = false;
-        toast.error(payload.msg || "Something went wrong");
+        toast.error(
+          payload?.msg || "Something went wrong, Check internet connection"
+        );
       });
   },
 });

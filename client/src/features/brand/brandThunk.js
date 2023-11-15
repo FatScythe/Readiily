@@ -56,7 +56,10 @@ export const getBrandsThunk = async (url, thunkAPI) => {
 
     return data;
   } catch (error) {
-    return error;
+    console.error(error);
+    return thunkAPI.rejectWithValue({
+      msg: "Something went wrong, Check internet connection",
+    });
   }
 };
 
