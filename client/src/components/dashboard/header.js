@@ -51,20 +51,8 @@ const DashboardHeader = ({ isSideOpen, setIsSideOpen, role }) => {
 export default DashboardHeader;
 
 const UserHeader = () => {
-  const { currentBrand, brands, loading } = useSelector((store) => store.brand);
-  const dispatch = useDispatch();
   const location = useLocation();
   const currentLocation = location.pathname.substring(11);
-
-  const handleSelect = (e) => {
-    const selectedIndex = e.target.options.selectedIndex;
-    dispatch(
-      selectBrand({
-        name: e.target.value,
-        id: e.target.options[selectedIndex].getAttribute("data-key"),
-      })
-    );
-  };
 
   if (currentLocation === "calendar") {
     return (
@@ -85,43 +73,62 @@ const UserHeader = () => {
       <div className='text-blue font-semibold sm:text-xl mx-2'>My Account</div>
     );
   }
-  return (
-    <>
-      {loading ? (
-        <div className='animate-pulse duration-700'>...</div>
-      ) : brands && brands?.brands.length > 0 ? (
-        <>
-          <select
-            className='border border-black'
-            onChange={handleSelect}
-            value={currentBrand.name}
-          >
-            {brands.brands.map((brand) => {
-              return (
-                <option key={brand._id} data-key={brand._id}>
-                  {brand.name}
-                </option>
-              );
-            })}
-          </select>
-        </>
-      ) : (
-        <Link
-          to='/dashboard/account/brand/create'
-          className='bg-blue rounded-md px-3 py-2 text-white'
-        >
-          Create Brand
-        </Link>
-      )}
-    </>
-  );
+
+  return <UserHeaderHome />;
 };
 
+const UserHeaderHome = () => {
+  const dispatch = useDispatch();
+  const { currentBrand, brands, loading } = useSelector((store) => store.brand);
+  const handleSelect = (e) => {
+    const selectedIndex = e.target.options.selectedIndex;
+    dispatch(
+      selectBrand({
+        name: e.target.value,
+        id: e.target.options[selectedIndex].getAttribute("data-key"),
+      })
+    );
+  };
+
+  if (loading) {
+    return <div>...</div>;
+  }
+  if (!loading && !brands) {
+    return <div>Error...</div>;
+  }
+  if (brands && brands.nb < 1) {
+    return (
+      <Link
+        to='/dashboard/account/brand/create'
+        className='bg-blue rounded-md px-3 py-2 text-white'
+      >
+        Create Brand
+      </Link>
+    );
+  }
+
+  return (
+    <select
+      className='border border-black'
+      onChange={handleSelect}
+      value={currentBrand ? currentBrand.name : "Select a brand"}
+    >
+      {brands.brands.map((brand) => {
+        return (
+          <option key={brand._id} data-key={brand._id}>
+            {brand.name || "Select a brand"}
+          </option>
+        );
+      })}
+    </select>
+  );
+};
 const DesignerHeader = () => {
+  const { account } = useSelector((store) => store.auth);
   return (
     <div className='flex justify-between items-center gap-1 sm:gap-3'>
       <h3 className='text-blue text-lg font-semibold sm:text-xl md:text-2xl'>
-        Hello Ayo
+        Hello {account ? account?.name.split(" ")[0] : "Designer"}
       </h3>
       <button>
         <BellIcon className='w-6 h-6 sm:h-8 sm:w-8' />
@@ -131,10 +138,11 @@ const DesignerHeader = () => {
 };
 
 const AdminHeader = () => {
+  const { account } = useSelector((store) => store.auth);
   return (
     <div className='flex justify-between items-center gap-1 sm:gap-3'>
       <h3 className='text-blue text-lg font-semibold sm:text-xl md:text-2xl'>
-        Hello Admin
+        Hello {account ? account?.name.split(" ")[0] : "Admin"}
       </h3>
       <button>
         <BellIcon className='w-6 h-6 sm:h-8 sm:w-8' />
