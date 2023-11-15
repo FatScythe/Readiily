@@ -5,7 +5,9 @@ const {
   getAllRequest,
   assignRequest,
   getAssignedRequest,
+  acceptRequest,
 } = require("../controller/requestCtrl");
+
 const {
   authenticateAccount,
   authorizePermissions,
@@ -16,13 +18,20 @@ router
   .post(authenticateAccount, createRequest)
   .get([authenticateAccount, authorizePermissions("admin")], getAllRequest);
 
-router.route("/:id").get(authenticateAccount, getBrandRequests);
 router
   .route("/assign")
+  .patch([authenticateAccount, authorizePermissions("admin")], assignRequest)
   .get(
     [authenticateAccount, authorizePermissions("designer")],
     getAssignedRequest
-  )
-  .patch([authenticateAccount, authorizePermissions("admin")], assignRequest);
+  );
+
+router.patch(
+  "/accept",
+  [authenticateAccount, authorizePermissions("designer")],
+  acceptRequest
+);
+
+router.route("/:id").get(authenticateAccount, getBrandRequests);
 
 module.exports = router;

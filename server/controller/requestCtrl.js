@@ -4,6 +4,7 @@ const Brand = require("../model/Brand");
 const useCloudinary = require("../utils/useCloudinary");
 const { BadRequestError, NotFoundError } = require("../errors");
 const Account = require("../model/Account");
+const checkPermissions = require("../utils/checkPermissions");
 
 const createRequest = async (req, res) => {
   let { desc, date, brand } = req.body;
@@ -132,9 +133,32 @@ const assignRequest = async (req, res) => {
 };
 
 const getAssignedRequest = async (req, res) => {
-  const assignedRequests = await Request.find({ designer: req.user.userId });
+  const assignedRequests = await Request.find({
+    designer: req.user.userId,
+  }).populate("brand");
 
   res.status(StatusCodes.OK).json(assignedRequests);
+};
+
+const acceptRequest = async (req, res) => {
+  const { requestId } = req.body;
+  if (!requestId || requestId.length < 1) {
+    throw new BadRequestError("Please provide request to assign");
+  }
+
+  for (const id of requestId) {
+    const request = await Request.findOne({ _id: id });
+
+    if (!request) {
+      throw new NotFoundError("No request with id: " + id);
+    }
+
+    checkPermissions(req.user, request.designer);
+    request.accepted = true;
+    await request.save();
+  }
+
+  res.status(StatusCodes.OK).json({ msg: "Request(s) accepted" });
 };
 
 module.exports = {
@@ -143,4 +167,5 @@ module.exports = {
   getAllRequest,
   assignRequest,
   getAssignedRequest,
+  acceptRequest,
 };
