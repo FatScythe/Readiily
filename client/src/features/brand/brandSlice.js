@@ -66,6 +66,7 @@ const brandSlice = createSlice({
       })
       .addCase(getBrands.rejected, (state, { payload }) => {
         state.loading = false;
+        state.currentBrand = null;
         toast.error(payload.msg || "Something went wrong");
       })
       // Create brand
@@ -85,6 +86,7 @@ const brandSlice = createSlice({
       })
       .addCase(deleteBrand.fulfilled, (state, { payload }) => {
         state.loading = false;
+        state.currentBrand = null;
         toast.success(payload.msg);
       })
       .addCase(deleteBrand.rejected, (state, { payload }) => {
