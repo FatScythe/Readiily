@@ -7,7 +7,7 @@ import useTitle from "../../../../../hooks/useTitle";
 import dayjs from "dayjs";
 // Util
 import { generateDate, days, months } from "../../../../../utils/calendar";
-import { ArrowIcon } from "../../../../../assets/icons";
+import { ArrowIcon, InfoIcon } from "../../../../../assets/icons";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { getRequests } from "../../../../../features/request/requestSlice";
@@ -38,6 +38,23 @@ const Calendar = () => {
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (!currentBrand) {
+    return (
+      <div className='h-screen grid place-items-center'>
+        <h1 className='text-xl sm:text-3xl font-semibold flex flex-col justify-start items-center'>
+          <span> Please select a brand to schedule request</span>
+          <code className='text-base sm:text-lg flex justify-start items-start sm:items-center gap-2 mt-5'>
+            <InfoIcon className='w-8 sm:w-10 h-8 sm:h-10' />
+            <span>
+              You can do that at the top right hand corner of the dashboard
+              homepage
+            </span>
+          </code>
+        </h1>
+      </div>
+    );
   }
 
   if (!loading && !requests) {
