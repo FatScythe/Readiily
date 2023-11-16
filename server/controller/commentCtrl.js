@@ -28,6 +28,7 @@ const createComment = async (req, res) => {
   }
 
   request.accepted = false;
+  request.status = "pending";
   await request.save();
 
   await Comment.create({ comment, brand: brandId, request: requestId });
