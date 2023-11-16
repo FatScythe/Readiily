@@ -94,7 +94,7 @@ const getBrandRequests = async (req, res) => {
   });
 };
 
-const getAllRequest = async (req, res) => {
+const getMonthRequests = async (req, res) => {
   const date = new Date();
   let currentMonth = date.getMonth();
   let currentYear = date.getFullYear();
@@ -161,11 +161,53 @@ const acceptRequest = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "Request(s) accepted" });
 };
 
+const uploadResponse = async (req, res) => {
+  const { requestId } = req.body;
+  const { designFile } = req.files;
+  let response = "";
+
+  if (!designFile) {
+    throw new BadRequestError("No response design file was found");
+  }
+  const request = await Request.findOne({ _id: requestId });
+  if (!request) {
+    throw new NotFoundError("No request with id: " + requestId);
+  }
+
+  response = await useCloudinary(designFile, "image", "/Response", requestId);
+  console.log(response);
+  if (response && response.msg) {
+    return res.status(response.status).json({
+      msg: response.msg,
+    });
+  }
+
+  request.design = response;
+  request.status = "done";
+
+  await request.save();
+
+  res.status(StatusCodes.OK).json({ msg: "Uploaded Design" });
+};
+
+const getDesignHistory = async (req, res) => {
+  let request;
+  if (req.user.role === "admin") {
+    request = await Request.find({ status: "done" });
+  } else {
+    request = await Request.find({ status: "done", designer: req.user.userId });
+  }
+
+  res.status(StatusCodes.OK).json(request);
+};
+
 module.exports = {
   createRequest,
   getBrandRequests,
-  getAllRequest,
+  getMonthRequests,
   assignRequest,
   getAssignedRequest,
   acceptRequest,
+  uploadResponse,
+  getDesignHistory,
 };

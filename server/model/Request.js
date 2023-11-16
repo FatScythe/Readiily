@@ -6,12 +6,11 @@ const RequestSchema = new Schema(
       type: String,
       required: [true, "Please provide request description"],
     },
-    image: String,
+    design: String,
     date: {
       type: Date,
       required: [true, "Please provide a schedule date"],
     },
-    response: String,
     accepted: {
       type: Boolean,
       default: false,

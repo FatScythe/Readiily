@@ -2,10 +2,12 @@ const router = require("express").Router();
 const {
   createRequest,
   getBrandRequests,
-  getAllRequest,
+  getMonthRequests,
   assignRequest,
   getAssignedRequest,
   acceptRequest,
+  uploadResponse,
+  getDesignHistory,
 } = require("../controller/requestCtrl");
 
 const {
@@ -16,7 +18,7 @@ const {
 router
   .route("/")
   .post(authenticateAccount, createRequest)
-  .get([authenticateAccount, authorizePermissions("admin")], getAllRequest);
+  .get([authenticateAccount, authorizePermissions("admin")], getMonthRequests);
 
 router
   .route("/assign")
@@ -30,6 +32,18 @@ router.patch(
   "/accept",
   [authenticateAccount, authorizePermissions("designer")],
   acceptRequest
+);
+
+router.patch(
+  "/response",
+  [authenticateAccount, authorizePermissions("admin", "designer")],
+  uploadResponse
+);
+
+router.get(
+  "/history",
+  [authenticateAccount, authorizePermissions("admin", "designer")],
+  getDesignHistory
 );
 
 router.route("/:id").get(authenticateAccount, getBrandRequests);
