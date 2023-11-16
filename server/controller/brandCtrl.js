@@ -88,6 +88,18 @@ const getBrands = async (req, res) => {
   res.status(StatusCodes.OK).json({ nb: count, brands });
 };
 
+const getBrand = async (req, res) => {
+  const { id } = req.params;
+
+  const brand = await Brand.findOne({ _id: id });
+
+  if (!brand) {
+    throw new NotFoundError("No brand with id: " + id);
+  }
+
+  res.status(StatusCodes.OK).json(brand);
+};
+
 const deleteBrand = async (req, res) => {
   const { id: brandId } = req.params;
 
@@ -171,4 +183,4 @@ const editBrand = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "Brand updated" });
 };
 
-module.exports = { createBrand, getBrands, deleteBrand, editBrand };
+module.exports = { createBrand, getBrands, getBrand, deleteBrand, editBrand };

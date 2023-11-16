@@ -3,6 +3,7 @@ const {
   createBrand,
   editBrand,
   getBrands,
+  getBrand,
   deleteBrand,
 } = require("../controller/brandCtrl");
 const { authenticateAccount } = require("../middlewares/authentication");
@@ -14,6 +15,7 @@ router
 
 router
   .route("/:id")
+  .get(authenticateAccount, getBrand)
   .patch(authenticateAccount, editBrand)
   .delete(authenticateAccount, deleteBrand);
 

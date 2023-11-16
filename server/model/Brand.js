@@ -45,4 +45,9 @@ const BrandSchema = new Schema(
   { timestamps: true }
 );
 
+BrandSchema.pre("deleteOne", { document: true }, async function (next) {
+  await this.model("Requests").deleteMany({ brand: this._id });
+  await this.model("Comments").deleteMany({ brand: this._id });
+});
+
 module.exports = model("Brands", BrandSchema);
