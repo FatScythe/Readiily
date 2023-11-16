@@ -40,7 +40,9 @@ const EachDate = ({
         !isCurrentMonth ? "opacity-40" : "opacity-100"
       } h-14 sm:h-24 ${
         today ? "bg-red-400 text-black sm:bg-black sm:text-white" : ""
-      } sm:hover:bg-red-400 sm:hover:text-white cursor-pointer transition-all ease-in flex flex-col justify-center sm:justify-between items-center sm:items-stretch border border-t-0 border-r-0 border-[#E2E8F0] sm:p-2`}
+      } sm:hover:bg-sky-500 sm:hover:text-white ${
+        myRequest.length > 0 && "bg-green-400"
+      } cursor-pointer transition-all ease-in flex flex-col justify-center sm:justify-between items-center sm:items-stretch border border-t-0 border-r-0 border-grayish sm:p-2`}
       title={`${date.$D}/${date.$M + 1}/${date.$y}`}
     >
       <h4 className='font-bold sm:text-base sm:font-semibold md:font-normal'>
@@ -64,6 +66,7 @@ const EachDate = ({
             className='bg-green-200 opacity-90 sm:bg-transparent w-full h-full flex justify-center items-center sm:inline-block'
             onClick={() => {
               setIsPostOpen(true);
+              setIsDone(false);
               setForm({
                 ...form,
                 date: `${date.$y}-${date.$M + 1}-${date.$D}`,
