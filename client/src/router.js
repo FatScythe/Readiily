@@ -27,7 +27,6 @@ import History from "./pages/Dashboard/pages/designer/history";
 // Designer SubPages
 import AvailableRequest from "./pages/Dashboard/pages/designer/request/available";
 import BrandInfo from "./pages/Dashboard/pages/designer/request/brand";
-import RequestView from "./pages/Dashboard/pages/designer/request/view";
 // Admin Pages
 import AllRequest from "./pages/Dashboard/pages/admin/request";
 import Payments from "./pages/Dashboard/pages/admin/payments";
@@ -137,12 +136,8 @@ export const router = createBrowserRouter([
             element: <AvailableRequest />,
           },
           {
-            path: "brand",
+            path: "brand/:id",
             element: <BrandInfo />,
-          },
-          {
-            path: ":id",
-            element: <RequestView />,
           },
         ],
       },
