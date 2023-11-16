@@ -1,7 +1,29 @@
 // Hook
 import useTitle from "../../../../../hooks/useTitle";
+import useSWR from "swr";
+// Utils
+import url from "../../../../../utils/url";
+
 const History = () => {
   useTitle("Design History");
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { data, error, isLoading } = useSWR(
+    url + "/api/v1/request/history",
+    fetcher
+  );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if ((data && data.msg) || error) {
+    return <div>Failed to load</div>;
+  }
+
+  const myHistory =
+    data?.filter((request) => request.status === "done" && request.design) ||
+    [];
+
   return (
     <section>
       <main className='bg-white/80 sm:m-2 shadow-xl sm:p-2'>

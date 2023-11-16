@@ -5,6 +5,7 @@ import useSWR from "swr";
 // Utils
 import url from "../../../../../utils/url";
 import time_between from "../../../../../utils/time_between";
+// Icon
 import { CancelIcon } from "../../../../../assets/icons";
 // Toastify
 import { toast } from "react-toastify";
@@ -20,25 +21,30 @@ const PendingRequest = () => {
   );
 
   const handleAccept = async () => {
-    if (requestId.length < 1) {
-      toast.info("Select request to accept");
-      return;
+    try {
+      if (requestId.length < 1) {
+        toast.info("Select request to accept");
+        return;
+      }
+      const res = await fetch(url + "/api/v1/request/accept", {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ requestId }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.msg || "Something went wrong");
+        return;
+      }
+
+      toast.success(data.msg);
+      setRequestId([]);
+    } catch (error) {
+      toast.error(error.msg || "Something went wrong");
+      console.error(error);
     }
-    const res = await fetch(url + "/api/v1/request/accept", {
-      method: "PATCH",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ requestId }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      toast.error(data.msg || "Something went wrong");
-      return;
-    }
-
-    toast.success(data.msg);
-    setRequestId([]);
   };
 
   if (isLoading) {
@@ -91,16 +97,16 @@ const PendingRequest = () => {
           </div>
           {myRequest.length > 0 && (
             <div className='grid grid-cols-12 py-3 px-2 sm:py-6 sm:px-5 bg-blue/10 gap-2'>
-              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
+              <div className='col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
                 ID
               </div>
-              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
+              <div className='col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden'>
                 Brand
               </div>
-              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
+              <div className='col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
                 Deadline
               </div>
-              <div className='col-span-3 sm:col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
+              <div className='col-span-3 text-secondary font-semibold sm:text-lg overflow-hidden text-center'>
                 Accept
               </div>
             </div>
@@ -127,14 +133,16 @@ const PendingRequest = () => {
           )}
         </div>
 
-        <div className='flex justify-end items-center py-3 px-4'>
-          <button
-            className='bg-sky-600 px-3 py-2 text-lg rounded-3xl text-white font-semibold'
-            onClick={handleAccept}
-          >
-            Accept
-          </button>
-        </div>
+        {myRequest.length > 0 && (
+          <div className='flex justify-end items-center py-3 px-4'>
+            <button
+              className='bg-sky-600 px-3 py-2 text-lg rounded-3xl text-white font-semibold'
+              onClick={handleAccept}
+            >
+              Accept
+            </button>
+          </div>
+        )}
       </main>
     </section>
   );
