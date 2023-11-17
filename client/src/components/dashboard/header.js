@@ -12,7 +12,7 @@ const DashboardHeader = ({ isSideOpen, setIsSideOpen, role }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
-    <header className='flex justify-between items-center'>
+    <header className='flex justify-between items-center bg-white'>
       <button
         className='hidden sm:block basis-auto p-4'
         onClick={() => setIsSideOpen(!isSideOpen)}

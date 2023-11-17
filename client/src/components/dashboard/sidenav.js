@@ -22,7 +22,7 @@ const DashboardSideNav = ({ isSideOpen, setIsSideOpen, role }) => {
         className={`flex flex-col justify-start gap-24 items-start px-2 py-4 transition-all duration-700 ease-in-out h-full ${
           isSideOpen
             ? "absolute top-0 left-0 right-[80%] px-4 bg-lightpink"
-            : "w-full"
+            : "w-full bg-white h-screen shadow-md"
         }`}
       >
         <ul className='side-opt flex flex-col justify-between items-center gap-5'>
