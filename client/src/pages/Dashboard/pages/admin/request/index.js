@@ -1,10 +1,11 @@
 import "./request.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 // Hook
 import useTitle from "../../../../../hooks/useTitle";
 import useSWR from "swr";
 // Icons
-import { AddUserIcon } from "../../../../../assets/icons";
+import { AddUserIcon, CancelIcon } from "../../../../../assets/icons";
 // Utils
 import time_between from "../../../../../utils/time_between";
 // Component
@@ -15,6 +16,7 @@ import { toast } from "react-toastify";
 const Request = () => {
   useTitle("All request");
   const [openModal, setOpenModal] = useState(false);
+  const [view, setView] = useState({ open: false, request: null });
   const [requestId, setRequestId] = useState([]);
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error, isLoading } = useSWR("/api/v1/request", fetcher);
@@ -71,14 +73,17 @@ const Request = () => {
           )}
         </header>
 
+        {view.open && <RequestModal view={view} setView={setView} />}
+
         <div className='h-[50vh] sm:h-[60vh] overflow-x-hidden overflow-y-scroll'>
-          {unassignedReq.length > 1 ? (
+          {unassignedReq.length >= 1 ? (
             unassignedReq.map((request) => (
               <SingleRequest
                 key={request._id}
                 request={request}
                 requestId={requestId}
                 setRequestId={setRequestId}
+                setView={setView}
               />
             ))
           ) : (
@@ -109,23 +114,41 @@ const Request = () => {
 
 export default Request;
 
-const SingleRequest = ({ request, requestId, setRequestId }) => {
+const SingleRequest = ({ request, requestId, setRequestId, setView }) => {
   const { _id, brand, date } = request;
 
   return (
     <div className='grid grid-cols-12 py-3 px-2 sm:py-6 sm:px-5 mt-3 gap-2 border border-transparent border-b-slate-400'>
-      <div className='col-span-3 sm:text-lg overflow-hidden'>{_id}</div>
-      <div className='col-span-3 sm:col-span-3 sm:text-lg flex justify-start gap-2 items-center overflow-hidden'>
-        {brand && brand.logoLight ? (
+      <div className='col-span-3 sm:text-lg overflow-hidden flex flex-col justify-center'>
+        <span>{_id}</span>
+        <button
+          className='bg-blue px-4 py-2 rounded-xl text-white w-fit text-sm'
+          onClick={() => setView({ open: true, request })}
+        >
+          <span>View </span>
+          <span className='hidden sm:inline'>Request</span>
+        </button>
+      </div>
+      <div className='col-span-3 sm:text-lg flex justify-start gap-2 items-center overflow-hidden'>
+        {brand && (brand.logoLight || brand.logoDark) ? (
           <img
-            src={brand.logoLight}
+            src={brand.logoLight || brand.logoDark}
             className='w-10 h-10 rounded-full hidden sm:block'
             alt={brand.name}
           />
         ) : (
           <></>
         )}
-        <span>{brand ? brand.name : "Brand deleted"}</span>
+        <div className='flex flex-col justify-center'>
+          <span>{brand.name}</span>
+          <Link
+            className='text-blue underline underline-offset-2'
+            to={`/dashboard/request/brand/${brand ? brand._id : ""}`}
+          >
+            <span>View </span>
+            <span className='hidden sm:inline'>Branding</span>
+          </Link>
+        </div>
       </div>
       <div
         className='col-span-3 sm:text-lg overflow-hidden text-center text-red-400 cursor-pointer'
@@ -146,6 +169,29 @@ const SingleRequest = ({ request, requestId, setRequestId }) => {
           type='checkbox'
           className='scale-105 h-6 w-6 border border-transparent outline -outline-offset-1 outline-2 outline-blue'
         />
+      </div>
+    </div>
+  );
+};
+
+const RequestModal = ({ view, setView }) => {
+  return (
+    <div className='fixed top-0 right-0 left-0 bottom-0 bg-black/5'>
+      <div className='absolute h-4/6 -bottom-64 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 w-full sm:w-1/2 md::w-1/3 bg-grayish p-2 rounded-xl'>
+        <button
+          className='w-full flex justify-end items-center'
+          onClick={() => setView({ open: false, request: null })}
+        >
+          <CancelIcon className='w-6 h-6 bg-red-500 rounded-full stroke-white stroke-2' />
+        </button>
+        <div className='w-5/6 sm:w-3/4 mx-auto'>
+          <p className='border-2 border-black rounded-lg h-32 overflow-x-hidden overflow-y-scroll'>
+            {view.request.desc}
+          </p>
+          <h2 className='text-lg sm:text-xl '>Preferred brand image</h2>
+
+          <button>download</button>
+        </div>
       </div>
     </div>
   );

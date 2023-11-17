@@ -79,12 +79,15 @@ const BrandInfo = () => {
           <div className='w-full h-40 rounded-lg shadow-lg bg-white col-span-12 sm:col-span-4 md:col-span-3 p-1 sm:p-2 flex flex-col justify-between items-start'>
             <h2 className='text-secondary text-lg'>Brand Social Handle</h2>
             <main className='grid grid-cols-12 gap-2 w-full'>
-              {socials.map((social) => {
+              {socials.map((social, index) => {
                 if (!social.handle) {
-                  return <></>;
+                  return <div key={index}></div>;
                 }
                 return (
-                  <div className='col-span-6 flex justify-start items-center gap-2 bg-sky-500 text-white rounded-md p-1'>
+                  <div
+                    key={index}
+                    className='col-span-6 flex justify-start items-center gap-2 bg-sky-500 text-white rounded-md p-1'
+                  >
                     <span className=''>{social.media.slice(0, 3)}</span>
                     <span>{social.handle}</span>
                   </div>
@@ -148,7 +151,10 @@ const BrandInfo = () => {
             <main className='grid grid-cols-12 gap-2 w-full'>
               {industry.length > 0 ? (
                 industry.map((item, index) => (
-                  <div className='col-span-6 bg-gray-400 text-white rounded-md p-1'>
+                  <div
+                    className='col-span-6 bg-gray-400 text-white rounded-md p-1'
+                    key={index}
+                  >
                     <span>{item}</span>
                   </div>
                 ))
