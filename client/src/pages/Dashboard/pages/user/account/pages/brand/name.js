@@ -5,7 +5,7 @@ const Name = ({ form, setForm }) => {
       <input
         type='text'
         placeholder='My Brand'
-        className='border border-blue rounded-md text-lg p-2 w-full sm:w-1/3 outline-black'
+        className='bg-white/70 border border-blue rounded-md text-lg p-2 w-full sm:w-1/4 outline-black'
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
       />

@@ -7,9 +7,9 @@ import { toast } from "react-toastify";
 const Color = ({ form, setForm }) => {
   const [currColor, setCurrColor] = useState(null);
   return (
-    <div className='w-full h-40 rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-4 p-1 sm:p-2'>
-      <h2 className='text-blue text-lg'>Brand Color</h2>
-      <main className='flex flex-col justify-between items-stretch gap-10 m-2'>
+    <div className='w-11/12 h-fit rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-3 p-1 sm:p-2'>
+      <h2 className='text-lg'>Brand Colors</h2>
+      <main className='flex flex-col justify-between items-stretch gap-5'>
         <div className='h-1/2 flex justify-start items-center gap-5'>
           {form.colors.map((color, index) => {
             return (
@@ -36,7 +36,7 @@ const Color = ({ form, setForm }) => {
         <div className='flex justify-between items-center'>
           <div>
             <label htmlFor='color' className=''>
-              <AddIcon className='w-10 h-10' />
+              <AddIcon className='w-10 sm:w-12 h-10 sm:h-12' />
             </label>
             <input
               id='color'
@@ -45,7 +45,7 @@ const Color = ({ form, setForm }) => {
               className='hidden'
             />
           </div>
-          {(currColor || form.colors.length < 6) && (
+          {currColor && form.colors.length < 6 && (
             <button
               type='button'
               className='bg-sky-500 px-2 py-1 rounded-md text-white'

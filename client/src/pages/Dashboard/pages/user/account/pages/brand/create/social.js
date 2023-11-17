@@ -6,8 +6,8 @@ const Social = ({ form, setForm }) => {
   const OtherMedia = form.socials.filter((item) => item.media !== currSocial);
 
   return (
-    <div className='flex flex-col justify-between items-stretch w-full h-40 rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-4 p-1 sm:p-2'>
-      <h2 className='text-blue text-lg'>Brand Social Handle </h2>
+    <div className='flex flex-col justify-between items-stretch w-full h-full rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-3 p-1 sm:p-2'>
+      <h2 className='text-lg'>Brand Social Handle </h2>
       <div className='flex justify-between items-center gap-2'>
         <div>
           <select

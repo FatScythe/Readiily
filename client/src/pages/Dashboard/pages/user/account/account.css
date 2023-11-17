@@ -3,5 +3,5 @@ ul a.active p {
 }
 
 ul a.active li {
-    @apply font-bold pb-3;
+    @apply pb-2;
 }

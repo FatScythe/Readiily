@@ -20,8 +20,8 @@ export const LightBackground = ({ form, setForm }) => {
     setForm({ ...form, light: file });
   };
   return (
-    <div className='flex flex-col justify-between items-stretch w-full h-40 rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-4 p-1 sm:p-2'>
-      <h2 className='text-blue text-lg'>Logo for Light Background</h2>
+    <div className='flex flex-col justify-between gap-5 items-stretch w-full h-full rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-3 p-1 sm:p-2'>
+      <h2 className='text-lg'>Logo for Light Background</h2>
       <div className='flex justify-between items-center outline-none border border-gray-400 rounded-md p-3 '>
         <div className='basis-11/12 overflow-hidden'>
           <label
@@ -83,8 +83,8 @@ export const DarkBackground = ({ form, setForm }) => {
     setForm({ ...form, dark: file });
   };
   return (
-    <div className='flex flex-col justify-between items-stretch w-full h-40 rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-4 p-1 sm:p-2'>
-      <h2 className='text-blue text-lg'>Logo for Dark Background</h2>
+    <div className='flex flex-col justify-between items-stretch w-full h-full rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-3 p-1 sm:p-2'>
+      <h2 className='text-lg'>Logo for Dark Background</h2>
       <div className='flex justify-between items-center outline-none border border-gray-400 rounded-md p-3 '>
         <div className='basis-11/12 overflow-hidden'>
           <label

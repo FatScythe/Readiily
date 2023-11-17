@@ -7,8 +7,8 @@ import { CancelIcon } from "../../../../../../../../assets/icons";
 
 const Industry = ({ form, setForm }) => {
   return (
-    <div className='flex flex-col justify-between items-stretch w-full h-42 rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-4 p-2'>
-      <h2 className='text-blue text-lg'>Brand Industry</h2>
+    <div className='flex flex-col justify-between items-stretch w-full h-full rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-3 p-2'>
+      <h2 className='text-lg'>Brand Industry</h2>
 
       <div className='flex flex-col justify-between items-stretch gap-2'>
         <div className='grid grid-cols-12 gap-2'>

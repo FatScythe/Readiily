@@ -25,14 +25,16 @@ const CreateBrand = () => {
           <Industry form={form} setForm={setForm} />
         </main>
 
-        <div className='w-full flex justify-end items-center'>
-          <button
-            type='submit'
-            className='bg-blue px-3 py-2 sm:py-5 sm:w-1/4 sm:text-lg rounded-lg text-white font-semibold'
-          >
-            Create
-          </button>
-        </div>
+        {form.name && form.font && (
+          <div className='w-full flex justify-end items-center'>
+            <button
+              type='submit'
+              className='bg-blue px-3 py-2 sm:py-5 sm:w-1/4 sm:text-lg rounded-lg text-white font-semibold'
+            >
+              Create
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

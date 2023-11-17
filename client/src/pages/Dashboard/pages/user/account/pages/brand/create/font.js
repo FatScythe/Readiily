@@ -25,10 +25,10 @@ const Font = ({ form, setForm }) => {
   };
 
   return (
-    <div className='flex flex-col justify-between items-stretch w-full h-40 rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-4 p-1 sm:p-2'>
-      <h2 className='text-blue text-lg flex justify-between items-center'>
+    <div className='flex flex-col justify-between items-stretch w-full h-full rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-3 p-1 sm:p-2'>
+      <h2 className='text-lg flex justify-between items-center'>
         <p>Font</p>
-        <div className='flex justify-between items-center gap-2'>
+        <div className='flex justify-between items-center'>
           <input
             onChange={(e) => setCustomFont(e.target.checked)}
             type='checkbox'
