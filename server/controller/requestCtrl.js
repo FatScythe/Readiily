@@ -193,9 +193,12 @@ const uploadResponse = async (req, res) => {
 const getDesignHistory = async (req, res) => {
   let request;
   if (req.user.role === "admin") {
-    request = await Request.find({ status: "done" });
+    request = await Request.find({ status: "done" }).populate("brand");
   } else {
-    request = await Request.find({ status: "done", designer: req.user.userId });
+    request = await Request.find({
+      status: "done",
+      designer: req.user.userId,
+    }).populate("brand");
   }
 
   res.status(StatusCodes.OK).json(request);
