@@ -19,7 +19,7 @@ const Comment = ({ id }) => {
   }
 
   return (
-    <div className='w-5/6 sm:w-3/4 mx-auto'>
+    <div className='w-5/6 z-10 mx-auto'>
       {data.length > 0 ? (
         data.map((comment) => (
           <div
