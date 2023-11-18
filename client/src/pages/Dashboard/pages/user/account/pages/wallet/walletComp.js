@@ -5,7 +5,7 @@ import {
   WalletIcon,
 } from "../../../../../../../assets/icons";
 
-export const Card = () => {
+export const Card = ({ modal, setModal }) => {
   return (
     <main className='h-64 rounded-lg shadow-md p-3 text-white bg-gradient-to-r from-secondary to-blue'>
       <div className='flex justify-between items-stretch h-full p-3'>
@@ -50,7 +50,10 @@ export const Card = () => {
             <span className='text-gray-300 ml-2'>$</span>
           </h1>
 
-          <button className='bg-sky-400 text-sm sm:text-base px-2 py-1 sm:px-3 sm:py-2 rounded-lg text-gray-100'>
+          <button
+            className='bg-sky-400 text-sm sm:text-base px-2 py-1 sm:px-3 sm:py-2 rounded-lg text-gray-100'
+            onClick={() => setModal({ ...modal, open: true, isFund: true })}
+          >
             Fund Wallet
           </button>
         </div>
@@ -59,7 +62,7 @@ export const Card = () => {
   );
 };
 
-export const Referral = () => {
+export const Referral = ({ modal, setModal }) => {
   return (
     <section className='my-4'>
       <h1 className='text-xl font-semibold sm:text-3xl'>
@@ -79,7 +82,10 @@ export const Referral = () => {
           <ChainLinkIcon className='w-6 h-6' />
           <span>Get your referral link</span>
         </button>
-        <button className='bg-purple-500 px-3 py-2 rounded-md text-white flex justify-between items-center gap-2'>
+        <button
+          className='bg-purple-500 px-3 py-2 rounded-md text-white flex justify-between items-center gap-2'
+          onClick={() => setModal({ ...modal, open: true, isFund: false })}
+        >
           <WalletIcon className='w-6 h-6' />
           <span>Claim referral bonus</span>
         </button>

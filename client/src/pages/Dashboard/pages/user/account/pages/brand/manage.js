@@ -53,7 +53,7 @@ const BrandManage = () => {
             <p>Email</p>
             <p>Status</p>
           </div>
-          <div className='h-96 overflow-scroll pb-11'>
+          <div className='h-96 overflow-scroll overflow-x-hidden pb-11'>
             {brands && brands.nb > 0 ? (
               brands.brands.map((brand) => (
                 <SingleBrand key={brand._id} {...brand} />

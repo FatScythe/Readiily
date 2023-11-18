@@ -60,7 +60,7 @@ const Brand = () => {
   return (
     <section>
       <Name form={form} setForm={setForm} />
-      <div className='rounded-2xl h-[75vh] sm:m-3 sm:p-2 sm:shadow-xl sm:bg-white/80'>
+      <div className='rounded-2xl h-screen sm:m-3 sm:p-2 sm:shadow-xl sm:bg-white/80'>
         <header className='px-2 py-5 m-2 sm:m-4'>
           <ul className='flex justify-start items-center text-blue gap-5 sm:gap-8'>
             <NavLink to='/dashboard/account/brand/create' className='relative'>
