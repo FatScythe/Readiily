@@ -67,7 +67,7 @@ const Navbar = () => {
               </Link>
               <Link
                 to='/auth?signup=true'
-                className='font-semibold text-white text-xl sm:text-2xl md:text-sm bg-blue px-3 py-2 rounded-md md:w-full hover:scale-105 transition-all duration-500'
+                className='font-semibold text-white text-xl sm:text-2xl md:text-sm bg-blue px-3 py-3 rounded-md md:w-full hover:scale-105 transition-all duration-500'
               >
                 Get your first design!
               </Link>
@@ -82,7 +82,7 @@ const Navbar = () => {
               </Link>
               <Link
                 to='/dashboard'
-                className='font-semibold text-white text-xl sm:text-2xl md:text-sm bg-sky-700 px-3 py-2 rounded-md md:w-full hover:scale-105 transition-all duration-500'
+                className='font-semibold text-white text-xl sm:text-2xl md:text-sm bg-sky-700 px-3 py-3 rounded-md md:w-full hover:scale-105 transition-all duration-500'
               >
                 Dashboard
               </Link>

@@ -29,7 +29,7 @@ const Homepage = () => {
       <Footer />
 
       <a
-        className={`fixed ${
+        className={`fixed md:hidden ${
           show ? "bottom-10" : "-bottom-20"
         } right-4 bg-black transition-all duration-500 text-white rounded-full p-4 sm:p-6`}
         href='#hero'

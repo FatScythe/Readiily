@@ -1,23 +1,16 @@
 // Icons
-import {
-  BulbIcon,
-  CheckIcon,
-  LoudIcon,
-  LoveIcon,
-  RibbonIcon,
-  WindIcon,
-} from "../../assets/icons";
+import { BulbIcon, CheckIcon, RibbonIcon, WindIcon } from "../../assets/icons";
 // Images
 import feat1 from "../../assets/images/features1.png";
 import feat2 from "../../assets/images/features2.png";
-import feat3 from "../../assets/images/features3.png";
 import cta1 from "../../assets/images/cta1.png";
 import cta2 from "../../assets/images/cta2.png";
 import cta3 from "../../assets/images/cta3.png";
+import Carousel from "./carousel";
 
 const Features = () => {
   return (
-    <section id='features' className='mt-64 mb-2'>
+    <section id='features' className='mt-5 mb-2'>
       <Features1 />
       <Features2 />
       <Features3 />
@@ -30,21 +23,22 @@ export default Features;
 
 const Features1 = () => {
   return (
-    <section className='grid grid-cols-12 gap-5 mb-10 p-2 container'>
+    <section className='grid grid-cols-12 gap-5 mb-10 p-2 container place-items-center'>
       <div className='col-span-12 sm:col-span-6 gap-2'>
-        <h2 className='flex justify-start items-center gap-5 md:gap-10'>
-          <span className='text-xl md:text-2xl'>Section</span>
-          <span>
-            <BulbIcon className='w-8 h-8 hover:w-10 hover:h-10 transition-all duration-200 sm:w-10 sm:h-10 md:w-12 md:h-12 sm:hover:w-14 sm:hover:h-14' />
-          </span>
-        </h2>
-        <h1 className='text-xl sm:text-2xl md:text-3xl font-bold mt-3'>
-          Fill pre-designed sections for building cohesive design layout
-        </h1>
-        <p className='mt-5 md:mt-10 text-lg sm:text-xl md:text-3xl w-3/4'>
-          We leverage your pre-design input to streamline your brand’s design
-          content and layout
-        </p>
+        <div className='flex justify-start items-start gap-2'>
+          <div className='basis-1/12'>
+            <BulbIcon className='w-8 h-8 hover:w-10 hover:h-10 transition-all duration-200' />
+          </div>
+          <div className='basis-11/12 text-blue'>
+            <h1 className='text-xl sm:text-2xl md:text-4xl font-bold'>
+              Fill your branding
+            </h1>
+            <p className='mt-5 md:mt-10 text-lg md:text-3xl w-3/4 sm:w-11/12'>
+              We leverage your pre-design brand input in generating a little to
+              no customisable design
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className='col-span-12 sm:col-span-6 w-full flex justify-center items-center'>
@@ -56,29 +50,26 @@ const Features1 = () => {
 
 const Features2 = () => {
   return (
-    <section className='grid grid-cols-12 gap-5 mb-10 p-2 container'>
-      <div className='col-span-12 sm:col-span-6 order-2 sm:order-1 gap-2'>
-        <div className='col-span-12 sm:col-span-6 w-full border border-secondary rounded-lg flex justify-center items-center bg-secondary/5'>
-          <img src={feat2} alt='Assets' />
+    <section className='grid grid-cols-12 gap-5 mb-10 p-2 container place-items-center'>
+      <div className='col-span-12 sm:col-span-6 gap-2 order-2 sm:order-1'>
+        <div className='flex justify-start items-start gap-2'>
+          <div className='basis-11/12 text-blue'>
+            <h1 className='text-xl sm:text-2xl md:text-4xl font-bold'>
+              Your assets are covered
+            </h1>
+            <p className='mt-5 md:mt-10 text-lg md:text-3xl w-3/4 sm:w-11/12'>
+              We utilize premium assets that perfectly align with your brand’s
+              identity to enhance your brand’s identity for your audience
+            </p>
+          </div>
+          <div className='basis-1/12'>
+            <RibbonIcon className='w-8 h-8 hover:w-10 hover:h-10 transition-all duration-200' />
+          </div>
         </div>
       </div>
 
-      <div className='col-span-12 sm:col-span-6 order-1 sm:order-2'>
-        <h2 className='flex justify-start items-center gap-5 md:gap-10'>
-          <span className='text-xl md:text-2xl'>Assets</span>
-          <span>
-            <RibbonIcon className='w-8 h-8 hover:w-10 hover:h-10 transition-all duration-200 sm:w-10 sm:h-10 md:w-12 md:h-12 sm:hover:w-14 sm:hover:h-14' />
-          </span>
-        </h2>
-        <h1 className='text-xl sm:text-2xl md:text-3xl font-bold mt-3'>
-          Your brand stock images, icons, graphics, and other essential assets
-          are covered by us
-        </h1>
-        <p className='mt-5 md:mt-10 text-lg sm:text-xl md:text-2xl'>
-          We utilize premium assets that perfectly align with your brand’s
-          identity and guidelines to enhance your brand’s recognition among your
-          audience
-        </p>
+      <div className='col-span-12 sm:col-span-6 w-full flex justify-center items-center bg-grayish border border-secondary rounded-xl'>
+        <img src={feat2} alt='Assets' />
       </div>
     </section>
   );
@@ -86,30 +77,26 @@ const Features2 = () => {
 
 const Features3 = () => {
   return (
-    <section className='grid grid-cols-12 gap-5 p-2 container'>
+    <section className='grid grid-cols-12 gap-5 mb-10 p-2 container place-items-center'>
       <div className='col-span-12 sm:col-span-6 gap-2'>
-        <h2 className='flex justify-start items-center gap-5 md:gap-10'>
-          <span className='text-xl md:text-2xl'>Bespoke</span>
-          <span>
-            <CheckIcon className='w-8 h-8 hover:w-10 hover:h-10 transition-all duration-200 sm:w-10 sm:h-10 md:w-12 md:h-12 sm:hover:w-14 sm:hover:h-14 stroke-secondary' />
-          </span>
-        </h2>
-        <h1 className='text-xl sm:text-2xl md:text-3xl font-bold mt-3'>
-          Design tailored to your brand identity and content strategy
-        </h1>
-        <p className='mt-5 md:mt-10 text-lg sm:text-xl md:text-2xl'>
-          We design tailored captivating brand designs within time and in sync
-          with your content strategy and brand’s visual language
-        </p>
+        <div className='flex justify-start items-start gap-2'>
+          <div className='basis-1/12'>
+            <CheckIcon className='w-8 h-8 hover:w-10 hover:h-10 transition-all duration-200' />
+          </div>
+          <div className='basis-11/12 text-blue'>
+            <h1 className='text-xl sm:text-2xl md:text-4xl font-bold'>
+              Generate crazy design
+            </h1>
+            <p className='mt-5 md:mt-10 text-lg md:text-3xl w-3/4 sm:w-11/12'>
+              Get tailored captivating brand designs with prompt in sync with
+              your audience needs.
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className='col-span-12 sm:col-span-6 relative w-full mx-auto'>
-        <img
-          src={feat3}
-          alt='Bespoke'
-          className='rounded-md object-cover sm:w-11/12'
-        />
-        <LoudIcon className='w-6 h-6 hover:w-8 hover:h-8 transition-all duration-200 absolute -bottom-6 right-0 sm:right-5' />
+      <div className='col-span-12 sm:col-span-6 w-full flex justify-center items-center'>
+        <Carousel />
       </div>
     </section>
   );
@@ -127,9 +114,7 @@ const Features4 = () => {
 
       <div className='grid grid-cols-8 gap-6 md:gap-2'>
         <div className='col-span-8 md:col-span-2'>
-          <h4 className='text-lg font-semibold mb-4'>
-            Pre-filled brand sections
-          </h4>
+          <h4 className='text-lg font-bold mb-4'>Pre-filled brandings</h4>
           <div className='flex justify-center items-center mt-3'>
             <img
               src={cta1}
@@ -144,7 +129,7 @@ const Features4 = () => {
         </div>
 
         <div className='col-span-8 md:col-span-2'>
-          <h4 className='text-lg font-semibold mb-4'>Content Prompts</h4>
+          <h4 className='text-lg font-bold mb-4'>Content Prompts</h4>
           <div className='flex justify-center items-center mt-3'>
             <img
               src={cta2}
@@ -159,8 +144,7 @@ const Features4 = () => {
         </div>
 
         <div className='col-span-8 md:col-span-2 relative'>
-          <LoveIcon className='w-6 h-6 absolute right-2 top-4' />
-          <h4 className='text-lg font-semibold mb-4'>Crazy Engaging Designs</h4>
+          <h4 className='text-lg font-bold mb-4'>Crazy Engaging Designs</h4>
           <div className='flex justify-center items-center mt-3'>
             <img
               src={cta3}
