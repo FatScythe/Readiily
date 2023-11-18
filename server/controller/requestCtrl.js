@@ -175,7 +175,7 @@ const uploadResponse = async (req, res) => {
   }
 
   response = await useCloudinary(designFile, "image", "/Response", requestId);
-  console.log(response);
+
   if (response && response.msg) {
     return res.status(response.status).json({
       msg: response.msg,

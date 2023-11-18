@@ -11,11 +11,13 @@ import { toast } from "react-toastify";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { createRequest } from "../../../../../features/request/requestSlice";
+import Comment from "../../../../../components/dashboard/comment";
 
 const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
   const { brands, currentBrand } = useSelector((store) => store.brand);
   const [inputKey, setInputKey] = useState("");
   const dispatch = useDispatch();
+  console.log(myRequest);
 
   const handleSubmit = (e) => {
     setForm({ ...form, loading: true });
@@ -101,6 +103,7 @@ const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
                 />
               </a>
             )}
+            <Comment id={myRequest._id} />
           </div>
         ) : (
           <form className='p-1 sm:p-2' onSubmit={handleSubmit}>

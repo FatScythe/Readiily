@@ -8,15 +8,20 @@ import useSWR from "swr";
 import { AddUserIcon, CancelIcon } from "../../../../../assets/icons";
 // Utils
 import time_between from "../../../../../utils/time_between";
-// Component
+// Components
 import Designers from "./designers";
+import Comment from "../../../../../components/dashboard/comment";
 // Toastify
 import { toast } from "react-toastify";
 
 const Request = () => {
   useTitle("All request");
   const [openModal, setOpenModal] = useState(false);
-  const [view, setView] = useState({ open: false, request: null });
+  const [view, setView] = useState({
+    open: false,
+    request: null,
+    comment: false,
+  });
   const [requestId, setRequestId] = useState([]);
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error, isLoading } = useSWR("/api/v1/request", fetcher);
@@ -178,20 +183,32 @@ const RequestModal = ({ view, setView }) => {
   return (
     <div className='fixed top-0 right-0 left-0 bottom-0 bg-black/5'>
       <div className='absolute h-4/6 -bottom-64 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 w-full sm:w-1/2 md::w-1/3 bg-grayish p-2 rounded-xl'>
-        <button
-          className='w-full flex justify-end items-center'
-          onClick={() => setView({ open: false, request: null })}
-        >
-          <CancelIcon className='w-6 h-6 bg-red-500 rounded-full stroke-white stroke-2' />
-        </button>
-        <div className='w-5/6 sm:w-3/4 mx-auto'>
-          <p className='border-2 border-black rounded-lg h-32 overflow-x-hidden overflow-y-scroll'>
-            {view.request.desc}
-          </p>
-          <h2 className='text-lg sm:text-xl '>Preferred brand image</h2>
+        <div className='w-full flex justify-between items-center my-3'>
+          <button
+            className='underline underline-offset-2'
+            onClick={() => setView({ ...view, comment: !view.comment })}
+          >
+            {view.comment ? "Request" : "Comment"}
+          </button>
 
-          <button>download</button>
+          <button
+            onClick={() => setView({ ...view, open: false, request: null })}
+          >
+            <CancelIcon className='w-6 h-6 bg-red-500 rounded-full stroke-white stroke-2' />
+          </button>
         </div>
+        {view.comment ? (
+          <Comment id={view.request._id} />
+        ) : (
+          <div className='w-5/6 sm:w-3/4 mx-auto'>
+            <p className='border-2 border-black rounded-lg h-32 overflow-x-hidden overflow-y-scroll'>
+              {view.request.desc}
+            </p>
+            <h2 className='text-lg sm:text-xl '>Preferred brand image</h2>
+
+            <button>download</button>
+          </div>
+        )}
       </div>
     </div>
   );

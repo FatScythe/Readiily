@@ -13,7 +13,11 @@ import UploadResponse from "./upload";
 
 const AvailableRequest = () => {
   useTitle("Accepted Request");
-  const [view, setView] = useState({ open: false, request: null });
+  const [view, setView] = useState({
+    open: false,
+    request: null,
+    comment: false,
+  });
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
     url + "/api/v1/request/assign",

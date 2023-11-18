@@ -27,7 +27,6 @@ const createComment = async (req, res) => {
     throw new NotFoundError("No request with id: " + requestId);
   }
 
-  request.accepted = false;
   request.status = "pending";
   await request.save();
 
@@ -56,4 +55,12 @@ const getBrandComments = async (req, res) => {
   });
 };
 
-module.exports = { createComment, getBrandComments };
+const getRequestComments = async (req, res) => {
+  const { requestId } = req.params;
+
+  const comments = await Comment.find({ request: requestId });
+
+  res.status(StatusCodes.OK).json(comments);
+};
+
+module.exports = { createComment, getBrandComments, getRequestComments };
