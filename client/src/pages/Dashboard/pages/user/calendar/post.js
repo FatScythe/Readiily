@@ -17,7 +17,6 @@ const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
   const { brands, currentBrand } = useSelector((store) => store.brand);
   const [inputKey, setInputKey] = useState("");
   const dispatch = useDispatch();
-  console.log(myRequest);
 
   const handleSubmit = (e) => {
     setForm({ ...form, loading: true });
