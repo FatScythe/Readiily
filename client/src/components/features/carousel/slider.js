@@ -54,7 +54,7 @@ const ImageSlider = ({ slides }) => {
 
       <div
         style={slideStyles}
-        className='w-full h-full rounded-xl bg-center bg-cover'
+        className='w-full h-full rounded-xl bg-center bg-cover transition-all duration-500 ease-in'
       ></div>
     </div>
   );
