@@ -48,6 +48,7 @@ const AccountSchema = new Schema(
       default: false,
     },
     googleId: String,
+    designerToken: String,
     authType: {
       type: String,
       enum: ["email", "google"],

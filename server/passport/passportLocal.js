@@ -19,6 +19,10 @@ module.exports = passport.use(
         throw new BadRequestError("Invalid Credentials");
       }
 
+      if (account.role !== "user") {
+        throw new BadRequestError("Invalid Route");
+      }
+
       return cb(null, {
         userId: account._id,
         name: account.name,

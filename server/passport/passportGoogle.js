@@ -41,6 +41,10 @@ module.exports = passport.use(
           }
         }
 
+        if (account.role !== "user") {
+          throw new BadRequestError("Invalid Route");
+        }
+
         const user = {
           userId: account._id,
           name: account.name,

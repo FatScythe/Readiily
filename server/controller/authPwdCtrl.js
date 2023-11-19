@@ -1,6 +1,7 @@
 const Account = require("../model/Account");
-const { BadRequestError } = require("../errors");
+const { BadRequestError, NotFoundError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
+const createTokenAccount = require("../utils/createTokenAccount");
 const { attachCookieToResponse } = require("../utils/jwt");
 const Wallet = require("../model/Wallet");
 
@@ -41,6 +42,58 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json(req.user);
 };
 
+const loginAdmin = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new BadRequestError("Please provide email and password");
+  }
+  const account = await Account.findOne({ email });
+  if (!account) {
+    throw new NotFoundError("Invalid Credentials");
+  }
+
+  if (account.role !== "admin") {
+    throw new BadRequestError("Invalid Route");
+  }
+
+  const isPasswordCorrect = await account.comparePassword(password);
+  if (!isPasswordCorrect) {
+    throw new BadRequestError("Invalid Credentials!");
+  }
+
+  const tokenAccount = createTokenAccount(account);
+  attachCookieToResponse(res, tokenAccount);
+
+  res.status(StatusCodes.OK).json({ ...tokenAccount });
+};
+
+const loginDesigner = async (req, res) => {
+  //  Math.random().toString(35).slice(2).toUpperCase(); DED8KS375C
+  const { email, token } = req.body;
+  if (!email || !token) {
+    throw new BadRequestError("Please provide email and token");
+  }
+  const account = await Account.findOne({ email });
+  if (!account) {
+    throw new NotFoundError("Invalid Credentials");
+  }
+
+  if (account.role !== "designer") {
+    throw new BadRequestError("Invalid Route");
+  }
+
+  const isPasswordCorrect = account.designerToken === token;
+
+  if (!isPasswordCorrect) {
+    throw new BadRequestError("Invalid Credentials!");
+  }
+
+  const tokenAccount = createTokenAccount(account);
+  attachCookieToResponse(res, tokenAccount);
+
+  res.status(StatusCodes.OK).json({ ...tokenAccount });
+};
+
 const logout = async (req, res) => {
   res.cookie("token", "logout", {
     expires: new Date(Date.now()),
@@ -50,4 +103,4 @@ const logout = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "Logged Out Sucessfully" });
 };
 
-module.exports = { register, login, logout };
+module.exports = { register, login, loginAdmin, loginDesigner, logout };

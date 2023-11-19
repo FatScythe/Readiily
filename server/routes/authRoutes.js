@@ -1,5 +1,11 @@
 const router = require("express").Router();
-const { register, login, logout } = require("../controller/authPwdCtrl");
+const {
+  register,
+  login,
+  loginAdmin,
+  loginDesigner,
+  logout,
+} = require("../controller/authPwdCtrl");
 const { googleLogin } = require("../controller/authGoogleCtrl");
 const passportLocal = require("../passport/passportLocal");
 const passportGoogle = require("../passport/passportGoogle");
@@ -19,6 +25,9 @@ passportLocal.deserializeUser(function (user, cb) {
 });
 
 router.post("/login/password", passportLocal.authenticate("local"), login);
+
+router.post("/login/admin", loginAdmin);
+router.post("/login/designer", loginDesigner);
 
 passportGoogle.serializeUser(function (user, cb) {
   process.nextTick(function () {
