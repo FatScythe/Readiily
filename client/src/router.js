@@ -5,6 +5,7 @@ import GoogleRedirect from "./pages/Auth/google";
 import Dashboard from "./pages/Dashboard";
 import HomeDash from "./pages/Dashboard/pages/all";
 import SingleTicket from "./pages/Dashboard/pages/all/SingleTicket";
+import VerifyPayment from "./pages/payment/VerifyPayment";
 // Router
 import { createBrowserRouter, Navigate } from "react-router-dom";
 // User pages
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Homepage />,
+  },
+  {
+    path: "/verify-payment",
+    element: <VerifyPayment />,
   },
   { path: "/auth", element: <Auth /> },
   { path: "/google", element: <GoogleRedirect /> },
