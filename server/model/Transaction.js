@@ -6,7 +6,6 @@ const TranSchema = new Schema(
       type: String,
       required: [true, "Please provide detail for the transaction"],
     },
-
     amount: {
       type: Number,
       required: [true, "Please provide amount for the transaction"],
@@ -21,10 +20,16 @@ const TranSchema = new Schema(
       enum: ["USD", "NGN"],
       default: "USD",
     },
-    createdBy: {
+    account: {
       type: Types.ObjectId,
       ref: "Account",
       required: [true, "Please provide an account"],
+    },
+    flutterTrxId: String,
+    status: {
+      type: String,
+      enum: ["pending", "paid"],
+      default: "pending",
     },
   },
   { timestamps: true }

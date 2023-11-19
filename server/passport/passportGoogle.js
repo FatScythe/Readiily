@@ -1,6 +1,7 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oidc");
 const Account = require("../model/Account");
+const Wallet = require("../model/Wallet");
 const { BadRequestError } = require("../errors");
 
 module.exports = passport.use(
@@ -27,6 +28,17 @@ module.exports = passport.use(
             googleId: profile.id,
             authType: "google",
           });
+          if (account.role === "user") {
+            const wallet = await Wallet.create({
+              balance: process.env.REGISTRATION_BONUS,
+              account: account._id,
+            });
+            await wallet.createTransaction(
+              `Registration Bonus`,
+              process.env.REGISTRATION_BONUS,
+              "expense"
+            );
+          }
         }
 
         const user = {

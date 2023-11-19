@@ -27,6 +27,13 @@ const AccountSchema = new Schema(
     password: {
       type: String,
     },
+    passwordToken: {
+      type: String,
+    },
+    passwordTokenExpirationDate: {
+      type: Date,
+      default: "",
+    },
     role: {
       type: String,
       enum: ["user", "designer", "admin"],

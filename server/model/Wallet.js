@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require("mongoose");
+const Transaction = require("./Transaction");
 
 const WalletSchema = new Schema(
   {
@@ -14,6 +15,7 @@ const WalletSchema = new Schema(
     account: {
       type: Types.ObjectId,
       ref: "Account",
+      unique: [true, "Users can only have one wallet"],
       required: [true, "Please provide an account"],
     },
   },
@@ -28,5 +30,15 @@ WalletSchema.pre("save", async function (next) {
     });
   }
 });
+
+WalletSchema.methods.createTransaction = async function (detail, amount, type) {
+  await Transaction.create({
+    detail,
+    amount,
+    type,
+    account: this.account,
+    status: "paid",
+  });
+};
 
 module.exports = model("Wallets", WalletSchema);

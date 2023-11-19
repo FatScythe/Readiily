@@ -2,6 +2,7 @@ const Account = require("../model/Account");
 const { BadRequestError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 const { attachCookieToResponse } = require("../utils/jwt");
+const Wallet = require("../model/Wallet");
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -9,18 +10,28 @@ const register = async (req, res) => {
   if (!name || !email || !password) {
     throw new BadRequestError("Please fill all fields");
   }
+
   if (password.length < 8) {
     throw new BadRequestError("Password should be minimum of 8 character");
   }
-  const isFirstAccount = (await Account.countDocuments({})) === 0;
-  const role = isFirstAccount ? "admin" : "user";
 
-  await Account.create({
+  const account = await Account.create({
     name,
     password,
     email,
-    role,
   });
+
+  if (account.role === "user") {
+    const wallet = await Wallet.create({
+      balance: Number(process.env.REGISTRATION_BONUS),
+      account: account._id,
+    });
+    await wallet.createTransaction(
+      `Registration Bonus`,
+      process.env.REGISTRATION_BONUS,
+      "expense"
+    );
+  }
 
   res.status(StatusCodes.CREATED).json({ msg: "Account sucessfully created" });
 };
