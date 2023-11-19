@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 // Image
 import logo from "../../assets/images/R-White.png";
 // Icons
@@ -42,10 +43,10 @@ const Footer = () => {
         <Accordian2 />
         <Accordian3 />
       </main>
-      <aside className='border-0 border-t p-2 border-t-white/60 '>
-        <h2 className='text-white text-center'>
+      <aside className='border-0 border-t p-2 border-t-white/60 flex justify-center items-center'>
+        <Link to='/portal' className='text-white text-center'>
           © All right reserved - Readiily 2023
-        </h2>
+        </Link>
       </aside>
     </footer>
   );
