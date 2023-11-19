@@ -28,7 +28,7 @@ const FundModal = () => {
         method: "POST",
         body: JSON.stringify({
           amount: form.amount,
-          detail: `Fund wallet with $${form.amount}`,
+          detail: `Fund wallet`,
         }),
       });
 
