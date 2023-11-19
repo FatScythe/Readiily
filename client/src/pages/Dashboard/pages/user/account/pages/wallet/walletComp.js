@@ -5,14 +5,16 @@ import {
   WalletIcon,
 } from "../../../../../../../assets/icons";
 
-export const Card = ({ modal, setModal }) => {
+export const Card = ({ modal, setModal, data }) => {
+  const { walletId, walletBalance, income, expense } = data;
+
   return (
     <main className='h-64 rounded-lg shadow-md p-3 text-white bg-gradient-to-r from-secondary to-blue'>
       <div className='flex justify-between items-stretch h-full p-3'>
         <div className='flex flex-col justify-between items-start'>
           <h3 className='text-gray-300 sm:font-semibold'>My wallet</h3>
-          <h3 className='text-sm sm:text-xl md:text-3xl sm:tracking-wide'>
-            **** **** **** 4545
+          <h3 className='text-sm sm:text-xl md:text-3xl sm:tracking-wide uppercase'>
+            **** **** **** {walletId.slice(-4)}
           </h3>
           <section className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5'>
             <div className='flex justify-start items-center gap-4'>
@@ -21,7 +23,7 @@ export const Card = ({ modal, setModal }) => {
               </h3>
               <h3 className='flex flex-col justify-between items-start'>
                 <span className='text-lg sm:text-xl font-bold'>
-                  <span>40</span>
+                  <span>{income}</span>
                   <span>$</span>
                 </span>
                 <span className='text-sm'>Income</span>
@@ -33,7 +35,7 @@ export const Card = ({ modal, setModal }) => {
               </h3>
               <h3 className='flex flex-col justify-between items-start'>
                 <span className='text-lg sm:text-xl font-bold'>
-                  <span>40</span>
+                  <span>{expense}</span>
                   <span>$</span>
                 </span>
                 <span className='text-sm'>Expense</span>
@@ -46,7 +48,7 @@ export const Card = ({ modal, setModal }) => {
           <h3 className='text-gray-300 sm:font-semibold'>Available funds</h3>
 
           <h1 className='text-lg sm:text-2xl md:text-4xl font-semibold'>
-            <span>50</span>
+            <span>{walletBalance}</span>
             <span className='text-gray-300 ml-2'>$</span>
           </h1>
 

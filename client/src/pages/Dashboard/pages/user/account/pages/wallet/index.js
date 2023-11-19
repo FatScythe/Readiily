@@ -1,10 +1,27 @@
 import { useState } from "react";
 // Components
 import { Card, Referral } from "./walletComp";
-import { ArrowIcon } from "../../../../../../../assets/icons";
+import FundModal from "./fundModal";
+// Hook
+import useSWR from "swr";
+import useTitle from "../../../../../../../hooks/useTitle";
+// Utils
+import url from "../../../../../../../utils/url";
 
 const Wallet = () => {
+  useTitle("My Wallet");
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { data, error, isLoading } = useSWR(url + "/api/v1/wallet", fetcher);
   const [modal, setModal] = useState({ open: false, isFund: true });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if ((data && data.msg) || error) {
+    return <div>Failed to load</div>;
+  }
+
   return (
     <section className='m-3 relative'>
       {modal.open && (
@@ -18,7 +35,7 @@ const Wallet = () => {
           </div>
         </div>
       )}
-      <Card modal={modal} setModal={setModal} />
+      <Card modal={modal} setModal={setModal} data={data} />
       <Referral modal={modal} setModal={setModal} />
     </section>
   );
@@ -26,34 +43,6 @@ const Wallet = () => {
 
 export default Wallet;
 
-const FundModal = () => {
-  const handleFund = (e) => {
-    e.preventDefault();
-  };
-  return (
-    <div className='py-4 px-8'>
-      <h1 className='text-xl border border-transparent border-b-black pb-3'>
-        Fund Wallet
-      </h1>
-      <form className='my-3' onSubmit={handleFund}>
-        <div className='flex flex-col justify-between items-start gap-3'>
-          <label className='text-lg font-semibold'>Amount</label>
-          <input
-            type='number'
-            placeholder='00.00'
-            className='w-full bg-transparent border border-black outline-none rounded-sm p-2'
-          />
-        </div>
-
-        <div className='flex justify-end items-center mt-6'>
-          <button className='bg-sky-500 rounded-md px-4 py-2 text-sm sm:text-base text-white flex justify-between items-center gap-2'>
-            <span>Proceed to payment</span> <ArrowIcon className='w-6 h-6' />
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-};
 const ReferralModal = () => {
   return <div>Claim Referral</div>;
 };
