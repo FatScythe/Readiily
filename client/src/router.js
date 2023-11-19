@@ -1,6 +1,7 @@
 // Pages
 import Homepage from "./pages/HomePage";
 import Auth from "./pages/Auth";
+import Portal from "./pages/Portal";
 import GoogleRedirect from "./pages/Auth/google";
 import Dashboard from "./pages/Dashboard";
 import HomeDash from "./pages/Dashboard/pages/all";
@@ -33,6 +34,7 @@ import AllRequest from "./pages/Dashboard/pages/admin/request";
 import Payments from "./pages/Dashboard/pages/admin/payments";
 import Tickets from "./pages/Dashboard/pages/admin/tickets";
 import Designs from "./pages/Dashboard/pages/admin/designs";
+import CreateDesigners from "./pages/Dashboard/pages/admin/designers";
 // Component
 import Protected from "./components/protected/protected";
 
@@ -46,6 +48,7 @@ export const router = createBrowserRouter([
     element: <VerifyPayment />,
   },
   { path: "/auth", element: <Auth /> },
+  { path: "/portal", element: <Portal /> },
   { path: "/google", element: <GoogleRedirect /> },
   {
     path: "/dashboard",
@@ -166,6 +169,10 @@ export const router = createBrowserRouter([
       {
         path: "designs",
         element: <Designs />,
+      },
+      {
+        path: "create",
+        element: <CreateDesigners />,
       },
     ],
   },
