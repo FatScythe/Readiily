@@ -46,6 +46,12 @@ router.get(
   getDesignHistory
 );
 
-router.route("/:id").get(authenticateAccount, getBrandRequests);
+router
+  .route("/:id")
+  .get(
+    authenticateAccount,
+    [authenticateAccount, authorizePermissions("admin", "designer")],
+    getBrandRequests
+  );
 
 module.exports = router;
