@@ -32,10 +32,10 @@ const Font = ({ form, setForm }) => {
           <input
             onChange={(e) => setCustomFont(e.target.checked)}
             type='checkbox'
-            className='w-6 h-6'
+            className='h-4 w-4 sm:w-6 sm:h-6'
           />
           <span
-            className={`text-sm sm:text-base ${
+            className={`text-xs sm:text-base ${
               customFont ? "text-black" : "text-gray-300"
             }`}
           >

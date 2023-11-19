@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const Color = ({ form, setForm }) => {
   const [currColor, setCurrColor] = useState(null);
   return (
-    <div className='w-11/12 h-fit rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-3 p-1 sm:p-2'>
+    <div className='sm:w-11/12 h-fit rounded-lg shadow-lg bg-white col-span-12 sm:col-span-6 md:col-span-3 p-1 sm:p-2'>
       <h2 className='text-lg'>Brand Colors</h2>
       <main className='flex flex-col justify-between items-stretch gap-5'>
         <div className='h-1/2 flex justify-start items-center gap-5'>
