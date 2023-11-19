@@ -10,8 +10,6 @@ const createTicket = async (req, res) => {
 
   let ticketId = "#RDY" + tickets.toString().padStart(8, "-0");
 
-  //  Math.random().toString(35).slice(2).toUpperCase();
-
   if (!subject) {
     throw new BadRequestError("Please provide a subject");
   }
