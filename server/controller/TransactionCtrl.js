@@ -24,4 +24,9 @@ const createTransaction = async (req, res) => {
     .json({ msg: "Transction created", transaction });
 };
 
-module.exports = { createTransaction };
+const getAllTransaction = async (req, res) => {
+  const transactions = await Transaction.find({});
+
+  res.status(StatusCodes.OK).json(transactions);
+};
+module.exports = { createTransaction, getAllTransaction };
