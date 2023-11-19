@@ -1,5 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
+import useTitle from "../../../../../../../hooks/useTitle";
 const Support = () => {
+  useTitle("My Tickets");
   return (
     <div className='p-3'>
       <div className='bg-white rounded-lg p-5 shadow-lg'>

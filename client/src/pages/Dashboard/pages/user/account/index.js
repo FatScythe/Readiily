@@ -1,9 +1,7 @@
 import "./account.css";
 import { NavLink, Outlet, Navigate } from "react-router-dom";
-// Hook
-import useTitle from "../../../../../hooks/useTitle";
+
 const Account = () => {
-  useTitle("My Account");
   return (
     <section id='account'>
       <Navigate to='/dashboard/account/brand' />

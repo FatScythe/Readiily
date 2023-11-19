@@ -12,8 +12,11 @@ import {
 } from "../../../../../../../features/brand/brandSlice";
 // Component
 import Name from "./name";
+// Hook
+import useTitle from "../../../../../../../hooks/useTitle";
 
 const Brand = () => {
+  useTitle("My Brands");
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     id: "",
