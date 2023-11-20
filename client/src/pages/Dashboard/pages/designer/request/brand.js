@@ -50,8 +50,11 @@ const BrandInfo = () => {
             <main className='flex justify-start items-center gap-4'>
               <div className='flex justify-start items-center gap-2'>
                 {colors.length > 0 ? (
-                  colors.map((color) => (
-                    <div className='flex flex-col justify-between items-center gap-2'>
+                  colors.map((color, index) => (
+                    <div
+                      className='flex flex-col justify-between items-center gap-2'
+                      key={index}
+                    >
                       <span
                         style={{ backgroundColor: color }}
                         className='h-10 w-10 rounded-full'
