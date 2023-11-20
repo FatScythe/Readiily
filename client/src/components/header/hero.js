@@ -25,12 +25,8 @@ const Hero = () => {
           className='flex justify-center items-center gap-1 md:gap-2 pr-2 border border-black rounded-md bg-white text-black font-semibold'
           onClick={() => {
             if (!account) {
-              // window.open(
-              //   "http://localhost:5000/api/v1/auth/login/google",
-              //   "_self"
-              // );
               window.open(
-                "https://readiily.onrender.com/api/v1/auth/login/google",
+                window.location.origin + "/api/v1/auth/login/google",
                 "_self"
               );
             } else {

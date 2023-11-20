@@ -35,11 +35,7 @@ const Auth = () => {
   });
 
   const handleGoogleAuth = () => {
-    // window.open("http://localhost:5000/api/v1/auth/login/google", "_self");
-    window.open(
-      "https://readiily.onrender.com/api/v1/auth/login/google",
-      "_self"
-    );
+    window.open(window.location.origin + "/api/v1/auth/login/google", "_self");
   };
 
   const handleAuth = async (e) => {
@@ -172,7 +168,7 @@ const Auth = () => {
                   onChange={(e) =>
                     setForm({ ...form, password: e.target.value })
                   }
-                  className='peer block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-yellow-500 focus:border-sky-600 focus:border-2'
+                  className='peer block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-blue focus:border-sky-600 focus:border-2'
                   required
                 />
                 <button
