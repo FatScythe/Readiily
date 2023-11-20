@@ -5,6 +5,7 @@ const useCloudinary = require("../utils/useCloudinary");
 const { BadRequestError, NotFoundError } = require("../errors");
 const Account = require("../model/Account");
 const checkPermissions = require("../utils/checkPermissions");
+const Wallet = require("../model/Wallet");
 
 const createRequest = async (req, res) => {
   let { desc, date, brand } = req.body;
@@ -54,6 +55,25 @@ const createRequest = async (req, res) => {
       }
     }
   }
+
+  const wallet = await Wallet.findOne({ account: req.user.userId });
+  if (!wallet) {
+    throw new NotFoundError("User as no wallet");
+  }
+  let formerBalance = wallet.balance;
+  if (formerBalance < process.env.REQUEST_PRICE) {
+    throw new BadRequestError("Please fund wallet");
+  }
+
+  wallet.balance = formerBalance - process.env.REQUEST_PRICE;
+
+  await wallet.save();
+
+  await wallet.createTransaction(
+    `Design Request`,
+    process.env.REQUEST_PRICE,
+    "income"
+  );
 
   await Request.create({
     desc,
