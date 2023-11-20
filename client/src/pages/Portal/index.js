@@ -66,9 +66,7 @@ const Portal = () => {
         return;
       }
 
-      console.log(data);
       dispatch(saveAccount(data));
-
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
@@ -134,7 +132,7 @@ const Portal = () => {
                     onChange={(e) =>
                       setForm({ ...form, password: e.target.value })
                     }
-                    className='peer block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-yellow-500 focus:border-sky-600 focus:border-2'
+                    className='peer block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-blue focus:border-sky-600 focus:border-2'
                     required
                   />
                   <button
@@ -164,7 +162,7 @@ const Portal = () => {
                     onChange={(e) =>
                       setForm({ ...form, token: e.target.value })
                     }
-                    className='peer block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-yellow-500 focus:border-sky-600 focus:border-2'
+                    className='peer block border border-black outline-none p-2 w-full rounded-lg my-4 placeholder:font-normal placeholder:tracking-normal font-extrabold tracking-widest text-blue focus:border-sky-600 focus:border-2'
                     required
                   />
                   <button
