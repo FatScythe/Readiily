@@ -14,7 +14,8 @@ const CreateDesigners = () => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
     url + "/api/v1/account/designers",
-    fetcher
+    fetcher,
+    { refreshInterval: 2000 }
   );
   const [form, setForm] = useState({
     id: "",
@@ -163,9 +164,7 @@ const CreateDesigners = () => {
       {isLoading && <div>Loading...</div>}
       {(data && data.msg) || error ? (
         <div>Failed to load....</div>
-      ) : data && data.length < 1 ? (
-        <h2>No designers yet</h2>
-      ) : (
+      ) : data && data.length > 1 ? (
         <div className='grid grid-cols-12 gap-3'>
           {data.map((designer) => (
             <Designer
@@ -176,6 +175,8 @@ const CreateDesigners = () => {
             />
           ))}
         </div>
+      ) : (
+        <h2>No designers yet</h2>
       )}
     </section>
   );
@@ -206,11 +207,43 @@ const Designer = ({ designer, form, setForm }) => {
       console.error(error);
     }
   };
+
+  const handleRefresh = async () => {
+    try {
+      const res = await fetch(
+        url + "/api/v1/account/designers/" + designer._id,
+        {
+          method: "PATCH",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            email: designer.email,
+            name: designer.name,
+            token: Math.random().toString(35).slice(2).toUpperCase(),
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data?.msg || "Something went wrong");
+        return;
+      }
+
+      toast.success("Token refreshed");
+    } catch (error) {
+      toast.error(error?.msg || "Something went wrong");
+    }
+  };
+
   return (
     <div className='bg-white p-2 rounded-md col-span-12 sm:col-span-6 md:col-span-4 w-full'>
       <div className='flex justify-between items-center'>
         <div>
-          <button className='bg-blue p-1 rounded-md text-sm text-white'>
+          <button
+            className='bg-blue p-1 rounded-md text-sm text-white'
+            onClick={handleRefresh}
+          >
             Refresh token
           </button>
         </div>
