@@ -10,7 +10,7 @@ const Error1 = ({ error }) => {
         <span className='text-3xl sm:text-4xl text-orange font-normal'>:(</span>
       </h3>
       <p className='text-lg sm:text-xl'>
-        {error ? error.msg : "Something went wrong"}
+        {error ? error.msg || error.message : "Something went wrong"}
       </p>
       <button
         className='flex gap-2 w-fit items-center my-5 bg-black text-white border-2 hover:border-black hover:bg-transparent hover:text-black rounded-3xl p-4  transition-all duration-500 ease-in-out'
