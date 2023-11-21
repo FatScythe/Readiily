@@ -7,6 +7,7 @@ import { HamburgerIcon, ExitIcon, BellIcon } from "../../assets/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { selectBrand } from "../../features/brand/brandSlice";
 import { logoutAccount } from "../../features/auth/authSlice";
+import Loader from "../loader";
 
 const DashboardHeader = ({ isSideOpen, setIsSideOpen, role }) => {
   const dispatch = useDispatch();
@@ -91,7 +92,7 @@ const UserHeaderHome = () => {
   };
 
   if (loading) {
-    return <div>...</div>;
+    return <Loader className='w-6 h-6' />;
   }
   if (!loading && !brands) {
     return <div>Error...</div>;

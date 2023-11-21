@@ -8,6 +8,8 @@ import { CancelIcon } from "../../../../../assets/icons";
 // Utils
 import url from "../../../../../utils/url";
 import Comment from "../../../../../components/dashboard/comment";
+// Component
+import Loader from "../../../../../components/loader";
 
 const History = () => {
   useTitle("Design History");
@@ -23,7 +25,11 @@ const History = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   if ((data && data.msg) || error) {

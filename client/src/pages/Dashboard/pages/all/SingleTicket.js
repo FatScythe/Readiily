@@ -8,6 +8,8 @@ import useSWR from "swr";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { replyTicket } from "../../../../features/ticket/ticketSlice";
+// Component
+import Loader from "../../../../components/loader";
 
 const SingleTicket = () => {
   useTitle("Ticket");
@@ -24,7 +26,11 @@ const SingleTicket = () => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   const { subject, ticketId, message, status, account, createdAt, response } =

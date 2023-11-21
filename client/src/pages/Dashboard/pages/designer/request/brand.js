@@ -6,6 +6,8 @@ import useSWR from "swr";
 import { DownloadIcon } from "../../../../../assets/icons";
 // Utils
 import url from "../../../../../utils/url";
+// Component
+import Loader from "../../../../../components/loader";
 
 const BrandInfo = () => {
   const { id } = useParams();
@@ -17,7 +19,11 @@ const BrandInfo = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   if ((data && data.msg) || error) {

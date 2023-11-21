@@ -2,6 +2,8 @@
 import useSWR from "swr";
 // Utils
 import url from "../../utils/url";
+// Component
+import Loader from "../loader";
 
 const Comment = ({ id }) => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -11,7 +13,11 @@ const Comment = ({ id }) => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='grid place-items-center'>
+        <Loader className='w-10 sm:w-16 h-10 sm:h-16' />
+      </div>
+    );
   }
 
   if ((data && data.msg) || error) {

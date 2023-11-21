@@ -1,7 +1,11 @@
-// Hooks
+// Toastify
 import { toast } from "react-toastify";
-import url from "../../../../../utils/url";
+// Hook
 import useSWR from "swr";
+// Util
+import url from "../../../../../utils/url";
+// Component
+import Loader from "../../../../../components/loader";
 
 const Designers = ({ openModal, setOpenModal, requestId, setRequestId }) => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -19,7 +23,11 @@ const Designers = ({ openModal, setOpenModal, requestId, setRequestId }) => {
 
       <div className='fixed p-2 z-20 bg-slate-200 top-1/2 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-full sm:w-3/4 rounded-lg overflow-x-hidden overflow-y-scroll'>
         <h2 className='text-lg sm:text-xl font-semibold'>Designers:</h2>
-        {isLoading && <div>Loading...</div>}
+        {isLoading && (
+          <div className='grid place-items-center'>
+            <Loader className='w-20 h-20' />
+          </div>
+        )}
         {(data && data.msg) || error ? (
           <div>Failed to load</div>
         ) : (

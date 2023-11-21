@@ -7,7 +7,8 @@ import useSWR from "swr";
 import { CancelIcon } from "../../../../../assets/icons";
 // Utils
 import url from "../../../../../utils/url";
-// Component
+// Components
+import Loader from "../../../../../components/loader";
 import Comment from "../../../../../components/dashboard/comment";
 
 const Designs = () => {
@@ -24,7 +25,11 @@ const Designs = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   if ((data && data.msg) || error) {

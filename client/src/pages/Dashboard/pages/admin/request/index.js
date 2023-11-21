@@ -1,4 +1,3 @@
-import "./request.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // Hook
@@ -9,6 +8,7 @@ import { AddUserIcon, CancelIcon } from "../../../../../assets/icons";
 // Utils
 import time_between from "../../../../../utils/time_between";
 // Components
+import Loader from "../../../../../components/loader";
 import Designers from "./designers";
 import Comment from "../../../../../components/dashboard/comment";
 // Toastify
@@ -31,7 +31,11 @@ const Request = () => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   const unassignedReq = data.requests.filter(

@@ -5,6 +5,8 @@ import useTitle from "../../../../../hooks/useTitle";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { getTickets } from "../../../../../features/ticket/ticketSlice";
+// Component
+import Loader from "../../../../../components/loader";
 
 const Tickets = () => {
   useTitle("Tickets");
@@ -17,10 +19,14 @@ const Tickets = () => {
   }, [dispatch]);
 
   if (loading) {
-    <div>Loading</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
   if (!loading && !tickets) {
-    <div>Error</div>;
+    return <div>Error</div>;
   }
 
   let allTickets = [];

@@ -10,6 +10,7 @@ import { CancelIcon } from "../../../../../assets/icons";
 // Toastify
 import { toast } from "react-toastify";
 // Component
+import Loader from "../../../../../components/loader";
 import Comment from "../../../../../components/dashboard/comment";
 
 const PendingRequest = () => {
@@ -50,7 +51,11 @@ const PendingRequest = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   if ((data && data.msg) || error) {

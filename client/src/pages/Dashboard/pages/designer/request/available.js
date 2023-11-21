@@ -8,7 +8,8 @@ import { UploadIcon } from "../../../../../assets/icons";
 // Utils
 import url from "../../../../../utils/url";
 import time_between from "../../../../../utils/time_between";
-// Component
+// Components
+import Loader from "../../../../../components/loader";
 import UploadResponse from "./upload";
 
 const AvailableRequest = () => {
@@ -25,7 +26,11 @@ const AvailableRequest = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   if ((data && data.msg) || error) {

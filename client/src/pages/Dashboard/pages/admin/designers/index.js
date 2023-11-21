@@ -8,6 +8,8 @@ import { ClipBoardIcon, TrashIcon } from "../../../../../assets/icons";
 import { toast } from "react-toastify";
 // Utils
 import url from "../../../../../utils/url";
+// Component
+import Loader from "../../../../../components/loader";
 
 const CreateDesigners = () => {
   useTitle("Create Designers");
@@ -161,7 +163,11 @@ const CreateDesigners = () => {
         Designers
       </h2>
 
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <div className='grid place-items-center'>
+          <Loader className='w-10 h-10 sm:w-20 sm:h-20' />
+        </div>
+      )}
       {(data && data.msg) || error ? (
         <div>Failed to load....</div>
       ) : data && data.length > 1 ? (

@@ -3,17 +3,24 @@ import useTitle from "../../../../../hooks/useTitle";
 import useSWR from "swr";
 // Util
 import url from "../../../../../utils/url";
+// Component
+import Loader from "../../../../../components/loader";
 
 const Payments = () => {
   useTitle("Payments");
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
     url + "/api/v1/transaction",
-    fetcher
+    fetcher,
+    { refreshInterval: 3000 }
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   if ((data && data.msg) || error) {
