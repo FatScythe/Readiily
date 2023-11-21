@@ -10,7 +10,10 @@ import {
 import { toast } from "react-toastify";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { createRequest } from "../../../../../features/request/requestSlice";
+import {
+  createRequest,
+  getRequests,
+} from "../../../../../features/request/requestSlice";
 import Comment from "../../../../../components/dashboard/comment";
 
 const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
@@ -47,9 +50,12 @@ const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
     dispatch(createRequest({ ...form, brand: currentBrand.id }));
     setIsPostOpen(false);
     setForm({ desc: "", imageFile: null, date: "", loading: false });
+    setTimeout(() => {
+      dispatch(getRequests(currentBrand.id));
+    }, 5000);
   };
 
-  const handleFont = (e) => {
+  const handleFile = (e) => {
     const file = e.target.files[0];
 
     if (!file) return;
@@ -127,7 +133,7 @@ const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
                 <input
                   type='file'
                   key={inputKey}
-                  onChange={handleFont}
+                  onChange={handleFile}
                   className='hidden'
                   accept='image/*'
                   id='addimage'
@@ -173,7 +179,7 @@ const Post = ({ setIsPostOpen, form, setForm, myRequest }) => {
               </div>
               <div className='w-full flex justify-end items-center'>
                 <button
-                  className='px-3 py-2 bg-blue disabled:bg-blue/40 rounded-3xl font-semibold hover:opacity-50 text-white text-sm flex justify-between items-center gap-2'
+                  className='px-3 py-2 bg-blue disabled:bg-blue/40 disabled:cursor-not-allowed rounded-3xl font-semibold hover:opacity-50 text-white text-sm flex justify-between items-center gap-2'
                   type='submit'
                   disabled={form.loading}
                 >
