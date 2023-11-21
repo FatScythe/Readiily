@@ -4,6 +4,10 @@ import {
   ChainLinkIcon,
   WalletIcon,
 } from "../../../../../../../assets/icons";
+// Toastify
+import { toast } from "react-toastify";
+// Redux
+import { useSelector } from "react-redux";
 
 export const Card = ({ modal, setModal, data }) => {
   const { walletId, walletBalance, income, expense } = data;
@@ -65,6 +69,8 @@ export const Card = ({ modal, setModal, data }) => {
 };
 
 export const Referral = ({ modal, setModal }) => {
+  const { account } = useSelector((store) => store.auth);
+
   return (
     <section className='my-4'>
       <h1 className='text-xl font-semibold sm:text-3xl'>
@@ -80,7 +86,15 @@ export const Referral = ({ modal, setModal }) => {
       </p>
 
       <div className='flex flex-col sm:flex-row justify-start items-start gap-4 my-4'>
-        <button className='bg-sky-500 px-3 py-2 rounded-md text-white flex justify-between items-center gap-2'>
+        <button
+          onClick={() => {
+            navigator.clipboard.writeText(
+              window.location.origin + "/auth?referrer=" + account.userId
+            );
+            toast.info("Copied to clipboard!");
+          }}
+          className='bg-sky-500 px-3 py-2 rounded-md text-white flex justify-between items-center gap-2'
+        >
           <ChainLinkIcon className='w-6 h-6' />
           <span>Get your referral link</span>
         </button>
