@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import HomeDash from "./pages/Dashboard/pages/all";
 import SingleTicket from "./pages/Dashboard/pages/all/SingleTicket";
 import VerifyPayment from "./pages/payment/VerifyPayment";
+import NotFound from "./pages/notFound";
 // Router
 import { createBrowserRouter, Navigate } from "react-router-dom";
 // User pages
@@ -176,5 +177,5 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  { path: "*", element: <div>Page Not Found : ) 404</div> },
+  { path: "*", element: <NotFound /> },
 ]);
