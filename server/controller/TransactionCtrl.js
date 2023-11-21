@@ -25,7 +25,7 @@ const createTransaction = async (req, res) => {
 };
 
 const getAllTransaction = async (req, res) => {
-  const transactions = await Transaction.find({});
+  const transactions = await Transaction.find({}).sort("-updatedAt");
 
   res.status(StatusCodes.OK).json(transactions);
 };
