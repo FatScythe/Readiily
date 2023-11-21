@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 // Components
+import Loader from "../../../../../components/loader";
 import Post from "./post";
 import EachDate from "./date";
 // Hook
@@ -37,7 +38,11 @@ const Calendar = () => {
   }, [currentBrand, dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   if (!currentBrand) {

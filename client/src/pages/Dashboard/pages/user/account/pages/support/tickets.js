@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { getTickets } from "../../../../../../../features/ticket/ticketSlice";
+// Component
+import Loader from "../../../../../../../components/loader";
 
 const MyTickets = () => {
   const dispatch = useDispatch();
@@ -14,8 +16,11 @@ const MyTickets = () => {
   }, [dispatch]);
 
   if (loading) {
-    <div>Loading</div>;
+    <div className='h-half grid place-items-center'>
+      <Loader className='w-20 h-20' />
+    </div>;
   }
+
   if (!loading && !tickets) {
     <div>Error</div>;
   }

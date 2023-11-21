@@ -2,6 +2,7 @@ import { useState } from "react";
 // Components
 import { Card, Referral } from "./walletComp";
 import FundModal from "./fundModal";
+import Loader from "../../../../../../../components/loader";
 // Hook
 import useSWR from "swr";
 import useTitle from "../../../../../../../hooks/useTitle";
@@ -15,7 +16,11 @@ const Wallet = () => {
   const [modal, setModal] = useState({ open: false, isFund: true });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   if ((data && data.msg) || error) {
