@@ -10,6 +10,7 @@ import url from "../../../../../utils/url";
 import Comment from "../../../../../components/dashboard/comment";
 // Component
 import Loader from "../../../../../components/loader";
+import Error1 from "../../../../../components/error";
 
 const History = () => {
   useTitle("Design History");
@@ -33,7 +34,11 @@ const History = () => {
   }
 
   if ((data && data.msg) || error) {
-    return <div>Failed to load</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 msg={data || error} />
+      </div>
+    );
   }
 
   const myHistory =

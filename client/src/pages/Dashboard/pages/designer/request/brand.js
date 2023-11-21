@@ -8,6 +8,7 @@ import { DownloadIcon } from "../../../../../assets/icons";
 import url from "../../../../../utils/url";
 // Component
 import Loader from "../../../../../components/loader";
+import Error1 from "../../../../../components/error";
 
 const BrandInfo = () => {
   const { id } = useParams();
@@ -27,7 +28,11 @@ const BrandInfo = () => {
   }
 
   if ((data && data.msg) || error) {
-    return <div>Failed to load</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 msg={data || error} />
+      </div>
+    );
   }
 
   const {

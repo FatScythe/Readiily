@@ -4,8 +4,9 @@ import { toast } from "react-toastify";
 import useSWR from "swr";
 // Util
 import url from "../../../../../utils/url";
-// Component
+// Components
 import Loader from "../../../../../components/loader";
+import Error1 from "../../../../../components/error";
 
 const Designers = ({ openModal, setOpenModal, requestId, setRequestId }) => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -29,7 +30,9 @@ const Designers = ({ openModal, setOpenModal, requestId, setRequestId }) => {
           </div>
         )}
         {(data && data.msg) || error ? (
-          <div>Failed to load</div>
+          <div className='h-half grid place-items-center'>
+            <Error1 msg={data || error} />
+          </div>
         ) : (
           <div className='grid grid-cols-12 my-2 gap-2'>
             {data && data.length >= 1 ? (

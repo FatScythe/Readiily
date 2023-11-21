@@ -10,6 +10,7 @@ import url from "../../../../../utils/url";
 import time_between from "../../../../../utils/time_between";
 // Components
 import Loader from "../../../../../components/loader";
+import Error1 from "../../../../../components/error";
 import UploadResponse from "./upload";
 
 const AvailableRequest = () => {
@@ -34,7 +35,11 @@ const AvailableRequest = () => {
   }
 
   if ((data && data.msg) || error) {
-    return <div>Failed to load</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 msg={data || error} />
+      </div>
+    );
   }
   const myRequest = data?.filter((request) => request.accepted) || [];
 

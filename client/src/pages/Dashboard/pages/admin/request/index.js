@@ -9,6 +9,7 @@ import { AddUserIcon, CancelIcon } from "../../../../../assets/icons";
 import time_between from "../../../../../utils/time_between";
 // Components
 import Loader from "../../../../../components/loader";
+import Error1 from "../../../../../components/error";
 import Designers from "./designers";
 import Comment from "../../../../../components/dashboard/comment";
 // Toastify
@@ -26,14 +27,18 @@ const Request = () => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error, isLoading } = useSWR("/api/v1/request", fetcher);
 
-  if ((data && data.msg) || error) {
-    return <div>Failed to load</div>;
-  }
-
   if (isLoading) {
     return (
       <div className='h-half sm:h-screen grid place-items-center'>
         <Loader className='w-20 h-20' />
+      </div>
+    );
+  }
+
+  if ((data && data.msg) || error) {
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 msg={data || error} />
       </div>
     );
   }

@@ -2,8 +2,9 @@
 import useSWR from "swr";
 // Utils
 import url from "../../utils/url";
-// Component
+// Components
 import Loader from "../loader";
+import Error1 from "../error";
 
 const Comment = ({ id }) => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -21,7 +22,11 @@ const Comment = ({ id }) => {
   }
 
   if ((data && data.msg) || error) {
-    return <div>Failed to load</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 msg={data || error} />
+      </div>
+    );
   }
 
   return (

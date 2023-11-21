@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Card, Referral } from "./walletComp";
 import FundModal from "./fundModal";
 import Loader from "../../../../../../../components/loader";
+import Error1 from "../../../../../../../components/error";
 // Hook
 import useSWR from "swr";
 import useTitle from "../../../../../../../hooks/useTitle";
@@ -24,7 +25,11 @@ const Wallet = () => {
   }
 
   if ((data && data.msg) || error) {
-    return <div>Failed to load</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 msg={data || error} />
+      </div>
+    );
   }
 
   return (

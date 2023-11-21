@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 // Components
 import Loader from "../../../../../components/loader";
+import Error1 from "../../../../../components/error";
 import Post from "./post";
 import EachDate from "./date";
 // Hook
@@ -47,7 +48,7 @@ const Calendar = () => {
 
   if (!currentBrand) {
     return (
-      <div className='h-screen grid place-items-center'>
+      <div className='h-half sm:h-screen grid place-items-center'>
         <h1 className='text-xl sm:text-3xl font-semibold flex flex-col justify-start items-center'>
           <span> Please select a brand to schedule request</span>
           <code className='text-base sm:text-lg flex justify-start items-start sm:items-center gap-2 mt-5'>
@@ -63,7 +64,11 @@ const Calendar = () => {
   }
 
   if (!loading && !requests) {
-    return <div>Error...</div>;
+    return (
+      <div className='h-half sm:h-screen grid place-items-center'>
+        <Error1 />
+      </div>
+    );
   }
 
   return (

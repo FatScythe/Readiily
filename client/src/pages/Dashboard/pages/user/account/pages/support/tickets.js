@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTickets } from "../../../../../../../features/ticket/ticketSlice";
 // Component
 import Loader from "../../../../../../../components/loader";
+import Error1 from "../../../../../../../components/error";
 
 const MyTickets = () => {
   const dispatch = useDispatch();
@@ -16,13 +17,19 @@ const MyTickets = () => {
   }, [dispatch]);
 
   if (loading) {
-    <div className='h-half grid place-items-center'>
-      <Loader className='w-20 h-20' />
-    </div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
 
   if (!loading && !tickets) {
-    <div>Error</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 />
+      </div>
+    );
   }
 
   let myTickets = [];

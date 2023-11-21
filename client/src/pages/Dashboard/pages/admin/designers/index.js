@@ -8,8 +8,9 @@ import { ClipBoardIcon, TrashIcon } from "../../../../../assets/icons";
 import { toast } from "react-toastify";
 // Utils
 import url from "../../../../../utils/url";
-// Component
+// Components
 import Loader from "../../../../../components/loader";
+import Error1 from "../../../../../components/error";
 
 const CreateDesigners = () => {
   useTitle("Create Designers");
@@ -169,7 +170,9 @@ const CreateDesigners = () => {
         </div>
       )}
       {(data && data.msg) || error ? (
-        <div>Failed to load....</div>
+        <div className='h-half grid place-items-center'>
+          <Error1 msg={data || error} />
+        </div>
       ) : data && data.length > 1 ? (
         <div className='grid grid-cols-12 gap-3'>
           {data.map((designer) => (

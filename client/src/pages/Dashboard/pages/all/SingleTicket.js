@@ -8,8 +8,9 @@ import useSWR from "swr";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { replyTicket } from "../../../../features/ticket/ticketSlice";
-// Component
+// Components
 import Loader from "../../../../components/loader";
+import Error1 from "../../../../components/error";
 
 const SingleTicket = () => {
   useTitle("Ticket");
@@ -21,10 +22,6 @@ const SingleTicket = () => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error, isLoading } = useSWR("/api/v1/ticket/" + id, fetcher);
 
-  if ((data && data.msg) || error) {
-    return <div>Failed to load</div>;
-  }
-
   if (isLoading) {
     return (
       <div className='h-half sm:h-screen grid place-items-center'>
@@ -33,6 +30,13 @@ const SingleTicket = () => {
     );
   }
 
+  if ((data && data.msg) || error) {
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 msg={data || error} />
+      </div>
+    );
+  }
   const { subject, ticketId, message, status, account, createdAt, response } =
     data;
 

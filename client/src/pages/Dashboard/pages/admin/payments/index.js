@@ -3,8 +3,9 @@ import useTitle from "../../../../../hooks/useTitle";
 import useSWR from "swr";
 // Util
 import url from "../../../../../utils/url";
-// Component
+// Components
 import Loader from "../../../../../components/loader";
+import Error1 from "../../../../../components/error";
 
 const Payments = () => {
   useTitle("Payments");
@@ -24,7 +25,11 @@ const Payments = () => {
   }
 
   if ((data && data.msg) || error) {
-    return <div>Failed to load</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 msg={data || error} />
+      </div>
+    );
   }
 
   return (

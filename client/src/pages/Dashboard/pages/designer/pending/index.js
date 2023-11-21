@@ -11,6 +11,7 @@ import { CancelIcon } from "../../../../../assets/icons";
 import { toast } from "react-toastify";
 // Component
 import Loader from "../../../../../components/loader";
+import Error1 from "../../../../../components/error";
 import Comment from "../../../../../components/dashboard/comment";
 
 const PendingRequest = () => {
@@ -59,7 +60,11 @@ const PendingRequest = () => {
   }
 
   if ((data && data.msg) || error) {
-    return <div>Failed to load</div>;
+    return (
+      <div className='h-half grid place-items-center'>
+        <Error1 msg={data || error} />
+      </div>
+    );
   }
 
   const myRequest = data?.filter((request) => !request.accepted) || [];
