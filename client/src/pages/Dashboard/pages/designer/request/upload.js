@@ -64,7 +64,7 @@ const UploadResponse = ({ view, setView }) => {
 
   return (
     <div className='fixed top-0 right-0 left-0 bottom-0 bg-black/5'>
-      <div className='absolute h-4/6 -bottom-64 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 w-full sm:w-1/2 md::w-1/3 bg-grayish p-2 rounded-xl'>
+      <div className='absolute h-full top-1/2 sm:top-3/4 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 w-full sm:w-1/2 md::w-1/3 bg-grayish p-2 rounded-xl'>
         <header className='w-full flex justify-between items-center my-3'>
           <button
             className='underline underline-offset-2'

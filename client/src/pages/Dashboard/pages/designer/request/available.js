@@ -99,13 +99,14 @@ const SingleRequest = ({ request, view, setView }) => {
               alt={brand.name}
             />
           )}
-          <h2 className='flex flex-col justify-start items-center'>
+          <h2 className='flex flex-col justify-start items-start sm:items-center'>
             <span>{brand ? brand.name : "No brand name"}</span>
             <Link
               className='text-blue underline underline-offset-2'
               to={`/dashboard/request/brand/${brand ? brand._id : ""}`}
             >
-              View Branding
+              <span className='hidden sm:inline'>View </span>
+              <span>Branding</span>
             </Link>
           </h2>
         </div>
