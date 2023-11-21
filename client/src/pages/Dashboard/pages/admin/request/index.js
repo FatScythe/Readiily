@@ -81,7 +81,7 @@ const Request = () => {
 
         {view.open && <RequestModal view={view} setView={setView} />}
 
-        <div className='h-[50vh] sm:h-[60vh] overflow-x-hidden overflow-y-scroll'>
+        <div className='h-[50vh] overflow-x-hidden overflow-y-scroll'>
           {unassignedReq.length >= 1 ? (
             unassignedReq.map((request) => (
               <SingleRequest

@@ -81,12 +81,14 @@ const Designer = ({
   };
   return (
     <button
-      className='col-span-4 flex flex-col justify-center items-center gap-4 hover:bg-black/20 py-1 rounded-lg'
+      className='col-span-4 flex flex-col justify-center items-center gap-4 hover:bg-black/20 py-1 rounded-lg overflow-clip'
       onClick={handleAssign}
     >
       <img src={avatar} className='w-14 h-14 rounded-full' alt='designer tag' />
       <h3 className='text-sm font-semibold'>{name}</h3>
-      <h3 className='text-sm font-semibold'>{email}</h3>
+      <h3 className='text-xs sm:text-sm font-semibold w-full break-words'>
+        {email}
+      </h3>
     </button>
   );
 };
