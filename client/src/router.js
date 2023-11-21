@@ -38,19 +38,22 @@ import Designs from "./pages/Dashboard/pages/admin/designs";
 import CreateDesigners from "./pages/Dashboard/pages/admin/designers";
 // Component
 import Protected from "./components/protected/protected";
+import ErrorPage from "./pages/errorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Homepage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/verify-payment",
     element: <VerifyPayment />,
+    errorElement: <ErrorPage />,
   },
-  { path: "/auth", element: <Auth /> },
-  { path: "/portal", element: <Portal /> },
-  { path: "/google", element: <GoogleRedirect /> },
+  { path: "/auth", element: <Auth />, errorElement: <ErrorPage /> },
+  { path: "/portal", element: <Portal />, errorElement: <ErrorPage /> },
+  { path: "/google", element: <GoogleRedirect />, errorElement: <ErrorPage /> },
   {
     path: "/dashboard",
     element: (
@@ -58,6 +61,7 @@ export const router = createBrowserRouter([
         <Dashboard />
       </Protected>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "",
