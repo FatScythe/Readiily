@@ -1,11 +1,16 @@
 // import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import Loader from "../loader";
+
 const Protected = ({ children }) => {
   const { account, loading } = useSelector((store) => store.auth);
-  // const [isLogged, setIsLoggedIn] = useState(null)
   if (loading) {
-    return <div>Loading</div>;
+    return (
+      <div className='h-screen grid place-items-center'>
+        <Loader className='w-20 h-20' />
+      </div>
+    );
   }
   if (!account) {
     return <Navigate to='/' />;
