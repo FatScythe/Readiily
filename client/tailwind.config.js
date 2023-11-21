@@ -14,6 +14,9 @@ module.exports = {
         lightpink: "#F9F6F8",
         grayish: "#F9F6F8",
       },
+      height: {
+        half: "50vh",
+      },
     },
   },
   plugins: [],

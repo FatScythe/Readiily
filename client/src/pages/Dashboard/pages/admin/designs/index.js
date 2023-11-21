@@ -58,7 +58,7 @@ const Designs = () => {
         </header>
         {view.open && <RequestModal view={view} setView={setView} />}
 
-        <div className='h-[50vh] sm:h-[60vh] overflow-x-hidden overflow-y-scroll'>
+        <div className='h-half sm:h-[60vh] overflow-x-hidden overflow-y-scroll'>
           {myHistory.length > 0 ? (
             myHistory.map((request) => (
               <SingleRequest
