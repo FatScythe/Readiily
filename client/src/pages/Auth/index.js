@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import useTitle from "../../hooks/useTitle";
 
 const Auth = () => {
+  const [loading, setLoading] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams({ signup: false });
   const [showPwd, setShowPwd] = useState(false);
   const signup = searchParams.get("signup") === "true";
@@ -41,30 +42,39 @@ const Auth = () => {
   const handleAuth = async (e) => {
     try {
       e.preventDefault();
+      setLoading(true);
       const { name, email, password, cpassword } = form;
       if (!email || !password) {
+        setLoading(false);
         toast.info("Please provide email and password!");
         return;
       }
 
       if (signup && !name) {
+        setLoading(false);
         toast.info("Provide your full name");
         return;
       }
       if (signup && password.length < 8) {
+        setLoading(false);
         toast.info("Password too short");
         return;
       }
       if (signup && cpassword !== password) {
+        setLoading(false);
         toast.info("Passwords does not match");
         return;
       }
 
       if (signup) {
         dispatch(registerAccount(form));
+        setLoading(false);
       } else {
         dispatch(loginAccount(form));
-        navigate("/dashboard");
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/dashboard");
+        }, 3000);
       }
 
       if (signup) {
@@ -220,7 +230,10 @@ const Auth = () => {
             )}
 
             <div className='w-full flex justify-end items-center'>
-              <button className='bg-blue px-2 py-3 rounded-md text-white flex justify-between items-center gap-2'>
+              <button
+                disabled={loading}
+                className='bg-blue px-2 py-3 rounded-md text-white flex justify-between items-center gap-2 disabled:cursor-not-allowed disabled:bg-blue/60'
+              >
                 <span>{signup ? "Sign up" : "Sign in"}</span>
                 <span>
                   <ArrowIcon className='w-6 h-6' />
