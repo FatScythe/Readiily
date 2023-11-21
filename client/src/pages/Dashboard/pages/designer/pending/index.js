@@ -9,6 +9,8 @@ import time_between from "../../../../../utils/time_between";
 import { CancelIcon } from "../../../../../assets/icons";
 // Toastify
 import { toast } from "react-toastify";
+// Component
+import Comment from "../../../../../components/dashboard/comment";
 
 const PendingRequest = () => {
   useTitle("Available Request");
@@ -56,40 +58,10 @@ const PendingRequest = () => {
   }
 
   const myRequest = data?.filter((request) => !request.accepted) || [];
+
   return (
     <section className='relative'>
-      {modal.open && (
-        <div className='relative'>
-          <p
-            className='fixed bottom-0 left-0 right-0 top-0 bg-black/30 z-10'
-            onClick={() => setModal({ open: false, request: null })}
-          ></p>
-          <div className='absolute top-56 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-11/12 sm:w-3/4 bg-grayish z-20 p-2'>
-            <div className='flex justify-between items-center'>
-              <h1 className='text-lg font-semibold'>
-                Request #{modal.request._id}
-              </h1>
-              <button className='bg-red-400 p-1 rounded-full'>
-                <CancelIcon className='w-6 h-6 stroke-white stroke-2' />
-              </button>
-            </div>
-            <p className='mt-6'>
-              <span className='text-lg font-bold'>Description:</span>
-              {modal.request.desc}
-            </p>
-
-            <img
-              src={
-                modal.request.brand
-                  ? modal.request.brand.logoLight ||
-                    modal.request.brand.logoDark
-                  : ""
-              }
-              alt='additional information'
-            />
-          </div>
-        </div>
-      )}
+      {modal.open && <RequestModal modal={modal} setModal={setModal} />}
       <main className='bg-white/80 sm:m-2 shadow-xl sm:p-2'>
         <header>
           <div className='text-blue font-bold text-lg sm:text-xl py-4'>
@@ -192,6 +164,46 @@ const SingleRequest = ({ request, setModal, requestId, setRequestId }) => {
             }
           }}
         />
+      </div>
+    </div>
+  );
+};
+
+const RequestModal = ({ modal, setModal }) => {
+  return (
+    <div className='relative'>
+      <p
+        className='fixed bottom-0 left-0 right-0 top-0 bg-black/30 z-10'
+        onClick={() => setModal({ open: false, request: null })}
+      ></p>
+      <div className='absolute top-56 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-11/12 sm:w-3/4 bg-grayish z-20 p-2'>
+        <div className='flex justify-between items-center'>
+          <h1 className='text-lg font-semibold'>
+            Request #{modal.request._id}
+          </h1>
+          <button
+            className='bg-red-400 p-1 rounded-full'
+            onClick={() => setModal({ open: false, request: null })}
+          >
+            <CancelIcon className='w-6 h-6 stroke-white stroke-2' />
+          </button>
+        </div>
+        <p className='mt-6'>
+          <span className='text-lg font-bold'>Description:</span>
+          {modal.request.desc}
+        </p>
+
+        {(modal.request.brand.logoLight || modal.request.brand.logoDark) && (
+          <img
+            src={
+              modal.request.brand
+                ? modal.request.brand.logoLight || modal.request.brand.logoDark
+                : ""
+            }
+            alt='additional information'
+          />
+        )}
+        <Comment id={modal.request._id} />
       </div>
     </div>
   );
