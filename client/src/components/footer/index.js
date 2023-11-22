@@ -19,18 +19,24 @@ const Footer = () => {
       <main className='container px-5 md:px-20 pt-5 pb-14 flex flex-col items-start gap-3 md:gap-5 md:flex-row justify-between'>
         <div className='contact flex flex-col justify-between items-start gap-5 mb-5 md:mb-0'>
           <img src={logo} alt='Readiily' className='w-30 h-20' />
-          <div className='flex justify-between items-center gap-2'>
+          <a
+            href='mailto:readiily.com@gmail.com'
+            className='flex justify-between items-center gap-2'
+          >
             <span>
               <MailIcon className='w-8 h-8' />
             </span>
-            <span>design@readiily.com</span>
-          </div>
-          <div className='flex justify-between items-center gap-2'>
+            <span>readiily.com@gmail.com</span>
+          </a>
+          <a
+            href='tel:07066151673'
+            className='flex justify-between items-center gap-2'
+          >
             <span>
               <PhoneIcon className='w-8 h-8' />
             </span>
             <span>+234 706 6151 673</span>
-          </div>
+          </a>
           <div className='flex justify-between items-center gap-4'>
             <FbIcon className='w-6 h-6 sm:w-8 sm:h-8' />
             <InstaIcon className='w-6 h-6 sm:w-8 sm:h-8' />
@@ -43,7 +49,7 @@ const Footer = () => {
         <Accordian2 />
         <Accordian3 />
       </main>
-      <aside className='border-0 border-t p-2 border-t-white/60 flex justify-center items-center'>
+      <aside className='border-0 border-t py-4 border-t-white/60 flex justify-center items-center'>
         <Link to='/portal' className='text-white text-center'>
           © All right reserved - Readiily 2023
         </Link>
@@ -106,9 +112,15 @@ const Accordian2 = () => {
           isOpen ? "max-h-32" : "max-h-0 md:max-h-32"
         } flex-col justify-between items-start gap-3 transition-all duration-700`}
       >
-        <li>Log In</li>
-        <li>Sign up</li>
-        <li>Password Reset</li>
+        <li>
+          <Link to='/auth'>Log In</Link>
+        </li>
+        <li>
+          <Link to='/auth?signup=true'>Sign Up</Link>
+        </li>
+        <li>
+          <Link to='/auth'>Password Reset</Link>
+        </li>
       </ul>
     </div>
   );
