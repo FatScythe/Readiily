@@ -6,7 +6,7 @@ const { attachCookieToResponse } = require("../utils/jwt");
 const Wallet = require("../model/Wallet");
 
 const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, referrer } = req.body;
 
   if (!name || !email || !password) {
     throw new BadRequestError("Please fill all fields");
@@ -16,10 +16,22 @@ const register = async (req, res) => {
     throw new BadRequestError("Password should be minimum of 8 character");
   }
 
+  let referralId = referrer;
+
+  if (referralId) {
+    const account = await Account.findOne({ _id: referralId });
+    if (!account) {
+      referralId = "";
+    }
+  } else {
+    referralId = "";
+  }
+
   const account = await Account.create({
     name,
     password,
     email,
+    referral: referralId,
   });
 
   if (account.role === "user") {

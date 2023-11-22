@@ -1,4 +1,4 @@
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams, Navigate } from "react-router-dom";
 import { useState } from "react";
 // Image
 import Rlogo from "../../assets/images/Rlogo.png";
@@ -11,7 +11,7 @@ import {
   GoogleIcon,
 } from "../../assets/icons";
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerAccount, loginAccount } from "../../features/auth/authSlice";
 // Toastify
 import { toast } from "react-toastify";
@@ -19,11 +19,12 @@ import { toast } from "react-toastify";
 import useTitle from "../../hooks/useTitle";
 
 const Auth = () => {
+  const { account } = useSelector((store) => store.auth);
   const [loading, setLoading] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams({ signup: false });
   const [showPwd, setShowPwd] = useState(false);
   const signup = searchParams.get("signup") === "true";
-  const navigate = useNavigate();
+  const referrer = searchParams.get("referrer");
   const dispatch = useDispatch();
 
   useTitle(signup ? "Sign-up" : "Login");
@@ -33,10 +34,22 @@ const Auth = () => {
     email: "",
     password: "",
     cpassword: "",
+    referrer,
   });
 
   const handleGoogleAuth = () => {
-    window.open(window.location.origin + "/api/v1/auth/login/google", "_self");
+    window.open(
+      window.location.origin +
+        `/api/v1/auth/login/google?referrer=${referrer ? referrer : ""}`
+        ? referrer
+        : "",
+      "_self"
+    );
+    // DEVELOPMENT
+    // window.open(
+    //   "http://localhost:5000" + `/api/v1/auth/login/google?referrer=${referrer ? referrer : ""}`,
+    //   "_self"
+    // );
   };
 
   const handleAuth = async (e) => {
@@ -71,10 +84,7 @@ const Auth = () => {
         setLoading(false);
       } else {
         dispatch(loginAccount(form));
-        setTimeout(() => {
-          setLoading(false);
-          navigate("/dashboard");
-        }, 3000);
+        setLoading(false);
       }
 
       if (signup) {
@@ -88,11 +98,12 @@ const Auth = () => {
     }
   };
 
+  if (account) {
+    return <Navigate to='/dashboard' />;
+  }
+
   return (
-    <section
-      id='auth'
-      className={`${signup ? "h-full" : "h-screen"} bg-white/75`}
-    >
+    <section id='auth' className='h-full bg-white/75'>
       <nav className='flex justify-between items-center gap-3 border-2 border-blue px-3'>
         <Link to='/'>
           <img
@@ -110,6 +121,9 @@ const Auth = () => {
             onClick={(e) => {
               setSearchParams((prev) => {
                 prev.set("signup", signup ? false : true);
+                if (referrer) {
+                  prev.set("referrer", referrer);
+                }
                 return prev;
               });
             }}
@@ -119,15 +133,15 @@ const Auth = () => {
           </button>
         </div>
       </nav>
-      <main className='h-full pt-5 text-blue'>
+      <main className='h-full pt-3 text-blue'>
         <header className='text-center text-3xl font-bold'>
           {signup ? "Sign in to Readiily" : "Start designing with Readiily"}
         </header>
-        <div className='w-11/12 sm:w-3/4 md:w-3/6 mx-auto rounded-md mt-5 px-4 py-10 border-2 border-blue'>
+        <div className='w-11/12 sm:w-3/4 md:w-3/6 mx-auto rounded-md mt-3 px-4 py-5 border-2 border-blue'>
           <button
             type='button'
             onClick={handleGoogleAuth}
-            className='flex justify-center items-center gap-3 w-full sm:w-4/5 mx-auto px-3 py-2 border border-black shadow-md hover:shadow-xl rounded-md'
+            className='flex justify-center items-center gap-3 w-full sm:w-4/5 mx-auto px-4 py-3 border border-black shadow-md hover:shadow-xl rounded-md'
           >
             <GoogleIcon className='w-6 h-6' />
             <span>
@@ -242,11 +256,16 @@ const Auth = () => {
             </div>
           </form>
         </div>
-        <footer className='gap-2 mt-2 flex justify-center items-center pb-20'>
+        <footer className='gap-2 mt-2 flex justify-center items-center pb-5'>
           <h4>
             {signup ? "Already have an account?" : "Forgotten your password?"}
           </h4>
-          <Link to={signup ? "/auth" : "/"} className='text-orange'>
+          <Link
+            to={
+              signup ? (referrer ? `/auth?referrer=${referrer}` : "/auth") : "/"
+            }
+            className='text-orange'
+          >
             {signup ? "Sign in" : "Reset it"}
           </Link>
         </footer>

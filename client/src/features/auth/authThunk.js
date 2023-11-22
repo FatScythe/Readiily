@@ -1,14 +1,18 @@
 export const registerAccountThunk = async (account, url, thunkAPI) => {
   try {
-    const { name, email, password } = account;
+    const { name, email, password, referrer } = account;
     const response = await fetch(url, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        referrer: referrer ? referrer : "",
+      }),
     });
 
     const data = await response.json();
-
     if (!response.ok) {
       return thunkAPI.rejectWithValue(data);
     }

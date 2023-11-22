@@ -1,5 +1,6 @@
 const Wallet = require("../model/Wallet");
 const Transaction = require("../model/Transaction");
+const Account = require("../model/Account");
 const { StatusCodes } = require("http-status-codes");
 const mongoose = require("mongoose");
 
@@ -49,4 +50,49 @@ const getMyWallet = async (req, res) => {
   });
 };
 
-module.exports = { getMyWallet };
+const getRefferalBonus = async (req, res) => {
+  const referrals = await Account.find({
+    referral: req.user.userId,
+    refarralClaim: false,
+  });
+
+  let numOfReferrals = 0;
+
+  for (const ref in referrals) {
+    const account = await Account.findOne({ _id: ref._id });
+    if (account) {
+      account.refarralClaim = true;
+      numOfReferrals += 1;
+    }
+  }
+
+  if (numOfReferrals <= 1) {
+    return res.status(StatusCodes.OK).json({
+      status: "Error",
+      msg: "You don't have enough referals to claim yet",
+    });
+  }
+
+  const AMOUNT_REDEEMABLE = numOfReferrals * process.env.REFERRAL_PRICE;
+
+  const wallet = await Wallet.findOne({ account: req.user.userId });
+
+  const former_balance = wallet.balance;
+
+  wallet.balance = former_balance + AMOUNT_REDEEMABLE;
+
+  await wallet.save();
+
+  await wallet.createTransaction(
+    `Referral Bonus`,
+    AMOUNT_REDEEMABLE,
+    "expense"
+  );
+
+  res.status(StatusCodes.OK).json({
+    status: "Success",
+    msg: `You earned $${AMOUNT_REDEEMABLE}`,
+  });
+};
+
+module.exports = { getMyWallet, getRefferalBonus };

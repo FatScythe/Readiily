@@ -89,7 +89,9 @@ export const Referral = ({ modal, setModal }) => {
         <button
           onClick={() => {
             navigator.clipboard.writeText(
-              window.location.origin + "/auth?referrer=" + account.userId
+              window.location.origin +
+                "/auth?signup=true&referrer=" +
+                account.userId
             );
             toast.info("Copied to clipboard!");
           }}

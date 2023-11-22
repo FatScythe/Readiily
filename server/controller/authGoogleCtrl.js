@@ -1,4 +1,3 @@
-const { StatusCodes } = require("http-status-codes");
 const { attachCookieToResponse } = require("../utils/jwt");
 
 const googleLogin = async (req, res) => {
