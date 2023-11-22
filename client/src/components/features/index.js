@@ -51,7 +51,7 @@ const Features1 = () => {
 const Features2 = () => {
   return (
     <section className='grid grid-cols-12 gap-5 mb-10 p-2 container place-items-center'>
-      <div className='col-span-12 sm:col-span-6 gap-2 order-2 sm:order-1'>
+      <div className='col-span-12 sm:col-span-6 gap-2 sm:order-1'>
         <div className='flex justify-start items-start gap-2'>
           <div className='basis-11/12 text-blue'>
             <h1 className='text-xl sm:text-2xl md:text-4xl font-bold'>
