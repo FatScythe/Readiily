@@ -1,4 +1,4 @@
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams, Navigate } from "react-router-dom";
 import { useState } from "react";
 // Image
 import Rlogo from "../../assets/images/Rlogo.png";
@@ -10,17 +10,17 @@ import { toast } from "react-toastify";
 // Hooks
 import useTitle from "../../hooks/useTitle";
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { saveAccount } from "../../features/auth/authSlice";
 // Util
 import url from "../../utils/url";
 
 const Portal = () => {
   useTitle("Portal");
+  const { account } = useSelector((store) => store.auth);
   let [searchParams, setSearchParams] = useSearchParams({ admin: false });
   const [showPwd, setShowPwd] = useState(false);
   const admin = searchParams.get("admin") === "true";
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
@@ -67,11 +67,14 @@ const Portal = () => {
       }
 
       dispatch(saveAccount(data));
-      navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (account) {
+    return <Navigate to='/dashboard' />;
+  }
 
   return (
     <section id='auth' className='bg-white/75 h-screen'>
@@ -92,9 +95,12 @@ const Portal = () => {
                 return prev;
               });
             }}
-            className='text-orange underline underline-offset-4 mx-2'
+            className='flex justify-between items-center'
           >
-            {admin ? "Designer" : "Admin"}
+            <span className='text-black font-medium'>Switch to: </span>
+            <span className='text-orange underline underline-offset-4 mx-2'>
+              {admin ? "Designer" : "Admin"}
+            </span>
           </button>
         </div>
       </nav>
