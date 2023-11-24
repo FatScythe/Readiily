@@ -41,7 +41,15 @@ passportGoogle.deserializeUser(function (user, cb) {
   });
 });
 
-router.get("/login/google", passportGoogle.authenticate("google"));
+router.get(
+  "/login/google",
+  function (req, res, next) {
+    var sessData = req.session;
+    sessData.referrer = req.query?.referrer || "";
+    next();
+  },
+  passportGoogle.authenticate("google")
+);
 
 router.get(
   "/oauth2/redirect/google",

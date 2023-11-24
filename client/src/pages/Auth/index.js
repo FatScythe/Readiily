@@ -40,9 +40,7 @@ const Auth = () => {
   const handleGoogleAuth = () => {
     window.open(
       window.location.origin +
-        `/api/v1/auth/login/google?referrer=${referrer ? referrer : ""}`
-        ? referrer
-        : "",
+        `/api/v1/auth/login/google?referrer=${referrer ? referrer : ""}`,
       "_self"
     );
     // DEVELOPMENT
