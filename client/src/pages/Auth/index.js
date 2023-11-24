@@ -88,10 +88,12 @@ const Auth = () => {
       }
 
       if (signup) {
-        setSearchParams((prev) => {
-          prev.set("signup", false);
-          return prev;
-        });
+        setTimeout(() => {
+          setSearchParams((prev) => {
+            prev.set("signup", false);
+            return prev;
+          });
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
