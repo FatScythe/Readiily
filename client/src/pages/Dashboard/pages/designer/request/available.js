@@ -37,7 +37,7 @@ const AvailableRequest = () => {
   if ((data && data.msg) || error) {
     return (
       <div className='h-half grid place-items-center'>
-        <Error1 msg={data || error} />
+        <Error1 error={data || error} />
       </div>
     );
   }

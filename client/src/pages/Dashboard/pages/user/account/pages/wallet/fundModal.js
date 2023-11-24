@@ -71,7 +71,6 @@ const FundModal = () => {
     }
 
     setForm({ ...form, link: data.data.link });
-    console.log(data);
     window.open(data.data.link, "_self");
   };
   return (

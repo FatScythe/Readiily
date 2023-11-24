@@ -31,7 +31,7 @@ const Designers = ({ openModal, setOpenModal, requestId, setRequestId }) => {
         )}
         {(data && data.msg) || error ? (
           <div className='h-half grid place-items-center'>
-            <Error1 msg={data || error} />
+            <Error1 error={data || error} />
           </div>
         ) : (
           <div className='grid grid-cols-12 my-2 gap-2'>

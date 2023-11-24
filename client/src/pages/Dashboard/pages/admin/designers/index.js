@@ -171,7 +171,7 @@ const CreateDesigners = () => {
       )}
       {(data && data.msg) || error ? (
         <div className='h-half grid place-items-center'>
-          <Error1 msg={data || error} />
+          <Error1 error={data || error} />
         </div>
       ) : data && data.length > 1 ? (
         <div className='grid grid-cols-12 gap-3'>
