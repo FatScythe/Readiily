@@ -2,6 +2,7 @@ import { useState } from "react";
 // Components
 import { Card, Referral } from "./walletComp";
 import FundModal from "./fundModal";
+import ReferralModal from "./referralModal";
 import Loader from "../../../../../../../components/loader";
 import Error1 from "../../../../../../../components/error";
 // Hook
@@ -27,7 +28,7 @@ const Wallet = () => {
   if ((data && data.msg) || error) {
     return (
       <div className='h-half grid place-items-center'>
-        <Error1 msg={data || error} />
+        <Error1 error={data || error} />
       </div>
     );
   }
@@ -40,8 +41,12 @@ const Wallet = () => {
             className='fixed top-0 bottom-0 right-0 left-0 bg-black/20'
             onClick={() => setModal({ open: false, isFund: true })}
           ></div>
-          <div className='bg-white fixed z-10 top-1/2 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-full sm:w-3/4 md:w-1/2 rounded-xl'>
-            {modal.isFund ? <FundModal /> : <ReferralModal />}
+          <div className='bg-white fixed z-10 top-1/2 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-11/12 sm:w-3/4 md:w-1/2 rounded-xl'>
+            {modal.isFund ? (
+              <FundModal />
+            ) : (
+              <ReferralModal setModal={setModal} />
+            )}
           </div>
         </div>
       )}
@@ -52,7 +57,3 @@ const Wallet = () => {
 };
 
 export default Wallet;
-
-const ReferralModal = () => {
-  return <div>Claim Referral</div>;
-};

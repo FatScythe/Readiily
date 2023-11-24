@@ -56,21 +56,22 @@ const getRefferalBonus = async (req, res) => {
     refarralClaim: false,
   });
 
+  if (referrals.length < 2) {
+    return res.status(StatusCodes.OK).json({
+      status: "fail",
+      msg: "You don't have enough referals to claim yet",
+    });
+  }
+
   let numOfReferrals = 0;
 
-  for (const ref in referrals) {
+  for (const ref of referrals) {
     const account = await Account.findOne({ _id: ref._id });
     if (account) {
       account.refarralClaim = true;
+      await account.save();
       numOfReferrals += 1;
     }
-  }
-
-  if (numOfReferrals <= 1) {
-    return res.status(StatusCodes.OK).json({
-      status: "Error",
-      msg: "You don't have enough referals to claim yet",
-    });
   }
 
   const AMOUNT_REDEEMABLE = numOfReferrals * process.env.REFERRAL_PRICE;
@@ -90,7 +91,7 @@ const getRefferalBonus = async (req, res) => {
   );
 
   res.status(StatusCodes.OK).json({
-    status: "Success",
+    status: "success",
     msg: `You earned $${AMOUNT_REDEEMABLE}`,
   });
 };
