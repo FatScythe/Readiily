@@ -10,7 +10,7 @@ import Carousel from "./carousel";
 
 const Features = () => {
   return (
-    <section id='features' className='mt-5 mb-2'>
+    <section id='features' className='mt-5'>
       <Features1 />
       <Features2 />
       <Features3 />
@@ -77,7 +77,7 @@ const Features2 = () => {
 
 const Features3 = () => {
   return (
-    <section className='grid grid-cols-12 gap-5 mb-10 p-2 container place-items-center'>
+    <section className='grid grid-cols-12 gap-5 mb-2 sm:mb-5 p-2 container place-items-center'>
       <div className='col-span-12 sm:col-span-6 gap-2'>
         <div className='flex justify-start items-start gap-2'>
           <div className='basis-1/12'>
@@ -104,7 +104,7 @@ const Features3 = () => {
 
 const Features4 = () => {
   return (
-    <section className='bg-primary text-center mt-32 pb-16 relative'>
+    <section className='bg-primary text-center sm:mt-10 pb-16 relative'>
       <WindIcon className='w-8 h-8 absolute -top-4 left-16 hover:w-10 hover:h-10 transition-all duration-200' />
       <h2 className='text-xl md:text-4xl font-bold w-4/5 md:w-1/2 py-20 mx-auto'>
         Experience brand <span className='text-secondary'>designs </span>
