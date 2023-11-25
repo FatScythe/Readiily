@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { CancelIcon, UploadLogoIcon } from "../../../../../assets/icons";
 // Utils
 import url from "../../../../../utils/url";
+import { downloadCloudinary } from "../../../../../utils/downloadFile";
 // Component
 import Comment from "../../../../../components/dashboard/comment";
 
@@ -88,7 +89,13 @@ const UploadResponse = ({ view, setView }) => {
             </p>
             <h2 className='text-lg sm:text-xl '>Preferred brand image</h2>
 
-            <button>download</button>
+            {view.request.image ? (
+              <a href={downloadCloudinary(view.request.image)} download>
+                download
+              </a>
+            ) : (
+              <p>No preferred image</p>
+            )}
             <form className='w-full my-5'>
               <div className='flex justify-between items-center outline-none border border-gray-400 rounded-md p-3 '>
                 <label

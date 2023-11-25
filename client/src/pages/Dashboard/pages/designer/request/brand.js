@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { DownloadIcon } from "../../../../../assets/icons";
 // Utils
 import url from "../../../../../utils/url";
+import { downloadCloudinary } from "../../../../../utils/downloadFile";
 // Component
 import Loader from "../../../../../components/loader";
 import Error1 from "../../../../../components/error";
@@ -85,7 +86,11 @@ const BrandInfo = () => {
             <main className='flex justify-start items-center gap-4 w-full'>
               <div className='border border-black rounded-md p-2 w-full flex justify-between items-center'>
                 <span>{font}</span>
-                {fontUrl && <DownloadIcon className='w-6 h-6' />}
+                {fontUrl && (
+                  <a href={downloadCloudinary(fontUrl)} download>
+                    <DownloadIcon className='w-6 h-6' />
+                  </a>
+                )}
               </div>
             </main>
           </div>
@@ -131,7 +136,9 @@ const BrandInfo = () => {
                       alt='logo'
                       className='w-10 h-10 rounded-md'
                     />
-                    <DownloadIcon className='w-6 h-6' />
+                    <a href={downloadCloudinary(logoLight)} download>
+                      <DownloadIcon className='w-6 h-6' />
+                    </a>
                   </>
                 ) : (
                   <h2>No light logo</h2>
@@ -151,7 +158,9 @@ const BrandInfo = () => {
                       alt='logo'
                       className='w-10 h-10 rounded-md'
                     />
-                    <DownloadIcon className='w-6 h-6' />
+                    <a href={downloadCloudinary(logoDark)} download>
+                      <DownloadIcon className='w-6 h-6' />
+                    </a>
                   </>
                 ) : (
                   <h2>No dark logo</h2>

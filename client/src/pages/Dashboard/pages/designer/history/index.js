@@ -7,8 +7,9 @@ import useSWR from "swr";
 import { CancelIcon } from "../../../../../assets/icons";
 // Utils
 import url from "../../../../../utils/url";
-import Comment from "../../../../../components/dashboard/comment";
+import { downloadCloudinary } from "../../../../../utils/downloadFile";
 // Component
+import Comment from "../../../../../components/dashboard/comment";
 import Loader from "../../../../../components/loader";
 import Error1 from "../../../../../components/error";
 
@@ -161,7 +162,11 @@ const RequestModal = ({ view, setView }) => {
               </p>
               <h2 className='text-lg sm:text-xl '>Preferred brand image</h2>
 
-              <button>download</button>
+              {view.request.design && (
+                <a href={downloadCloudinary(view.request.design)} download>
+                  download
+                </a>
+              )}
             </div>
 
             <img

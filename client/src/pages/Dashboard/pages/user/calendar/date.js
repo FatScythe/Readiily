@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { createComment } from "../../../../../features/comment/commentSlice";
+// Util
+import { downloadCloudinary } from "../../../../../utils/downloadFile";
 
 const EachDate = ({
   date,
@@ -203,14 +205,19 @@ const Options = ({
               <span className='text-sm hidden sm:block'>Comment</span>
             </button>
           )}
-          <button className='flex justify-between items-center'>
+          <button className='flex justify-between items-center cursor-not-allowed opacity-40'>
             <MailIcon className='w-6 h-6 stroke-blue fill-blue' />
             <span className='text-sm hidden sm:block'>Send to mail</span>
           </button>
-          <button className='flex justify-between items-center'>
+          <a
+            disabled={myRequest && myRequest.length > 0 && myRequest[0].design}
+            href={downloadCloudinary(myRequest[0].design)}
+            className='flex justify-between items-center disabled:opacity-40 disabled:cursor-not-allowed'
+            download
+          >
             <DownloadIcon className='w-8 h-10' />
             <DownloadPopUpIcon className='w-8 h-10 hidden sm:block' />
-          </button>
+          </a>
         </div>
       )}
     </div>

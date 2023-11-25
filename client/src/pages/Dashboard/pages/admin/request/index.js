@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { AddUserIcon, CancelIcon } from "../../../../../assets/icons";
 // Utils
 import time_between from "../../../../../utils/time_between";
+import { downloadCloudinary } from "../../../../../utils/downloadFile";
 // Components
 import Loader from "../../../../../components/loader";
 import Error1 from "../../../../../components/error";
@@ -190,6 +191,7 @@ const SingleRequest = ({ request, requestId, setRequestId, setView }) => {
 };
 
 const RequestModal = ({ view, setView }) => {
+  console.log(view);
   return (
     <div className='fixed top-0 right-0 left-0 bottom-0 bg-black/5 z-20'>
       <div className='absolute h-4/6 -bottom-64 left-1/2 right-1/2 -translate-x-1/2 -translate-y-1/2 w-full sm:w-1/2 md::w-1/3 bg-grayish p-2 rounded-xl'>
@@ -216,7 +218,13 @@ const RequestModal = ({ view, setView }) => {
             </p>
             <h2 className='text-lg sm:text-xl '>Preferred brand image</h2>
 
-            <button>download</button>
+            {view.request.image ? (
+              <a href={downloadCloudinary(view.request.image)} download>
+                download
+              </a>
+            ) : (
+              <p>No preferred image</p>
+            )}
           </div>
         )}
       </div>
