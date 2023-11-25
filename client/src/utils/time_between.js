@@ -5,10 +5,14 @@ function time_between(date1, date2 = new Date()) {
   const ONE_HOUR = 1000 * 60 * 60;
 
   // Calculate the difference in milliseconds
-  let differenceMs = Math.abs(date1 - date2);
+  let differenceMs = date1 - date2;
   // Convert back to days/ hours/ week and return
   let day = Math.round(differenceMs / ONE_DAY);
-  let deadline = day + " day" + (day > 1 ? "s" : "");
+  let deadline =
+    Math.abs(day) +
+    " day" +
+    (day > 1 || day < -1 ? "s" : "") +
+    (day < 0 ? " ago" : "");
 
   if (day === 0) {
     let hour = Math.round(differenceMs / ONE_HOUR);
