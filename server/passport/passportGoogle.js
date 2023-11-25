@@ -40,7 +40,7 @@ module.exports = passport.use(
             name: profile.displayName,
             googleId: profile.id,
             authType: "google",
-            referral: referralId,
+            ...(referralId && referral: referralId),
           });
 
           if (account.role === "user") {
