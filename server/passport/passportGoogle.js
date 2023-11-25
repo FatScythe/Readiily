@@ -39,14 +39,14 @@ module.exports = passport.use(
             name: profile.displayName,
             googleId: profile.id,
             authType: "google",
-          }
+          };
 
-         if(referralId) {
-          accountObj = {
-           ...accountObj, 
-          ...(referralId) && {referral: referralId} 
+          if (referralId) {
+            accountObj = {
+              ...accountObj,
+              ...(referralId && { referral: referralId }),
+            };
           }
-         }
 
           account = await Account.create(accountObj);
 

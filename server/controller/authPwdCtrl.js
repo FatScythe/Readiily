@@ -27,11 +27,11 @@ const register = async (req, res) => {
     referralId = null;
   }
 
-  let accountObj = { name,password,email }
+  let accountObj = { name, password, email };
 
- if(referralId) {
-   accountObj = {...accountObj, ...(referralId) && {referral: referralId}}
-}
+  if (referralId) {
+    accountObj = { ...accountObj, ...(referralId && { referral: referralId }) };
+  }
 
   account = await Account.create(accountObj);
 
