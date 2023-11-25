@@ -29,19 +29,26 @@ module.exports = passport.use(
           if (referralId) {
             const account = await Account.findOne({ _id: referralId });
             if (!account) {
-              referralId = "";
+              referralId = null;
             }
           } else {
-            referralId = "";
+            referralId = null;
           }
-
-          account = await Account.create({
+          let accountObj = {
             email: profile.emails[0].value,
             name: profile.displayName,
             googleId: profile.id,
             authType: "google",
-            referralId && referral: referralId,
-          });
+          }
+
+         if(referralId) {
+          accountObj = {
+           ...accountObj, 
+          ...(referralId) && {referral: referralId} 
+          }
+         }
+
+          account = await Account.create(accountObj);
 
           if (account.role === "user") {
             const wallet = await Wallet.create({
