@@ -7,6 +7,7 @@ const RequestSchema = new Schema(
       required: [true, "Please provide request description"],
     },
     design: String,
+    image: String,
     date: {
       type: Date,
       required: [true, "Please provide a schedule date"],
