@@ -253,7 +253,11 @@ const Auth = () => {
           </h4>
           <Link
             to={
-              signup ? (referrer ? `/auth?referrer=${referrer}` : "/auth") : "/"
+              signup
+                ? referrer
+                  ? `/auth?referrer=${referrer}`
+                  : "/auth"
+                : "/forgot"
             }
             className='text-orange'
           >

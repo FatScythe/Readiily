@@ -2,6 +2,8 @@
 import Homepage from "./pages/HomePage";
 import Auth from "./pages/Auth";
 import Portal from "./pages/Portal";
+import ForgotPwd from "./pages/Auth/forgotPassword";
+import ResetPwd from "./pages/Auth/resetPassword";
 import GoogleRedirect from "./pages/Auth/google";
 import Dashboard from "./pages/Dashboard";
 import HomeDash from "./pages/Dashboard/pages/all";
@@ -53,6 +55,8 @@ export const router = createBrowserRouter([
   },
   { path: "/auth", element: <Auth />, errorElement: <ErrorPage /> },
   { path: "/portal", element: <Portal />, errorElement: <ErrorPage /> },
+  { path: "/forgot", element: <ForgotPwd />, errorElement: <ErrorPage /> },
+  { path: "/reset", element: <ResetPwd />, errorElement: <ErrorPage /> },
   { path: "/google", element: <GoogleRedirect />, errorElement: <ErrorPage /> },
   {
     path: "/dashboard",
