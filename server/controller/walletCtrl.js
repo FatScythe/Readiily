@@ -5,12 +5,16 @@ const { StatusCodes } = require("http-status-codes");
 const mongoose = require("mongoose");
 
 const getMyWallet = async (req, res) => {
-  const wallet = await Wallet.findOne({ account: req.user.userId });
+  let wallet = await Wallet.findOne({ account: req.user.userId });
+  if (!wallet) {
+    wallet = await Wallet.create({ balance: 0, account: req.user.userId });
+  }
   const transactions = await Transaction.find({ account: req.user.userId });
 
   if (transactions.length === 0) {
     return res.status(StatusCodes.OK).json({
-      balance: wallet.balance,
+      walletBalance: wallet.balance,
+      walletId: wallet._id,
       income: 0,
       expense: 0,
       transactions,
