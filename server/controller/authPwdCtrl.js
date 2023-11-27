@@ -3,7 +3,10 @@ const { BadRequestError, NotFoundError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 const createTokenAccount = require("../utils/createTokenAccount");
 const { attachCookieToResponse } = require("../utils/jwt");
+const sendResetPasswordEmail = require("../utils/sendResetPasswordEmail");
+const createHash = require("../utils/createHash");
 const Wallet = require("../model/Wallet");
+const crypto = require("crypto");
 
 const register = async (req, res) => {
   const { name, email, password, referrer } = req.body;
@@ -35,7 +38,7 @@ const register = async (req, res) => {
 
   account = await Account.create(accountObj);
 
-  if (account.role === "user") {
+  if (account.role === "account") {
     const wallet = await Wallet.create({
       balance: Number(process.env.REGISTRATION_BONUS),
       account: account._id,
@@ -81,7 +84,6 @@ const loginAdmin = async (req, res) => {
 };
 
 const loginDesigner = async (req, res) => {
-  //  Math.random().toString(35).slice(2).toUpperCase(); DED8KS375C
   const { email, token } = req.body;
   if (!email || !token) {
     throw new BadRequestError("Please provide email and token");
@@ -116,4 +118,72 @@ const logout = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "Logged Out Sucessfully" });
 };
 
-module.exports = { register, login, loginAdmin, loginDesigner, logout };
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!email) throw new BadRequestError("Please provide an email");
+
+  const account = await Account.findOne({ email });
+
+  if (account) {
+    if (account.authType !== "email") {
+      throw new BadRequestError("Not a password account");
+    }
+    const passwordToken = crypto.randomBytes(70).toString("hex");
+
+    const origin = process.env.DOMAIN;
+
+    await sendResetPasswordEmail({
+      name: account.name,
+      email: account.email,
+      passwordToken,
+      origin,
+    });
+
+    const tenMinutes = 1000 * 60 * 10;
+
+    account.passwordToken = createHash(passwordToken);
+    account.passwordTokenExpirationDate = new Date(Date.now() + tenMinutes);
+
+    await account.save();
+  }
+
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: "Please check your email for reset password link" });
+};
+
+const resetPassword = async (req, res) => {
+  const { email, passwordToken, newPassword } = req.body;
+
+  if (!email || !passwordToken || !newPassword)
+    throw new BadRequestError("Please fill all fields");
+
+  const account = await Account.findOne({ email });
+
+  if (account) {
+    const currentDate = new Date();
+
+    if (
+      account.passwordToken === createHash(passwordToken) &&
+      account.passwordTokenExpirationDate > currentDate
+    ) {
+      account.password = newPassword;
+      account.passwordToken = "";
+      account.passwordTokenExpirationDate = null;
+
+      await account.save();
+    }
+  }
+
+  res.status(StatusCodes.OK).json({ msg: "Password has been reset" });
+};
+
+module.exports = {
+  register,
+  login,
+  loginAdmin,
+  loginDesigner,
+  logout,
+  forgotPassword,
+  resetPassword,
+};

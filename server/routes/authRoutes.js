@@ -5,6 +5,8 @@ const {
   loginAdmin,
   loginDesigner,
   logout,
+  forgotPassword,
+  resetPassword,
 } = require("../controller/authPwdCtrl");
 const { googleLogin } = require("../controller/authGoogleCtrl");
 const passportLocal = require("../passport/passportLocal");
@@ -60,5 +62,7 @@ router.get(
 );
 
 router.delete("/logout", logout);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);
 
 module.exports = router;
