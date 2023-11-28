@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const Request = require("../model/Request");
 const Brand = require("../model/Brand");
 const useCloudinary = require("../utils/useCloudinary");
-const { BadRequestError, NotFoundError } = require("../errors");
+const { BadRequestError, NotFoundError, CustomAPIError } = require("../errors");
 const Account = require("../model/Account");
 const checkPermissions = require("../utils/checkPermissions");
 const Wallet = require("../model/Wallet");
@@ -197,9 +197,7 @@ const uploadResponse = async (req, res) => {
   response = await useCloudinary(designFile, "image", "/Response", requestId);
 
   if (response && response.msg) {
-    return res.status(response.status).json({
-      msg: response.msg,
-    });
+    throw new CustomAPIError(response.msg);
   }
 
   request.design = response;

@@ -1,5 +1,9 @@
 const { StatusCodes } = require("http-status-codes");
-const { BadRequestError, NotFoundError } = require("../errors/index");
+const {
+  BadRequestError,
+  NotFoundError,
+  CustomAPIError,
+} = require("../errors/index");
 const Brand = require("../model/Brand");
 const checkPermissions = require("../utils/checkPermissions");
 const useCloudinary = require("../utils/useCloudinary");
@@ -24,9 +28,7 @@ const createBrand = async (req, res) => {
         "lightlogo"
       );
       if (logoLight && logoLight.msg) {
-        return res.status(logoLight.status).json({
-          msg: logoLight.msg,
-        });
+        throw new CustomAPIError(logoLight.msg);
       }
     }
     if (darkFile) {
@@ -37,9 +39,7 @@ const createBrand = async (req, res) => {
         "darklogo"
       );
       if (logoDark && logoDark.msg) {
-        return res.status(logoDark.status).json({
-          msg: logoDark.msg,
-        });
+        throw new CustomAPIError(logoDark.msg);
       }
     }
     if (fontFile) {
@@ -50,9 +50,7 @@ const createBrand = async (req, res) => {
         "font"
       );
       if (fontUrl && fontUrl.msg) {
-        return res.status(fontUrl.status).json({
-          msg: fontUrl.msg,
-        });
+        throw new CustomAPIError(fontUrl.msg);
       }
     }
   }

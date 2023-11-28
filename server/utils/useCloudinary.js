@@ -34,9 +34,8 @@ const useCloudinary = async (
   } catch (error) {
     fs.unlinkSync(file.tempFilePath);
     return {
-      status: error.statusCode || 500,
-      msg:
-        error.message || "Something went wrong while uploading to cloudinary",
+      status: error?.statusCode || 500,
+      msg: error?.message || "Could not upload file",
     };
   }
 };

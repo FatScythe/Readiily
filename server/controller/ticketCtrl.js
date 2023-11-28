@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const { BadRequestError, NotFoundError } = require("../errors");
+const { BadRequestError, NotFoundError, CustomAPIError } = require("../errors");
 const useCloudinary = require("../utils/useCloudinary");
 const Ticket = require("../model/Ticket");
 
@@ -47,9 +47,7 @@ const createTicket = async (req, res) => {
         const file = req.files.attachments;
         result = await useCloudinary(file, "", "/Ticket/" + tickets, file.name);
         if (result && result.msg) {
-          return res.status(result.status).json({
-            msg: result.msg,
-          });
+          throw new CustomAPIError(result.status);
         }
         attachments = [result];
       }
