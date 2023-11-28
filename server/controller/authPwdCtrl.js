@@ -22,8 +22,8 @@ const register = async (req, res) => {
   let referralId = referrer;
 
   if (referralId) {
-    const account = await Account.findOne({ _id: referralId });
-    if (!account) {
+    const referrer = await Account.findOne({ _id: referralId });
+    if (!referrer) {
       referralId = null;
     }
   } else {
@@ -36,9 +36,9 @@ const register = async (req, res) => {
     accountObj = { ...accountObj, ...(referralId && { referral: referralId }) };
   }
 
-  account = await Account.create(accountObj);
+  const account = await Account.create(accountObj);
 
-  if (account.role === "account") {
+  if (account.role === "user") {
     const wallet = await Wallet.create({
       balance: Number(process.env.REGISTRATION_BONUS),
       account: account._id,
