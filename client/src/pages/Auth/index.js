@@ -40,12 +40,13 @@ const Auth = () => {
   const handleGoogleAuth = () => {
     window.open(
       window.location.origin +
-        `/api/v1/auth/login/google?referrer=${referrer ? referrer : ""}`,
+        `/api/v1/auth/login/google${referrer ? `?referrer=${referrer}` : ""}`,
       "_self"
     );
     // DEVELOPMENT
     // window.open(
-    //   "http://localhost:5000" + `/api/v1/auth/login/google?referrer=${referrer ? referrer : ""}`,
+    //   "http://localhost:5000" +
+    //     `/api/v1/auth/login/google${referrer ? `?referrer=${referrer}` : ""}`,
     //   "_self"
     // );
   };
