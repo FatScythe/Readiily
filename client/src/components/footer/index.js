@@ -119,7 +119,7 @@ const Accordian2 = () => {
           <Link to='/auth?signup=true'>Sign Up</Link>
         </li>
         <li>
-          <Link to='/auth'>Password Reset</Link>
+          <Link to='/forgot'>Password Reset</Link>
         </li>
       </ul>
     </div>
