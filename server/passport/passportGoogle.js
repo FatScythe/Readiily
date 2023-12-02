@@ -19,7 +19,7 @@ module.exports = passport.use(
         account = await Account.findOne({ email: profile.emails[0].value });
 
         if (account && account.authType !== "google") {
-          throw new BadRequestError("Email already exist");
+          return cb(null, false, { message: "Email already exist" });
         }
 
         // REGISTER

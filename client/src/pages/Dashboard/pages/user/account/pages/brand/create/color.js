@@ -33,7 +33,7 @@ const Color = ({ form, setForm }) => {
             );
           })}
         </div>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between items-center relative'>
           <div>
             <label htmlFor='color' className=''>
               <AddIcon className='w-10 sm:w-12 h-10 sm:h-12' />
@@ -42,7 +42,7 @@ const Color = ({ form, setForm }) => {
               id='color'
               type='color'
               onChange={(e) => setCurrColor(e.target.value)}
-              className='hidden'
+              className='absolute bottom-0 opacity-0'
             />
           </div>
           {currColor && form.colors.length < 6 && (

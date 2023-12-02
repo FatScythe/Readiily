@@ -49,10 +49,10 @@ const Navbar = () => {
             Features
           </a>
           <a
-            href='#cta'
+            href='#footer'
             className='text-xl sm:text-2xl md:text-base font-semibold hover:text-orange transition-colors duration-500'
           >
-            Pricing
+            Contact
           </a>
         </ul>
 
