@@ -5,9 +5,10 @@ import logo from "../../assets/images/R-light.png";
 import { HamburgerIcon, ExitIcon, BellIcon } from "../../assets/icons";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { selectBrand } from "../../features/brand/brandSlice";
+import { getBrands, selectBrand } from "../../features/brand/brandSlice";
 import { logoutAccount } from "../../features/auth/authSlice";
 import Loader from "../loader";
+import { useEffect } from "react";
 
 const DashboardHeader = ({ isSideOpen, setIsSideOpen, role }) => {
   const dispatch = useDispatch();
@@ -80,6 +81,11 @@ const UserHeader = () => {
 
 const UserHeaderHome = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBrands());
+  }, [dispatch]);
+
   const { currentBrand, brands, loading } = useSelector((store) => store.brand);
   const handleSelect = (e) => {
     const selectedIndex = e.target.options.selectedIndex;

@@ -35,7 +35,7 @@ const Font = ({ form, setForm }) => {
             className='h-4 w-4 sm:w-6 sm:h-6'
           />
           <span
-            className={`text-xs sm:text-base ${
+            className={`md:text-base ${
               customFont ? "text-black" : "text-gray-300"
             }`}
           >
