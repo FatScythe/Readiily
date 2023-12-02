@@ -1,14 +1,12 @@
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useOutletContext, useNavigate, Link } from "react-router-dom";
 // Icons
-import { ClipBoardIcon, TrashIcon } from "../../../../../../../assets/icons";
+import { TrashIcon } from "../../../../../../../assets/icons";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import {
   deleteBrand,
   getBrands,
 } from "../../../../../../../features/brand/brandSlice";
-// Toastify
-import { toast } from "react-toastify";
 // Utils
 import { socials } from "./create/utils";
 
@@ -48,10 +46,10 @@ const BrandManage = () => {
           </button>
         </h1>
         <div className='absolute -bottom-4 w-full h-1 bg-gradient-to-r from-red-500 to-green-500 mt-5'>
-          <div className='flex justify-between items-center my-5 w-full sm:w-10/12 text-gray-500 font-semibold text-lg sm:text-xl md:text-2xl p-5 border-2 border-transparent border-b-gray-600'>
-            <p>Brand(s)</p>
-            <p>Email</p>
-            <p>Status</p>
+          <div className='grid grid-cols-12 gap-4 my-5 w-full sm:w-10/12 text-gray-500 font-semibold text-lg sm:text-xl md:text-2xl p-5 border-2 border-transparent border-b-gray-600'>
+            <p className='col-span-4'>Brand(s)</p>
+            <p className='col-span-4'>Email</p>
+            <p className='col-span-4'>Status</p>
           </div>
           <div className='h-72 overflow-scroll overflow-x-hidden pb-11'>
             {brands && brands.nb > 0 ? (
@@ -71,23 +69,23 @@ const BrandManage = () => {
 const SingleBrand = ({ name, email, _id }) => {
   const dispatch = useDispatch();
   return (
-    <div className='group h-20 w-full flex justify-between items-center mb-5'>
-      <main className='basis-full sm:basis-10/12 flex justify-between items-center my-5 text-gray-300 text-xs gap-1 sm:text-base md:text-lg p-5 border border-transparent border-b-gray-600'>
-        <p className='flex flex-col justify-between items-start gap-2 w-16 text-ellipsis sm:w-fit overflow-hidden'>
+    <div className='group h-20 w-full mb-5 flex justify-between items-center'>
+      <main className='grid grid-cols-12 gap-4 basis-full sm:basis-10/12 my-5 text-gray-300 text-xs sm:text-base md:text-lg p-5 border border-transparent border-b-gray-600'>
+        <p className='flex flex-col justify-start items-start gap-2 col-span-4'>
           <span>{name}</span>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(_id);
-              toast.info("Copied to clipboard");
-            }}
-            className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2'
+          <Link
+            to={"/dashboard/request/brand/" + _id}
+            className='text-blue underline underline-offset-4 text-left'
           >
-            <span>{_id}</span>
-            <ClipBoardIcon className='w-6 sm:w-8 h-6 sm:h-8 stroke-black/70' />
-          </button>
+            View brand
+          </Link>
         </p>
-        <p className='w-20 text-ellipsis sm:w-fit overflow-hidden'>{email}</p>
-        <p className='w-16 text-ellipsis sm:w-fit overflow-hidden'>Active</p>
+        <p className='w-20 text-ellipsis sm:w-fit overflow-hidden col-span-4'>
+          {email}
+        </p>
+        <p className='w-16 text-ellipsis sm:w-fit overflow-hidden col-span-4'>
+          Active
+        </p>
       </main>
       <button
         className='basis-1/6 group-hover:flex hidden sm:flex justify-center items-center rounded-full p-2 hover:bg-black'
