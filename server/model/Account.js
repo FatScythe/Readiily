@@ -18,7 +18,7 @@ const AccountSchema = new Schema(
     },
     password: {
       type: String,
-      maxLength: 6,
+      minLength: 8,
     },
     avatar: {
       type: String,
