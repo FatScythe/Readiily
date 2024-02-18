@@ -1,0 +1,80 @@
+const { Model } = require("sequelize");
+
+module.exports = (sequelize, DataTypes) => {
+  class Account extends Model {}
+  Account.init(
+    {
+      _id: {
+        type: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: {
+            msg: "Please provide your full name",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        validate: {
+          len: {
+            args: [8, 99],
+            msg: "Minimum of 8 character",
+          },
+        },
+      },
+      passwordToken: {
+        type: DataTypes.TEXT,
+      },
+      passwordExpirationDate: {
+        type: DataTypes.DATE,
+      },
+      avatar: {
+        type: DataTypes.TEXT,
+        defaultValue: "/public/images/avatar.png",
+      },
+      role: {
+        type: DataTypes.STRING,
+        validate: {
+          isIn: {
+            args: [["user", "designer", "admin"]],
+          },
+        },
+        defaultValue: "user",
+      },
+      referral: {
+        type: DataTypes.STRING,
+      },
+      referralClaim: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      googleId: {
+        type: DataTypes.TEXT,
+      },
+      designerToke: {
+        type: DataTypes.TEXT,
+      },
+      authType: {
+        type: DataTypes.STRING,
+        validate: {
+          isIn: {
+            args: [["email", "google"]],
+          },
+        },
+        defaultValue: "email",
+      },
+    },
+    { sequelize, timestamps: true, tableName: "Accounts" }
+  );
+
+  return Account;
+};
