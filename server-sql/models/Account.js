@@ -2,15 +2,23 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Account extends Model {}
+
   Account.init(
     {
       _id: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: true,
+          notNull: {
+            msg: "Please provide a name",
+          },
+        },
       },
       email: {
         type: DataTypes.STRING,
@@ -18,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: {
           isEmail: {
-            msg: "Please provide your full name",
+            msg: "Please provide a valid email",
           },
         },
       },

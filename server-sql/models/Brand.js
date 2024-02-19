@@ -1,15 +1,22 @@
 module.exports = (sequelize, DataTypes) => {
-  sequelize.define(
-    "Brands",
+  const Brand = sequelize.define(
+    "Brand",
     {
       _id: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+          notEmpty: true,
+          notNull: {
+            msg: "Please provide a font name",
+          },
+        },
       },
       colors: {
         type: DataTypes.ARRAY(DataTypes.STRING),
@@ -17,9 +24,19 @@ module.exports = (sequelize, DataTypes) => {
       font: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: true,
+          notNull: {
+            msg: "Please provide a font name",
+          },
+        },
       },
       fontUrl: {
         type: DataTypes.STRING,
+        validate: {
+          notEmpty: true,
+          isUrl: true,
+        },
       },
       email: {
         type: DataTypes.STRING,
@@ -33,12 +50,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       website: {
         type: DataTypes.STRING,
+        validate: {
+          isUrl: true,
+        },
       },
       logoDark: {
         type: DataTypes.STRING,
+        validate: {
+          isUrl: true,
+        },
       },
       logoWhite: {
         type: DataTypes.STRING,
+        validate: {
+          isUrl: true,
+        },
       },
       industry: {
         type: DataTypes.ARRAY(DataTypes.STRING),
@@ -46,4 +72,5 @@ module.exports = (sequelize, DataTypes) => {
     },
     { timestamps: true }
   );
+  return Brand;
 };

@@ -1,10 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-  sequelize.define(
+  return sequelize.define(
     "Brands",
     {
       _id: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
       media: {
         type: DataTypes.STRING,
