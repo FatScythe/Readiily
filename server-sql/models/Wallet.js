@@ -1,4 +1,5 @@
 const { Model } = require("sequelize");
+const { BadRequestError } = require("../errors");
 module.exports = (sequelize, DataTypes) => {
   class Wallet extends Model {}
 
@@ -27,20 +28,24 @@ module.exports = (sequelize, DataTypes) => {
       //   required: [true, "Please provide an account"],
       // },
     },
-    { sequelize, timestamps: true, tableName: "Wallets" }
+    {
+      sequelize,
+      timestamps: true,
+      tableName: "Wallets",
+      validate: {
+        checkBalance() {
+          if (this.balance < 0 && this.currency === "USD") {
+            throw new BadRequestError(
+              "Balance in wallet cannot be less than zero"
+            );
+          }
+        },
+      },
+    }
   );
 
   return Wallet;
 };
-
-// WalletSchema.pre("save", async function (next) {
-//   if (this.balance < 0 && this.currency === "USD") {
-//     return next({
-//       statusCode: 404,
-//       message: "Balance in wallet cannot be less than zero",
-//     });
-//   }
-// });
 
 // WalletSchema.methods.createTransaction = async function (detail, amount, type) {
 //   await Transaction.create({
