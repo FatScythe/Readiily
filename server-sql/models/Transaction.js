@@ -1,3 +1,4 @@
+const { BadRequestError } = require("../errors");
 module.exports = (sequelize, DataTypes) => {
   const Transaction = sequelize.define(
     "Transaction",
@@ -56,16 +57,15 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "pending",
       },
     },
-    { timestamps: true }
+    {
+      timestamps: true,
+      hooks: {
+        beforeCreate: (transaction) => {
+          if (transaction.amount < 1 && transaction.currency === "USD")
+            throw new BadRequestError("Please provide a valid transaction");
+        },
+      },
+    }
   );
   return Transaction;
 };
-
-// TranSchema.pre("save", async function (next) {
-//   if (this.amount < 1 && this.currency === "USD") {
-//     return next({
-//       statusCode: 404,
-//       message: "Please provide a valid transaction",
-//     });
-//   }
-// });
