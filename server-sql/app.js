@@ -2,7 +2,6 @@ require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
 const { sequelize } = require("./models");
-const BadRequestError = require("../server/errors/badrequest-error");
 
 const app = express();
 
