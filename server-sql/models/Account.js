@@ -1,4 +1,5 @@
 const { Model } = require("sequelize");
+const bcrypt = require("bcrypt");
 
 module.exports = (sequelize, DataTypes) => {
   class Account extends Model {}
@@ -68,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
       googleId: {
         type: DataTypes.TEXT,
       },
-      designerToke: {
+      designerToken: {
         type: DataTypes.TEXT,
       },
       authType: {
@@ -81,7 +82,19 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "email",
       },
     },
-    { sequelize, timestamps: true, tableName: "Accounts" }
+    {
+      sequelize,
+      timestamps: true,
+      tableName: "Accounts",
+      hooks: {
+        beforeCreate: async (user) => {
+          const salt = await bcrypt.genSalt(10);
+          const hashedPwd = await bcrypt.hash(user.password, salt);
+
+          user.password = hashedPwd;
+        },
+      },
+    }
   );
 
   return Account;
