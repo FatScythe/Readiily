@@ -13,7 +13,7 @@ const Transaction = require("./Transaction");
 const sequelize = new Sequelize(db, user, password, {
   host,
   dialect,
-  //   logging: false,
+  // logging: false,
 });
 
 let models = {
@@ -28,9 +28,56 @@ let models = {
   Transaction: Transaction(sequelize, DataTypes),
 };
 
+// Account X Brand
+models.Account.hasMany(models.Brand);
+models.Brand.belongsTo(models.Account);
+// Account X Request
+models.Account.hasMany(models.Request);
+models.Request.belongsTo(models.Account);
+// Account X Transaction
+models.Account.hasMany(models.Transaction);
+models.Transaction.belongsTo(models.Account);
+// Account X Ticket
+models.Account.hasMany(models.Ticket);
+models.Ticket.belongsTo(models.Account);
+// Account X Wallet
+models.Account.hasOne(models.Wallet);
+models.Account.hasOne(models.Account);
+// Account X Response
+models.Account.hasMany(models.Response);
+models.Response.belongsTo(models.Account);
+
+// Brand X Request
+models.Brand.hasMany(models.Request);
+models.Request.belongsTo(models.Brand);
+// Brand X Comment
+models.Brand.hasMany(models.Comment);
+models.Comment.belongsTo(models.Brand);
+// Brand X Social
+models.Brand.hasOne(models.Social);
+models.Social.belongsTo(models.Account);
+// Brand X Ticket
+models.Brand.hasMany(models.Ticket);
+models.Ticket.belongsTo(models.Brand);
+
+// Comment X Request
+models.Request.hasMany(models.Comment);
+models.Comment.belongsTo(models.Request);
+
+// Ticket X Response
+models.Ticket.hasMany(models.Response);
+models.Response.belongsTo(models.Ticket);
+
 sequelize
   .sync({ force: true })
-  .then(() => {
+  .then(async () => {
+    const user = await models.Account.build({
+      name: "Test1",
+      email: "test1@email.com",
+      password: "secreter",
+    }).validate();
+    console.log(user.toJSON());
+    // console.log(await user.validate());
     console.log("Synced Successfully");
   })
   .catch((err) => {
