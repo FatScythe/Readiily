@@ -54,8 +54,8 @@ models.Request.belongsTo(models.Brand);
 models.Brand.hasMany(models.Comment);
 models.Comment.belongsTo(models.Brand);
 // Brand X Social
-models.Brand.hasOne(models.Social);
-models.Social.belongsTo(models.Account);
+models.Brand.hasMany(models.Social);
+models.Social.belongsTo(models.Brand);
 // Brand X Ticket
 models.Brand.hasMany(models.Ticket);
 models.Ticket.belongsTo(models.Brand);
